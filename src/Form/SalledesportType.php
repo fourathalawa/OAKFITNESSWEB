@@ -12,10 +12,10 @@ class SalledesportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('adresse')
-            ->add('idResponsable')
             ->add('nomsalle')
+            ->add('adresse')
             ->add('prixseance')
+            ->add('idResponsable')
         ;
     }
 

@@ -1,4 +1,4 @@
-{% extends 'base-front.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
 {% block title %}User index{% endblock %}
 
@@ -8,45 +8,42 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Iduser</th>
                 <th>Nomuser</th>
                 <th>Prenomuser</th>
                 <th>Mailuser</th>
                 <th>Telephonenumberuser</th>
                 <th>Datenaissanceuser</th>
-                <th>Roleuser</th>
-                <th>Numeropackuser</th>
-                <th>Datecommence</th>
                 <th>Experienceuser</th>
                 <th>Diplomeuser</th>
                 <th>Adressesallesport</th>
-                <th>Matriculefiscale</th>
-                <th>Password</th>
+
 
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.iduser }}</td>
                 <td>{{ user.nomuser }}</td>
                 <td>{{ user.prenomuser }}</td>
                 <td>{{ user.mailuser }}</td>
                 <td>{{ user.telephonenumberuser }}</td>
                 <td>{{ user.datenaissanceuser ? user.datenaissanceuser|date('Y-m-d') : '' }}</td>
-                <td>{{ user.roleuser }}</td>
-                <td>{{ user.numeropackuser }}</td>
-                <td>{{ user.datecommence ? user.datecommence|date('Y-m-d') : '' }}</td>
                 <td>{{ user.experienceuser }}</td>
                 <td>{{ user.diplomeuser }}</td>
                 <td>{{ user.adressesallesport }}</td>
-                <td>{{ user.matriculefiscale }}</td>
-                <td>{{ user.password }}</td>
-                <td>{{ user.codeverification }}</td>
-                <td>{{ user.imageuser }}</td>
+
                 <td>
-                    <a href="{{ path('app_user_show', {'iduser': user.iduser}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'iduser': user.iduser}) }}">edit</a>
+                    <a href="{{ path('app_user_show', {'iduser': user.iduser}) }}">Show</a>
+                    <a href="{{ path('app_user_delete', {'iduser': user.iduser}) }}">Delete</a>
+                    {% if(user.roleuser == 0) %}
+                    <a href="{{ path('app_user_editadherent', {'iduser': user.iduser}) }}">Edit</a>
+                    {% elseif(user.roleuser == 1) %}
+                        <a href="{{ path('app_user_editcoach', {'iduser': user.iduser}) }}">Edit</a>
+                    {% elseif(user.roleuser == 2) %}
+                        <a href="{{ path('app_user_editmanager', {'iduser': user.iduser}) }}">Edit</a>
+                    {% elseif(user.roleuser == 3) %}
+                        <a href="{{ path('app_user_editadmin', {'iduser': user.iduser}) }}">Edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -57,5 +54,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_new') }}">Create new</a>
+    <a href="{{ path('app_user_newadmin') }}">Create new</a>
 {% endblock %}

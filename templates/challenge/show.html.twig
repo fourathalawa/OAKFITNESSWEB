@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-front.html.twig' %}
 
 {% block title %}Challenge{% endblock %}
 
@@ -12,12 +12,8 @@
                 <td>{{ challenge.idchallenge }}</td>
             </tr>
             <tr>
-                <th>Datedebut</th>
-                <td>{{ challenge.datedebut }}</td>
-            </tr>
-            <tr>
-                <th>Datefin</th>
-                <td>{{ challenge.datefin }}</td>
+                <th>Taille</th>
+                <td>{{ challenge.taille }}</td>
             </tr>
             <tr>
                 <th>Poidint</th>
@@ -27,17 +23,14 @@
                 <th>Poidob</th>
                 <td>{{ challenge.poidob }}</td>
             </tr>
+
             <tr>
-                <th>Taille</th>
-                <td>{{ challenge.taille }}</td>
+                <th>Datedebut</th>
+                <td>{{ challenge.datedebut ? challenge.datedebut|date('Y-m-d') :''  }}</td>
             </tr>
             <tr>
-                <th>Poidnv</th>
-                <td>{{ challenge.poidnv }}</td>
-            </tr>
-            <tr>
-                <th>Iduser</th>
-                <td>{{ challenge.iduser }}</td>
+                <th>Datefin</th>
+                <td>{{ challenge.datefin ? challenge.datefin|date('Y-m-d') :''  }}</td>
             </tr>
         </tbody>
     </table>

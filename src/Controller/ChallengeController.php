@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Challenge;
+use App\Entity\User;
+use App\Repository\ChallengeRepository;
 use App\Form\ChallengeType;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Exception\RepositoryException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ChallengeController extends AbstractController
 {
     /**
-     * @Route("/", name="app_challenge_index", methods={"GET"})
+     * @Route("/all", name="app_challenge_index", methods={"GET"})
      */
     public function index(EntityManagerInterface $entityManager): Response
     {
@@ -38,7 +41,7 @@ class ChallengeController extends AbstractController
         $form = $this->createForm(ChallengeType::class, $challenge);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()  ) {
             $entityManager->persist($challenge);
             $entityManager->flush();
 
@@ -69,7 +72,7 @@ class ChallengeController extends AbstractController
         $form = $this->createForm(ChallengeType::class, $challenge);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() ) {
             $entityManager->flush();
 
             return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
@@ -92,5 +95,16 @@ class ChallengeController extends AbstractController
         }
 
         return $this->redirectToRoute('app_challenge_index', [], Response::HTTP_SEE_OTHER);
+    }
+    /**
+     * @Route("/yourchallenge/{iduser}", name="app_challenge_userchallenge",methods={"GET","POST"})
+     */
+    public function yourchallenge($iduser)
+    {
+        $challenge=$this->getDoctrine()->getRepository(Challenge::class)->getChallenge($iduser);
+
+        return $this->render('challenge/show.html.twig',[
+            'challenge' => $challenge,
+        ] );
     }
 }

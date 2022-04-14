@@ -38,7 +38,7 @@ class SalledesportController extends AbstractController
         $form = $this->createForm(SalledesportType::class, $salledesport);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $entityManager->persist($salledesport);
             $entityManager->flush();
 
@@ -69,7 +69,7 @@ class SalledesportController extends AbstractController
         $form = $this->createForm(SalledesportType::class, $salledesport);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $entityManager->flush();
 
             return $this->redirectToRoute('app_salledesport_index', [], Response::HTTP_SEE_OTHER);

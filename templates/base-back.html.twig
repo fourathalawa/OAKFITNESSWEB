@@ -24,7 +24,8 @@
 </head>
 <body>
 
-
+<table>
+    <td>
     <!-- partial:partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
@@ -169,8 +170,16 @@
         </ul>
     </nav>
     <!-- partial -->
+    </td>
+
+    <td >
+
+        {% block body %}
+        {% endblock %}
+    </td>
+</table>
     <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_navbar.html -->{% block body %}
+        <!-- partial:partials/_navbar.html -->
         <nav class="navbar p-0 fixed-top d-flex flex-row">
             <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
                 <a class="navbar-brand brand-logo-mini" href="index.html"><img src="back/images/logo-mini.svg" alt="logo" /></a>
@@ -1029,7 +1038,7 @@
                 </div>
             </div>
             <!-- content-wrapper ends -->
-            {% endblock %}
+
         </div>
         <!-- main-panel ends -->
     </div>

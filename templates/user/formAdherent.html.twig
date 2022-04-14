@@ -1,0 +1,103 @@
+{% form_theme formU 'bootstrap_4_layout.html.twig' %}
+
+        {{ form_start(formU,{'attr':{'novalidate':'novalidate'}}) }}
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+
+        <div class="container">
+
+            <hr>
+
+            <div class="card bg-light">
+                <article class="card-body mx-auto" style="max-width: 400px;">
+                    <h4 class="card-title mt-3 text-center">Create Account</h4>
+                    <form>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <div class="form-control">
+                                {{ form_label(formU.nomuser,"Name :") }}
+                                {{ form_widget(formU.nomuser) }}
+                                {{ form_errors(formU.nomuser) }}
+                            </div>
+
+                        </div>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                            </div>
+                            <div class="form-control">
+                                {{ form_label(formU.prenomuser,"Last Name :") }}
+                                {{ form_widget(formU.prenomuser) }}
+                                {{ form_errors(formU.prenomuser) }}
+                            </div>
+
+                        </div>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                            </div>
+                            <div class="form-control">
+                                {{ form_label(formU.mailuser,"Email :") }}
+                                {{ form_widget(formU.mailuser) }}
+                                {{ form_errors(formU.mailuser) }}
+                            </div>
+                        </div> <!-- form-group// -->
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-calendar"></i> </span>
+                            </div>
+
+                            <div class="form-control">
+                                {{ form_label(formU.datenaissanceuser,"Date de Naissance") }}
+                                {{ form_widget(formU.datenaissanceuser) }}
+                                {{ form_errors(formU.datenaissanceuser) }}
+                            </div>
+                        </div> <!-- form-group// -->
+
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                            </div>
+                            <div class="form-control">
+                            {{ form_label(formU.telephonenumberuser,"Phone Number :") }}
+                            {{ form_widget(formU.telephonenumberuser) }}
+                            {{ form_errors(formU.telephonenumberuser) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                            </div>
+
+                            <div class="form-control">
+                                {{ form_label(formU.password,"Password :") }}
+                                {{ form_widget(formU.password) }}
+                                {{ form_errors(formU.password) }}
+                            </div>
+                        </div> <!-- form-group// -->
+
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
+                        </div> <!-- form-group// -->
+                        <a href="newcoach" class="text-center">Are you a coach?</a><br>
+                        <a href="newmanager" class="text-center">Are you a manager?</a>
+                        <p class="text-center">Have an account? <a href="">Log In</a> </p>
+                    </form>
+                </article>
+            </div>
+
+        </div>
+
+
+
+
+        {{ form_end(formU) }}
+        <br>
+
+
+

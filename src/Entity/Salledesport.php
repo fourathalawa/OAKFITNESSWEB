@@ -49,6 +49,12 @@ class Salledesport
      */
     private $prixseance;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="salles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getIdSalle(): ?int
     {
         return $this->idSalle;
@@ -98,6 +104,18 @@ class Salledesport
     public function setPrixseance(float $prixseance): self
     {
         $this->prixseance = $prixseance;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -45,7 +45,7 @@ class RepasController extends AbstractController
             return $this->redirectToRoute('app_repas_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('repas/new.html.twig', [
+        return $this->render('repas/newadherent.html.twig', [
             'repa' => $repa,
             'form' => $form->createView(),
         ]);
@@ -75,7 +75,7 @@ class RepasController extends AbstractController
             return $this->redirectToRoute('app_repas_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('repas/edit.html.twig', [
+        return $this->render('repas/editadherent.html.twig', [
             'repa' => $repa,
             'form' => $form->createView(),
         ]);

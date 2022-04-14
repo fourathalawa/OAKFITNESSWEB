@@ -1,4 +1,57 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creat challenge</title>
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href={{asset('front/css/challenge.css')}}>
+    <link rel="stylesheet" href={{asset('front/css/signup.css')}}>
+</head>
+<body>
+
+    <fieldset>
+        <legend><span class="number">1</span>Donnée initiale</legend>
+        {{ form_label(form.poidint,"Poids initial :") }}
+        {{ form_widget(form.poidint) }}
+        {{ form_errors(form.poidint) }}
+
+        {{ form_label(form.taille,"Taille :") }}
+        {{ form_widget(form.taille) }}
+        {{ form_errors(form.taille) }}
+
+    </fieldset>
+
+    <fieldset>
+        <legend><span class="number">2</span>Objective</legend>
+        {{ form_label(form.poidob,"Poids objective :") }}
+        {{ form_widget(form.poidob) }}
+        {{ form_errors(form.poidob) }}
+    </fieldset>
+    <fieldset>
+        <legend><span class="number">3</span>Durée</legend>
+
+        {{ form_label(form.datedebut,"Date de début :") }}
+        {{ form_widget(form.datedebut) }}
+        {{ form_errors(form.datedebut )}}
+
+        {{ form_label(form.datefin,"Date de fin :") }}
+        {{ form_widget(form.datefin) }}
+        {{ form_errors(form.datefin) }}
+        <legend><span class="number">4</span>poids nouveau </legend>
+        {{ form_label(form.poidnv,"poid nv:") }}
+        {{ form_widget(form.poidnv) }}
+            {{ form_errors(form.poidnv)}}
+<legend><span class="number">4</span>Id User Temporaire </legend>
+        {{ form_label(form.iduser,"Id User :") }}
+        {{ form_widget(form.iduser) }}
+        {{ form_errors(form.iduser) }}
+
+    </fieldset>
     <button class="btn">{{ button_label|default('Save') }}</button>
+</form>
+
+</body>
+</html>
+
 {{ form_end(form) }}

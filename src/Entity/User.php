@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * User
  *
@@ -23,35 +25,35 @@ class User
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="NomUser", type="string", length=50, nullable=false)
      */
     private $nomuser;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="PrenomUser", type="string", length=50, nullable=false)
      */
     private $prenomuser;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="MailUser", type="string", length=60, nullable=false)
      */
     private $mailuser;
 
     /**
      * @var int
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="TelephoneNumberUser", type="bigint", nullable=false)
      */
     private $telephonenumberuser;
 
     /**
      * @var \DateTime
-     *
+
      * @ORM\Column(name="DateNaissanceUser", type="date", nullable=false)
      */
     private $datenaissanceuser;
@@ -79,14 +81,14 @@ class User
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="ExperienceUser", type="string", length=150, nullable=true)
      */
     private $experienceuser;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="DiplomeUser", type="string", length=150, nullable=true)
      */
     private $diplomeuser;
@@ -100,14 +102,14 @@ class User
 
     /**
      * @var int|null
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="MatriculeFiscale", type="bigint", nullable=true)
      */
     private $matriculefiscale;
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="Password", type="string", length=45, nullable=true)
      */
     private $password;
@@ -121,10 +123,19 @@ class User
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="imageUser", type="string", length=250, nullable=true)
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
      */
     private $imageuser;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Salledesport::class, mappedBy="user")
+     */
+    private $salles;
+
+    public function __construct()
+    {
+        $this->salles = new ArrayCollection();
+    }
 
     public function getIduser(): ?int
     {
@@ -318,6 +329,48 @@ class User
         $this->mailuser = $mailuser;
         $this->datenaissanceuser = $date;
         $this->password= $password;
+
+        return $this;
+    }
+    public function UserC(string $nom,string $prenom ,string $mailuser,string $date,string $experienceuser,string $diplomeuser,string $password): self
+    {
+        $this->nomuser = $nom;
+        $this->prenomuser = $prenom;
+        $this->mailuser = $mailuser;
+        $this->datenaissanceuser = $date;
+        $this->experienceuser = $experienceuser;
+        $this->diplomeuser = $diplomeuser;
+        $this->password= $password;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Salledesport>
+     */
+    public function getSalles(): Collection
+    {
+        return $this->salles;
+    }
+
+    public function addSalle(Salledesport $salle): self
+    {
+        if (!$this->salles->contains($salle)) {
+            $this->salles[] = $salle;
+            $salle->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSalle(Salledesport $salle): self
+    {
+        if ($this->salles->removeElement($salle)) {
+            // set the owning side to null (unless already changed)
+            if ($salle->getUser() === $this) {
+                $salle->setUser(null);
+            }
+        }
 
         return $this;
     }

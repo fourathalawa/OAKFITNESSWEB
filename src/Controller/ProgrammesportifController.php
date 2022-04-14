@@ -45,7 +45,7 @@ class ProgrammesportifController extends AbstractController
             return $this->redirectToRoute('app_programmesportif_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('programmesportif/new.html.twig', [
+        return $this->render('programmesportif/newadherent.html.twig', [
             'programmesportif' => $programmesportif,
             'form' => $form->createView(),
         ]);
@@ -75,7 +75,7 @@ class ProgrammesportifController extends AbstractController
             return $this->redirectToRoute('app_programmesportif_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('programmesportif/edit.html.twig', [
+        return $this->render('programmesportif/editadherent.html.twig', [
             'programmesportif' => $programmesportif,
             'form' => $form->createView(),
         ]);

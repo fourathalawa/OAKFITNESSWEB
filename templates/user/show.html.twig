@@ -1,82 +1,77 @@
+
 {% extends 'base-front.html.twig' %}
 
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <link rel="stylesheet" href={{asset('front/css/show.css')}}>
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            <div class="row container d-flex justify-content-center">
+                <div class="col-xl-6 col-md-12">
+                    <div class="card user-card-full">
+                        <div class="row m-l-0 m-r-0">
+                            <div class="col-sm-4 bg-c-lite-green user-profile">
+                                <div class="card-block text-center text-white">
+                                    <div class="m-b-25"> <img src="{{asset('front/images/'~user.imageuser)}}" class="img-radius" alt="User-Profile-Image"> </div>
+                                    <h6 class="f-w-600">{{ user.nomuser }} {{ user.prenomuser }}</h6>
+                                    <p>Member</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="card-block">
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Email</p>
+                                            <h6 class="text-muted f-w-400">{{ user.mailuser }}</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Phone</p>
+                                            <h6 class="text-muted f-w-400">{{ user.telephonenumberuser }}</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">birth day</p>
+                                            <h6 class="text-muted f-w-400">{{ user.datenaissanceuser ? user.datenaissanceuser|date('Y-m-d') : '' }}</h6>
+                                        </div>
+                                    </div>
+                                        {% if(user.roleuser == 1) %}
+                                            <br>
+                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Professional</h6>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Experience</p>
+                                            <h6 class="text-muted f-w-400">{{ user.experienceuser  }}</h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Diplome</p>
+                                            <h6 class="text-muted f-w-400">{{ user.diplomeuser }}</h6>
+                                        </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Iduser</th>
-                <td>{{ user.iduser }}</td>
-            </tr>
-            <tr>
-                <th>Nomuser</th>
-                <td>{{ user.nomuser }}</td>
-            </tr>
-            <tr>
-                <th>Prenomuser</th>
-                <td>{{ user.prenomuser }}</td>
-            </tr>
-            <tr>
-                <th>Mailuser</th>
-                <td>{{ user.mailuser }}</td>
-            </tr>
-            <tr>
-                <th>Telephonenumberuser</th>
-                <td>{{ user.telephonenumberuser }}</td>
-            </tr>
-            <tr>
-                <th>Datenaissanceuser</th>
-                <td>{{ user.datenaissanceuser ? user.datenaissanceuser|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Roleuser</th>
-                <td>{{ user.roleuser }}</td>
-            </tr>
-            <tr>
-                <th>Numeropackuser</th>
-                <td>{{ user.numeropackuser }}</td>
-            </tr>
-            <tr>
-                <th>Datecommence</th>
-                <td>{{ user.datecommence ? user.datecommence|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Experienceuser</th>
-                <td>{{ user.experienceuser }}</td>
-            </tr>
-            <tr>
-                <th>Diplomeuser</th>
-                <td>{{ user.diplomeuser }}</td>
-            </tr>
-            <tr>
-                <th>Adressesallesport</th>
-                <td>{{ user.adressesallesport }}</td>
-            </tr>
-            <tr>
-                <th>Matriculefiscale</th>
-                <td>{{ user.matriculefiscale }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-            <tr>
-                <th>Codeverification</th>
-                <td>{{ user.codeverification }}</td>
-            </tr>
-            <tr>
-                <th>Imageuser</th>
-                <td>{{ user.imageuser }}</td>
-            </tr>
-        </tbody>
-    </table>
+                                    {% elseif(user.roleuser == 2) %}
+
+                                    <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
+                                    <div class="col-sm-6">
+                                        <p class="m-b-10 f-w-600">Tax number</p>
+                                        <h6 class="text-muted f-w-400">{{ user.matriculefiscale }}</h6>
+                                    </div>
+                                        {% endif %}
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
     <a href="{{ path('app_user_index') }}">back to list</a>
-
-    <a href="{{ path('app_user_edit', {'iduser': user.iduser}) }}">edit</a>
+    <br>
+    <a href="{{ path('app_challenge_userchallenge', {'iduser': user.iduser}) }}">My Challenge </a>
+    <br>
+    <a href="{{ path('app_user_editadherent', {'iduser': user.iduser}) }}">edit</a>
 
     {{ include('user/_delete_form.html.twig') }}
+
 {% endblock %}

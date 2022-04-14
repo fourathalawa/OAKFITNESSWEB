@@ -45,7 +45,7 @@ class EventController extends AbstractController
             return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('event/new.html.twig', [
+        return $this->render('event/newadherent.html.twig', [
             'evenement' => $evenement,
             'form' => $form->createView(),
         ]);
@@ -75,7 +75,7 @@ class EventController extends AbstractController
             return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('event/edit.html.twig', [
+        return $this->render('event/editadherent.html.twig', [
             'evenement' => $evenement,
             'form' => $form->createView(),
         ]);

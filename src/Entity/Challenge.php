@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Challenge
@@ -22,50 +23,48 @@ class Challenge
     private $idchallenge;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="DateDebut", type="string", length=20, nullable=false)
+     * @var \DateTime
+     * @ORM\Column(name="DateDebut", type="date", nullable=false)
      */
     private $datedebut;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="DateFin", type="string", length=20, nullable=false)
+     * @var \DateTime
+     * @ORM\Column(name="DateFin",type="date", nullable=false)
      */
     private $datefin;
 
     /**
      * @var float|null
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="PoidInt", type="float", precision=10, scale=0, nullable=true)
      */
     private $poidint;
 
     /**
      * @var float|null
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="PoidOb", type="float", precision=10, scale=0, nullable=true)
      */
     private $poidob;
 
     /**
      * @var float|null
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="Taille", type="float", precision=10, scale=0, nullable=true)
      */
     private $taille;
 
     /**
      * @var float|null
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="PoidNv", type="float", precision=10, scale=0, nullable=true)
      */
     private $poidnv;
 
     /**
      * @var int|null
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="IdUser", type="integer", nullable=true)
      */
     private $iduser;
@@ -75,24 +74,24 @@ class Challenge
         return $this->idchallenge;
     }
 
-    public function getDatedebut(): ?string
+    public function getDatedebut(): ?\DateTimeInterface
     {
         return $this->datedebut;
     }
 
-    public function setDatedebut(string $datedebut): self
+    public function setDatedebut(\DateTimeInterface $datedebut): self
     {
         $this->datedebut = $datedebut;
 
         return $this;
     }
 
-    public function getDatefin(): ?string
+    public function getDatefin(): ?\DateTimeInterface
     {
         return $this->datefin;
     }
 
-    public function setDatefin(string $datefin): self
+    public function setDatefin(\DateTimeInterface $datefin): self
     {
         $this->datefin = $datefin;
 
