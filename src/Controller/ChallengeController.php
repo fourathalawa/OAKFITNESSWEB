@@ -41,7 +41,7 @@ class ChallengeController extends AbstractController
         $form = $this->createForm(ChallengeType::class, $challenge);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()  ) {
+        if ($form->isSubmitted()  ) {
             $entityManager->persist($challenge);
             $entityManager->flush();
 

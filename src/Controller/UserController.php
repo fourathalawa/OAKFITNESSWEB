@@ -49,7 +49,7 @@ return $this->render('user/home.html.twig');
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() ) {
+        if ($form->isSubmitted()) {
             $user->setRoleuser(0);
             $entityManager->persist($user);
             $entityManager->flush();
