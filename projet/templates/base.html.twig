@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+        {% block stylesheets %}
+            <link href= "{{ asset("css/bootstrap.css") }}" rel="stylesheet">
+
+
+
+            <link href="{{ asset("plugins/revolution/css/settings.css") }}" rel="stylesheet" type="text/css"><!-- REVOLUTION SETTINGS STYLES -->
+
+            <link href="{{ asset("plugins/revolution/css/layers.css") }}" rel="stylesheet" type="text/css"><!-- REVOLUTION LAYERS STYLES -->
+
+            <link href="{{ asset("plugins/revolution/css/navigation.css") }}" rel="stylesheet" type="text/css"><!-- REVOLUTION NAVIGATION STYLES -->
+
+
+
+            <link href="{{ asset("css/style.css") }}" rel="stylesheet">
+
+            <link href="{{ asset("css/responsive.css") }}" rel="stylesheet">
+
+
+
+            <!-- Color Switcher Mockup -->
+
+            <link href="{{ asset("css/color-switcher-design.css") }}" rel="stylesheet">
+
+
+
+            <!-- Color Themes -->
+
+            <link id="theme-color-file" href="{{ asset("css/color-themes/default-theme.css") }}" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&amp;family=Roboto:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+
+            <link rel="{{ asset("shortcut icon") }}" href="images/favicon.png" type="image/x-icon">
+
+            <link rel="{{ asset("icon") }}" href="images/favicon.png" type="image/x-icon">
+
+
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="js/jquery.js"></script>
+
+            <!--Revolution Slider-->
+
+            <script src="{{ asset('plugins/revolution/js/jquery.themepunch.revolution.min.js') }}"></script>
+
+            <script src="{{ asset('plugins/revolution/js/jquery.themepunch.tools.min.js') }}"></script>
+
+            <script src="{{ asset('plugins/revolution/js/extensions/revolution.extension.actions.min.js') }}"></script>
+
+            <script src="{{ asset('plugins/revolution/js/extensions/revolution.extension.carousel.min.js') }}"></script>
+
+            <script src="{{ asset('plugins/revolution/js/extensions/revolution.extension.kenburn.min.js') }}"></script>
+
+            <script src="{{ asset('plugins/revolution/js/extensions/revolution.extension.layeranimation.min.js') }}"></script>
+
+            <script src="{{ asset('plugins/revolution/js/extensions/revolution.extension.migration.min.js') }}"></script>
+
+            <script src="{{ asset('plugins/revolution/js/extensions/revolution.extension.navigation.min.js') }}"></script>
+
+            <script src="{{ asset('plugins/revolution/js/extensions/revolution.extension.parallax.min.js') }}"></script>
+
+            <script src="{{ asset('plugins/revolution/js/extensions/revolution.extension.slideanims.min.js') }}"></script>
+
+            <script src="{{ asset('plugins/revolution/js/extensions/revolution.extension.video.min.js') }}"></script>
+
+            <script src="{{ asset('js/main-slider-script.js') }}"></script>
+
+
+
+            <script src="{{ asset('js/popper.min.js') }}"></script>
+
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+            <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+
+            <script src="{{ asset('js/jquery.fancybox.js') }}"></script>
+
+            <script src="{{ asset('js/appear.js') }}"></script>
+
+            <script src="{{ asset('js/parallax.min.js') }}"></script>
+
+            <script src="{{ asset('js/tilt.jquery.min.js') }}"></script>
+
+            <script src="{{ asset('js/jquery.paroller.min.js') }}"></script>
+
+            <script src="{{ asset('js/owl.js') }}"></script>
+
+            <script src="{{ asset('js/wow.js') }}"></script>
+
+            <script src="{{ asset('js/nav-tool.js') }}"></script>
+
+            <script src="{{ asset('js/jquery-ui.js') }}"></script>
+
+            <script src="{{ asset('js/script.js') }}"></script>
+
+            <script src="{{ asset('js/color-settings.js') }}"></script>
+
+
+
+            <!--Google Map APi Key-->
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIJ_QKHN-bi6_1C9f5eYE3pZs1zhQIo5o"></script>
+
+            <script src="{{ asset('js/map-script.js') }}"></script>
+
+            <!--End Google Map APi-->
+
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>
