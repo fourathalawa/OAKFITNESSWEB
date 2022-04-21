@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
 {% block title %}Reclamation{% endblock %}
 
@@ -52,7 +52,7 @@
 
     <a href="{{ path('app_reclamation_index') }}">back to list</a>
 
-    <a href="{{ path('app_reclamation_edit', {'idreclamation': reclamation.idreclamation}) }}">edit</a>
+    <a href="{{ path('app_reclamation_edit', {'idreclamation': reclamation.idreclamation }) }}">edit</a>
 
     {{ include('reclamation/_delete_form.html.twig') }}
 {% endblock %}

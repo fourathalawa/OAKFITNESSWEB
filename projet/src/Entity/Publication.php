@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,11 +18,11 @@ class Publication
     /**
      * @var int
      *
-     * @ORM\Column(name="IDpublication", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idpublication;
+    private $id;
 
     /**
      * @var int
@@ -39,13 +40,14 @@ class Publication
 
     /**
      * @var string
+     * @Assert\NotBlank
      *
      * @ORM\Column(name="Publication", type="string", length=255, nullable=false)
      */
     private $publication;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="publication",cascade={"all"},orphanRemoval=true )
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="publication",cascade={"all"},orphanRemoval=true)
      */
     private $commentaires;
 
@@ -54,9 +56,39 @@ class Publication
         $this->commentaires = new ArrayCollection();
     }
 
-    public function getIdpublication(): ?int
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
     {
-        return $this->idpublication;
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setPublication($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getPublication() === $this) {
+                $commentaire->setPublication(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getIduser(): ?int
@@ -91,36 +123,6 @@ class Publication
     public function setPublication(string $publication): self
     {
         $this->publication = $publication;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Commentaire>
-     */
-    public function getCommentaires(): Collection
-    {
-        return $this->commentaires;
-    }
-
-    public function addCommentaire(Commentaire $commentaire): self
-    {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires[] = $commentaire;
-            $commentaire->setPublication($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommentaire(Commentaire $commentaire): self
-    {
-        if ($this->commentaires->removeElement($commentaire)) {
-            // set the owning side to null (unless already changed)
-            if ($commentaire->getPublication() === $this) {
-                $commentaire->setPublication(null);
-            }
-        }
 
         return $this;
     }

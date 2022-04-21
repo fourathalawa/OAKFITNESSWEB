@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,11 +16,11 @@ class Commentaire
     /**
      * @var int
      *
-     * @ORM\Column(name="IDCommentaire", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idcommentaire;
+    private $id;
 
     /**
      * @var int
@@ -38,6 +39,7 @@ class Commentaire
     /**
      * @var string
      *
+     * @Assert\NotBlank
      * @ORM\Column(name="Commentaire", type="string", length=500, nullable=false)
      */
     private $commentaire;
@@ -54,9 +56,21 @@ class Commentaire
      */
     private $publication;
 
-    public function getIdcommentaire(): ?int
+    public function getPublication(): ?Publication
     {
-        return $this->idcommentaire;
+        return $this->publication;
+    }
+
+    public function setPublication(?Publication $publication): self
+    {
+        $this->publication = $publication;
+
+        return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getIdpublication(): ?int
@@ -103,18 +117,6 @@ class Commentaire
     public function setDatecommentaire(string $datecommentaire): self
     {
         $this->datecommentaire = $datecommentaire;
-
-        return $this;
-    }
-
-    public function getPublication(): ?Publication
-    {
-        return $this->publication;
-    }
-
-    public function setPublication(?Publication $publication): self
-    {
-        $this->publication = $publication;
 
         return $this;
     }

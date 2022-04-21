@@ -113,11 +113,18 @@ class User
     private $password;
 
     /**
-     * @var int
+     * @var int|null
      *
-     * @ORM\Column(name="CodeVerification", type="integer", nullable=false)
+     * @ORM\Column(name="CodeVerification", type="integer", nullable=true)
      */
     private $codeverification;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="imageUser", type="string", length=250, nullable=true)
+     */
+    private $imageuser;
 
 
 }

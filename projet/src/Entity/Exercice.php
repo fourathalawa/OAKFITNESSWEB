@@ -45,7 +45,7 @@ class Exercice
     /**
      * @var string
      *
-     * @ORM\Column(name="Video", type="string", length=70, nullable=false)
+     * @ORM\Column(name="Video", type="string", length=150, nullable=false)
      */
     private $video;
 

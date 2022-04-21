@@ -2,12 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Commentaire;
+use App\Entity\Publication;
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -30,25 +34,38 @@ class ReclamationController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="app_reclamation_new", methods={"GET", "POST"})
+     * @Route("/{id}/{idp}/new", name="app_reclamation_new", methods={"GET", "POST"})
+     * @Entity("publication", expr="repository.find(idp)")
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request,Publication $publication,Commentaire $commentaire,EntityManagerInterface $entityManager): Response
     {
-        $reclamation = new Reclamation();
-        $form = $this->createForm(ReclamationType::class, $reclamation);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($reclamation);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
-        }
+    $reclamation = new Reclamation();
+     $form = $this->createForm(ReclamationType::class, $reclamation);
+     $form->handleRequest($request);
 
-        return $this->render('reclamation/new.html.twig', [
-            'reclamation' => $reclamation,
-            'form' => $form->createView(),
-        ]);
+     if ($form->isSubmitted() && $form->isValid()) {
+         $time = date('d/m/Y');
+         $traitement = "non traite";
+         $reclamation->setPubrec($publication->getPublication());
+         $reclamation->setCommentairerec($commentaire->getCommentaire());
+         $reclamation->setIduserreclamation($commentaire->getIduser());
+         $reclamation->setEtatreclamation($traitement);
+         $reclamation->setDatereclam($time);
+         $reclamation->setIdcommentreclam($commentaire->getId());
+         $entityManager->persist($reclamation);
+         $entityManager->flush();
+         $v = $commentaire->getIdpublication();
+
+         return $this->redirectToRoute('app_publication_show', ['id' => $v], Response::HTTP_SEE_OTHER);
+     }
+
+     return $this->render('reclamation/new.html.twig', [
+         'reclamation' => $reclamation,
+         'form' => $form->createView(),
+     ]);
+
     }
 
     /**
@@ -62,23 +79,29 @@ class ReclamationController extends AbstractController
     }
 
     /**
-     * @Route("/{idreclamation}/edit", name="app_reclamation_edit", methods={"GET", "POST"})
+     * @Route("/{idreclamation}/{idCommentReclam}/edit", name="app_reclamation_edit", methods={"GET", "POST"})
+     * @Entity("commentaire", expr="repository.find(idCommentReclam)")
      */
-    public function edit(Request $request, Reclamation $reclamation, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Reclamation $reclamation,Commentaire $commentaire, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ReclamationType::class, $reclamation);
-        $form->handleRequest($request);
+       /* $commentaire = $entityManager
+            ->getRepository(Commentaire::class)
+            ->find(idCommentReclam); */
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager->remove($commentaire);
+        $entityManager->flush();
+
+            $reclamation->setEtatreclamation("traite");
             $entityManager->flush();
 
             return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
-        }
+
 
         return $this->render('reclamation/edit.html.twig', [
             'reclamation' => $reclamation,
             'form' => $form->createView(),
         ]);
+
     }
 
     /**

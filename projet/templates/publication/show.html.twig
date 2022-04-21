@@ -1,34 +1,65 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-front.html.twig' %}
 
 {% block title %}Publication{% endblock %}
 
 {% block body %}
-    <h1>Publication</h1>
+    <a href="{{ path('app_publication_new') }}">Ask a question</a>
 
     <table class="table">
+        <th><h4>Publication</h4> </th>
         <tbody>
             <tr>
-                <th>Idpublication</th>
-                <td>{{ publication.idpublication }}</td>
-            </tr>
-            <tr>
-                <th>Iduser</th>
-                <td>{{ publication.iduser }}</td>
-            </tr>
-            <tr>
-                <th>Datepublication</th>
-                <td>{{ publication.datepublication }}</td>
-            </tr>
-            <tr>
                 <th>Publication</th>
-                <td>{{ publication.publication }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <td><div class="row">
+                        {{ publication.publication|raw }}
+                    </div></td></td>
 
+                <td>{{ publication.datepublication }}</td>
+                <td> <a href="{{ path('app_publication_edit', {'id': publication.id}) }}">edit</a></td>
+
+
+            </tr>
+    </table>
+     <table class="table">
+         <th><h4>comments</h4>
+         </th>
+         {% for output in outputs %}
+                    <br><br>
+                <tr>
+
+                                <td>
+                                       <a href="{{ path('app_like', {'id': output[3]}) }}">  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                                                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                                            </svg></a>
+                                    <div class="center">   <a href="{{ path('app_commentaire_show', {'id': output[3]}) }}"> &nbsp;{{output[0] }}</a></div>
+                                       <a href="{{ path('app_dislike', {'id': output[3]}) }}"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                            </svg></a>
+                    <td>   <div class="row">
+                            {{ output[1]|raw }}
+                        </div> </td>
+                    <td>answered {{ output[2] }}</td>
+                    <td>
+                        <a href="{{ path('app_commentaire_edit', {'id': output[3]}) }}">edit</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('app_reclamation_new', {'id': output[3], 'idp': publication.id}) }}">report</a>
+
+                    </td>
+                </tr>
+
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+     </table>
+
+    </tbody>
+
+<h5 type="bold">Your answer</h5>
+    {{ include('commentaire/_form.html.twig') }}
     <a href="{{ path('app_publication_index') }}">back to list</a>
 
-    <a href="{{ path('app_publication_edit', {'idpublication': publication.idpublication}) }}">edit</a>
 
-    {{ include('publication/_delete_form.html.twig') }}
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-front.html.twig' %}
 
 {% block title %}Commentaire index{% endblock %}
 
@@ -8,26 +8,22 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Idcommentaire</th>
+                <th>Id</th>
                 <th>Idpublication</th>
                 <th>Iduser</th>
                 <th>Commentaire</th>
                 <th>Datecommentaire</th>
+                <th>vote</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for commentaire in commentaires %}
+        {% for output in outputs %}
             <tr>
-                <td>{{ commentaire.idcommentaire }}</td>
-                <td>{{ commentaire.idpublication }}</td>
-                <td>{{ commentaire.iduser }}</td>
-                <td>{{ commentaire.commentaire }}</td>
-                <td>{{ commentaire.datecommentaire }}</td>
-                <td>
-                    <a href="{{ path('app_commentaire_show', {'idcommentaire': commentaire.idcommentaire}) }}">show</a>
-                    <a href="{{ path('app_commentaire_edit', {'idcommentaire': commentaire.idcommentaire}) }}">edit</a>
-                </td>
+                <td>{{ output[0] }}</td>
+                <td>{{ output[1] }}</td>
+                <td>{{ output[2] }}</td>
+                <td>{{ output[3] }}</td>
             </tr>
         {% else %}
             <tr>

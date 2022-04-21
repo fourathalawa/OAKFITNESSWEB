@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Notecommentaire{% endblock %}
+
+{% block body %}
+    <h1>Edit Notecommentaire</h1>
+
+    {{ include('notecommentaire/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_notecommentaire_index') }}">back to list</a>
+
+    {{ include('notecommentaire/_delete_form.html.twig') }}
+{% endblock %}

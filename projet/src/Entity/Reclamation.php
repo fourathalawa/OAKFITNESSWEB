@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +32,13 @@ class Reclamation
     /**
      * @var string
      *
+     * @Assert\NotBlank
+     * @Assert\Length(
+     * min = 3,
+     * max = 50,
+     * minMessage = "Your first name must be at least {{ limit }} characters long",
+     * maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+     * )
      * @ORM\Column(name="DescrReclam", type="string", length=500, nullable=false)
      */
     private $descrreclam;
@@ -52,7 +60,7 @@ class Reclamation
     /**
      * @var string
      *
-     * @ORM\Column(name="EtatReclamation", type="string", length=100, nullable=false)
+     * @ORM\Column(name="EtatReclamation", type="string", length=110, nullable=false)
      */
     private $etatreclamation;
 

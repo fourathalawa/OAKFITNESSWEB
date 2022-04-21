@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Notecommentaire index{% endblock %}
+
+{% block body %}
+    <h1>Notecommentaire index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idnote</th>
+                <th>Userid</th>
+                <th>Idcommentaire</th>
+                <th>Islike</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for notecommentaire in notecommentaires %}
+            <tr>
+                <td>{{ notecommentaire.idnote }}</td>
+                <td>{{ notecommentaire.userid }}</td>
+                <td>{{ notecommentaire.idcommentaire }}</td>
+                <td>{{ notecommentaire.islike }}</td>
+                <td>
+                    <a href="{{ path('app_notecommentaire_show', {'idnote': notecommentaire.idnote}) }}">show</a>
+                    <a href="{{ path('app_notecommentaire_edit', {'idnote': notecommentaire.idnote}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_notecommentaire_new') }}">Create new</a>
+{% endblock %}
