@@ -1,0 +1,66 @@
+{% extends 'base-front.html.twig' %}
+
+
+{% block title %}Log In{% endblock %}
+
+{% block body %}
+        {{ form_start(formL,{'attr':{'novalidate':'novalidate'}}) }}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    {% form_theme formL 'bootstrap_4_layout.html.twig' %}
+
+
+<div class="container">
+
+    <hr>
+
+    <div class="card bg-light">
+        <article class="card-body mx-auto" style="max-width: 400px;">
+            <h4 class="card-title mt-3 text-center">Log In</h4>
+            <form>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <div class="form-control">
+                        {{ form_label(formL.mailuser,"yourmail@example.com") }}
+                        {{ form_widget(formL.mailuser) }}
+                        {{ form_errors(formL.mailuser) }}
+                    </div>
+
+                </div>
+               <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                    </div>
+
+                    <div class="form-control">
+                        {{ form_label(formL.password,"Password") }}
+                        {{ form_widget(formL.password) }}
+                        {{ form_errors(formL.password) }}
+                    </div>
+                </div> <!-- form-group// -->
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Login  </button>
+                </div> <!-- form-group// -->
+                <br>
+                <a href="{{ path('app_user_forget') }}">Forget Password</a>
+            </form>
+        </article>
+
+    </div>
+
+    <hr>
+    <br>
+
+</div>
+
+
+
+
+{{ form_end(formL) }}
+{% endblock %}
+
+
+

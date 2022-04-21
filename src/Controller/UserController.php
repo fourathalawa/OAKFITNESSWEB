@@ -1,17 +1,28 @@
 <?php
 
 namespace App\Controller;
-
+//require_once 'vendor\autoload.php';
+use Twilio\Rest\Client;
+use App\Entity\Challenge;
 use App\Entity\User;
+use App\Form\ForgetPasswordType;
 use App\Form\ManagerType;
 use App\Form\UserType;
 use App\Form\AdminType;
 use App\Form\CoachType;
+use App\Form\LoginType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 /**
  * @Route("/user")
@@ -19,11 +30,50 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/home", name="home")
+     * @Route("/login", name="login" ,methods={"GET", "POST"})
      */
-    public function home () :Response
+    public function Login (Request $request, UserRepository $userRepository,SessionInterface $session) :Response
     {
-return $this->render('user/home.html.twig');
+
+        $user = new User();
+        $form = $this->createForm(LoginType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $mail= $user->getMailuser();
+            $pass= $user->getPassword();
+
+            if($mail!="" && $pass!="") {
+                $us=$userRepository->findOneBy(['mailuser' => $mail,'password'=> $pass]);
+                if($us->getRoleUser()=="0"){
+                    $session->set('iduser',$us->getIduser());
+                    $session->set('roleuser',"0");
+                    return $this->render('user/show.html.twig', [
+                        'user' => $us
+                    ]);
+                }
+                else if($us->getRoleUser()=="1"){
+                    $session->set('iduser',$us->getIduser());
+                    $session->set('roleuser',"1");
+                    return $this->render('user/show.html.twig', [
+                        'user' => $us
+                    ]);
+                }
+                else if($us->getRoleUser()=="2"){
+                    $session->set('iduser',$us->getIduser());
+                    $session->set('roleuser',"2");
+                    return $this->render('user/show.html.twig', [
+                        'user' => $us
+                    ]);
+                }
+                else if($us->getRoleUser()=="3"){
+                    $session->set('iduser',$us->getIduser());
+                    $session->set('roleuser',"3");
+                    return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+                }
+            }
+                return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
+        }
+return $this->render('user/login.html.twig',['formL' => $form->createView()]);
     }
 
     /**
@@ -39,7 +89,31 @@ return $this->render('user/home.html.twig');
             'users' => $users,
         ]);
     }
+    /**
+     * @Route("/forget", name="app_user_forget", methods={"GET", "POST"})
+     */
+    public function ForgetPassword(Request $request, MailerInterface $mailer,UserRepository $userRepository): Response
+    {
+        $user = new User();
+        $form = $this->createForm(ForgetPasswordType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $us=$userRepository->findOneBy(['mailuser' => $user->getMailuser()]);
+            $email = (new TemplatedEmail())
+                ->from('fourat.halaoua@esprit.tn')
+                ->to($user->getMailuser())
+                ->subject('OAKFITNESS Password')
+                ->text( $us->getPassword());
 
+            try {
+                $mailer->send($email);
+            } catch (TransportExceptionInterface $e) {
+                var_dump($e->getMessage());
+            }
+            return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
+        }
+        return $this->render('user/forgetpassword.html.twig',['formF' => $form->createView()]);
+    }
     /**
      * @Route("/newadherent", name="app_user_newadherent", methods={"GET", "POST"})
      */
@@ -53,7 +127,16 @@ return $this->render('user/home.html.twig');
             $user->setRoleuser(0);
             $entityManager->persist($user);
             $entityManager->flush();
+            $sid = getenv("AC2d8da927deee5efd6f75a8ba968a9962");
+            $token = getenv("78f24206af2848e46cd70a399ecada13");
+            $twilio = new Client($sid, $token);
 
+            $message = $twilio->messages
+                ->create("+21699626324", // to
+                    ["body" => "Hi there", "from" => "+15017122661"]
+                );
+
+            print($message->sid);
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -98,7 +181,7 @@ return $this->render('user/home.html.twig');
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_show', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/newadmin.html.twig', [
@@ -130,10 +213,12 @@ return $this->render('user/home.html.twig');
     }
 
     /**
-     * @Route("/{iduser}", name="app_user_show", methods={"GET"})
+     * @Route("/show", name="app_user_show", methods={"GET"})
      */
-    public function show(User $user): Response
+    public function show(User $user,Request $request,UserRepository $userRepository): Response
     {
+        $session=$request->getSession();
+        $user=$userRepository->findOneBy($session->get('iduser',0));
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);

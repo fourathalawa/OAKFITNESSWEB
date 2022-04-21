@@ -56,5 +56,70 @@ class Reservation
      */
     private $accresponsable;
 
+    public function getIdreservation(): ?int
+    {
+        return $this->idreservation;
+    }
+
+    public function getDatereservation(): ?\DateTimeInterface
+    {
+        return $this->datereservation;
+    }
+
+    public function setDatereservation(\DateTimeInterface $datereservation): self
+    {
+        $this->datereservation = $datereservation;
+
+        return $this;
+    }
+
+    public function getIduser(): ?int
+    {
+        return $this->iduser;
+    }
+
+    public function setIduser(int $iduser): self
+    {
+        $this->iduser = $iduser;
+
+        return $this;
+    }
+
+    public function getNomsalle(): ?string
+    {
+        return $this->nomsalle;
+    }
+
+    public function setNomsalle(string $nomsalle): self
+    {
+        $this->nomsalle = $nomsalle;
+
+        return $this;
+    }
+
+    public function getAcccoach(): ?bool
+    {
+        return $this->acccoach;
+    }
+
+    public function setAcccoach(bool $acccoach): self
+    {
+        $this->acccoach = $acccoach;
+
+        return $this;
+    }
+
+    public function getAccresponsable(): ?bool
+    {
+        return $this->accresponsable;
+    }
+
+    public function setAccresponsable(bool $accresponsable): self
+    {
+        $this->accresponsable = $accresponsable;
+
+        return $this;
+    }
+
 
 }

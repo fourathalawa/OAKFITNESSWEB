@@ -15,7 +15,13 @@
                                 <div class="card-block text-center text-white">
                                     <div class="m-b-25"> <img src="{{asset('front/images/'~user.imageuser)}}" class="img-radius" alt="User-Profile-Image"> </div>
                                     <h6 class="f-w-600">{{ user.nomuser }} {{ user.prenomuser }}</h6>
+                                    {% if(user.roleuser == 0) %}
                                     <p>Member</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                    {% elseif(user.roleuser == 1) %}
+                                    <p>Coach</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                    {% elseif(user.roleuser == 2) %}
+                                    <p>Manager</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-sm-8">
@@ -38,6 +44,7 @@
                                         {% if(user.roleuser == 1) %}
                                             <br>
                                         <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Professional</h6>
+                                            <div class="row">
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600">Experience</p>
                                             <h6 class="text-muted f-w-400">{{ user.experienceuser  }}</h6>
@@ -46,14 +53,18 @@
                                             <p class="m-b-10 f-w-600">Diplome</p>
                                             <h6 class="text-muted f-w-400">{{ user.diplomeuser }}</h6>
                                         </div>
-
+                                    </div>
                                     {% elseif(user.roleuser == 2) %}
 
+
                                     <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
+                                    <div class="row">
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Tax number</p>
                                         <h6 class="text-muted f-w-400">{{ user.matriculefiscale }}</h6>
                                     </div>
+                                        </div>
+
                                         {% endif %}
 
 

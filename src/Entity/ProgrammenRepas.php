@@ -42,5 +42,46 @@ class ProgrammenRepas
      */
     private $jourrepas;
 
+    public function getIdpnR(): ?int
+    {
+        return $this->idpnR;
+    }
+
+    public function getIdprogrammenutritionnel(): ?int
+    {
+        return $this->idprogrammenutritionnel;
+    }
+
+    public function setIdprogrammenutritionnel(int $idprogrammenutritionnel): self
+    {
+        $this->idprogrammenutritionnel = $idprogrammenutritionnel;
+
+        return $this;
+    }
+
+    public function getIdrepas(): ?int
+    {
+        return $this->idrepas;
+    }
+
+    public function setIdrepas(int $idrepas): self
+    {
+        $this->idrepas = $idrepas;
+
+        return $this;
+    }
+
+    public function getJourrepas(): ?string
+    {
+        return $this->jourrepas;
+    }
+
+    public function setJourrepas(string $jourrepas): self
+    {
+        $this->jourrepas = $jourrepas;
+
+        return $this;
+    }
+
 
 }

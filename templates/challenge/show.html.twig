@@ -4,40 +4,38 @@
 
 {% block body %}
     <h1>Challenge</h1>
-
+    {% for cha in challenge %}
     <table class="table">
         <tbody>
-            <tr>
-                <th>Idchallenge</th>
-                <td>{{ challenge.idchallenge }}</td>
-            </tr>
+
             <tr>
                 <th>Taille</th>
-                <td>{{ challenge.taille }}</td>
+                <td>{{ cha.taille }}</td>
             </tr>
             <tr>
                 <th>Poidint</th>
-                <td>{{ challenge.poidint }}</td>
+                <td>{{ cha.poidint }}</td>
             </tr>
             <tr>
                 <th>Poidob</th>
-                <td>{{ challenge.poidob }}</td>
+                <td>{{ cha.poidob }}</td>
             </tr>
 
             <tr>
                 <th>Datedebut</th>
-                <td>{{ challenge.datedebut ? challenge.datedebut|date('Y-m-d') :''  }}</td>
+                <td>{{ cha.datedebut ? cha.datedebut|date('Y-m-d') :''  }}</td>
             </tr>
             <tr>
                 <th>Datefin</th>
-                <td>{{ challenge.datefin ? challenge.datefin|date('Y-m-d') :''  }}</td>
+                <td>{{ cha.datefin ? cha.datefin|date('Y-m-d') :''  }}</td>
             </tr>
         </tbody>
     </table>
 
     <a href="{{ path('app_challenge_index') }}">back to list</a>
 
-    <a href="{{ path('app_challenge_edit', {'idchallenge': challenge.idchallenge}) }}">edit</a>
+    <a href="{{ path('app_challenge_edit', {'idchallenge': cha.idchallenge}) }}">edit</a>
 
-    {{ include('challenge/_delete_form.html.twig') }}
+
+    {% endfor %}
 {% endblock %}

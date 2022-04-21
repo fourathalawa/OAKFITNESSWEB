@@ -42,5 +42,46 @@ class ProgrammesExercice
      */
     private $jourexercice;
 
+    public function getIdpsExercice(): ?int
+    {
+        return $this->idpsExercice;
+    }
+
+    public function getIdprogrammesportif(): ?int
+    {
+        return $this->idprogrammesportif;
+    }
+
+    public function setIdprogrammesportif(int $idprogrammesportif): self
+    {
+        $this->idprogrammesportif = $idprogrammesportif;
+
+        return $this;
+    }
+
+    public function getIdexercice(): ?int
+    {
+        return $this->idexercice;
+    }
+
+    public function setIdexercice(int $idexercice): self
+    {
+        $this->idexercice = $idexercice;
+
+        return $this;
+    }
+
+    public function getJourexercice(): ?string
+    {
+        return $this->jourexercice;
+    }
+
+    public function setJourexercice(string $jourexercice): self
+    {
+        $this->jourexercice = $jourexercice;
+
+        return $this;
+    }
+
 
 }

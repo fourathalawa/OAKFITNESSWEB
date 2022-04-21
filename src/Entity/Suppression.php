@@ -28,5 +28,22 @@ class Suppression
      */
     private $idusers;
 
+    public function getIds(): ?int
+    {
+        return $this->ids;
+    }
+
+    public function getIdusers(): ?int
+    {
+        return $this->idusers;
+    }
+
+    public function setIdusers(int $idusers): self
+    {
+        $this->idusers = $idusers;
+
+        return $this;
+    }
+
 
 }

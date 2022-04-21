@@ -70,5 +70,94 @@ class Produit
      */
     private $stockproduit;
 
+    public function getIdproduit(): ?int
+    {
+        return $this->idproduit;
+    }
+
+    public function getNomproduit(): ?string
+    {
+        return $this->nomproduit;
+    }
+
+    public function setNomproduit(string $nomproduit): self
+    {
+        $this->nomproduit = $nomproduit;
+
+        return $this;
+    }
+
+    public function getCategproduit(): ?string
+    {
+        return $this->categproduit;
+    }
+
+    public function setCategproduit(string $categproduit): self
+    {
+        $this->categproduit = $categproduit;
+
+        return $this;
+    }
+
+    public function getDescrproduit(): ?string
+    {
+        return $this->descrproduit;
+    }
+
+    public function setDescrproduit(string $descrproduit): self
+    {
+        $this->descrproduit = $descrproduit;
+
+        return $this;
+    }
+
+    public function getPrixproduit(): ?float
+    {
+        return $this->prixproduit;
+    }
+
+    public function setPrixproduit(float $prixproduit): self
+    {
+        $this->prixproduit = $prixproduit;
+
+        return $this;
+    }
+
+    public function getIsavailable(): ?int
+    {
+        return $this->isavailable;
+    }
+
+    public function setIsavailable(int $isavailable): self
+    {
+        $this->isavailable = $isavailable;
+
+        return $this;
+    }
+
+    public function getImageproduit(): ?string
+    {
+        return $this->imageproduit;
+    }
+
+    public function setImageproduit(string $imageproduit): self
+    {
+        $this->imageproduit = $imageproduit;
+
+        return $this;
+    }
+
+    public function getStockproduit(): ?int
+    {
+        return $this->stockproduit;
+    }
+
+    public function setStockproduit(int $stockproduit): self
+    {
+        $this->stockproduit = $stockproduit;
+
+        return $this;
+    }
+
 
 }

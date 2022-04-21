@@ -84,5 +84,118 @@ class Reclamation
      */
     private $idreclameur;
 
+    public function getIdreclamation(): ?int
+    {
+        return $this->idreclamation;
+    }
+
+    public function getIduserreclamation(): ?int
+    {
+        return $this->iduserreclamation;
+    }
+
+    public function setIduserreclamation(?int $iduserreclamation): self
+    {
+        $this->iduserreclamation = $iduserreclamation;
+
+        return $this;
+    }
+
+    public function getDescrreclam(): ?string
+    {
+        return $this->descrreclam;
+    }
+
+    public function setDescrreclam(string $descrreclam): self
+    {
+        $this->descrreclam = $descrreclam;
+
+        return $this;
+    }
+
+    public function getCategreclam(): ?int
+    {
+        return $this->categreclam;
+    }
+
+    public function setCategreclam(int $categreclam): self
+    {
+        $this->categreclam = $categreclam;
+
+        return $this;
+    }
+
+    public function getDatereclam(): ?string
+    {
+        return $this->datereclam;
+    }
+
+    public function setDatereclam(string $datereclam): self
+    {
+        $this->datereclam = $datereclam;
+
+        return $this;
+    }
+
+    public function getEtatreclamation(): ?string
+    {
+        return $this->etatreclamation;
+    }
+
+    public function setEtatreclamation(string $etatreclamation): self
+    {
+        $this->etatreclamation = $etatreclamation;
+
+        return $this;
+    }
+
+    public function getCommentairerec(): ?string
+    {
+        return $this->commentairerec;
+    }
+
+    public function setCommentairerec(?string $commentairerec): self
+    {
+        $this->commentairerec = $commentairerec;
+
+        return $this;
+    }
+
+    public function getPubrec(): ?string
+    {
+        return $this->pubrec;
+    }
+
+    public function setPubrec(?string $pubrec): self
+    {
+        $this->pubrec = $pubrec;
+
+        return $this;
+    }
+
+    public function getIdcommentreclam(): ?int
+    {
+        return $this->idcommentreclam;
+    }
+
+    public function setIdcommentreclam(?int $idcommentreclam): self
+    {
+        $this->idcommentreclam = $idcommentreclam;
+
+        return $this;
+    }
+
+    public function getIdreclameur(): ?int
+    {
+        return $this->idreclameur;
+    }
+
+    public function setIdreclameur(?int $idreclameur): self
+    {
+        $this->idreclameur = $idreclameur;
+
+        return $this;
+    }
+
 
 }

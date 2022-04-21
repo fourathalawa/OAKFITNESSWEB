@@ -1,15 +1,14 @@
 <?php
 
 namespace App\Entity;
-
+use App\Repository\ChallengeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Challenge
- *
  * @ORM\Table(name="challenge")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass=ChallengeRepository::class)
  */
 class Challenge
 {

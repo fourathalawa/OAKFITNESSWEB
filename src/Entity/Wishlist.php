@@ -42,5 +42,46 @@ class Wishlist
      */
     private $note;
 
+    public function getIdwishlist(): ?int
+    {
+        return $this->idwishlist;
+    }
+
+    public function getIdproduit(): ?int
+    {
+        return $this->idproduit;
+    }
+
+    public function setIdproduit(?int $idproduit): self
+    {
+        $this->idproduit = $idproduit;
+
+        return $this;
+    }
+
+    public function getIduser(): ?int
+    {
+        return $this->iduser;
+    }
+
+    public function setIduser(?int $iduser): self
+    {
+        $this->iduser = $iduser;
+
+        return $this;
+    }
+
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    public function setNote(?string $note): self
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
 
 }

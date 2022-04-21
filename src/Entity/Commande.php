@@ -59,5 +59,70 @@ class Commande
      */
     private $idClient;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getDatecommande(): ?\DateTimeInterface
+    {
+        return $this->datecommande;
+    }
+
+    public function setDatecommande(?\DateTimeInterface $datecommande): self
+    {
+        $this->datecommande = $datecommande;
+
+        return $this;
+    }
+
+    public function getTotal(): ?string
+    {
+        return $this->total;
+    }
+
+    public function setTotal(string $total): self
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    public function getEtat(): ?bool
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(bool $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getAvisclient(): ?string
+    {
+        return $this->avisclient;
+    }
+
+    public function setAvisclient(?string $avisclient): self
+    {
+        $this->avisclient = $avisclient;
+
+        return $this;
+    }
+
+    public function getIdClient(): ?User
+    {
+        return $this->idClient;
+    }
+
+    public function setIdClient(?User $idClient): self
+    {
+        $this->idClient = $idClient;
+
+        return $this;
+    }
+
 
 }
