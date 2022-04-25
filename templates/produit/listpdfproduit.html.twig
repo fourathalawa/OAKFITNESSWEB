@@ -1,0 +1,51 @@
+
+
+{% block body %}
+
+    <center ><h1 class="title" >Product list </h1></center >
+
+
+    <table class="table" style="color: black">
+        <thead>
+        <tr>
+            <th>Idproduit</th>
+            <th>Nomproduit</th>
+            <th>Categproduit</th>
+            <th>Descrproduit</th>
+            <th>Prixproduit</th>
+            <th>Isavailable</th>
+            <th>Stockproduit</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for produit in produits %}
+
+            <tr>
+                <td>{{ produit.idproduit }}</td>
+                <td>{{ produit.nomproduit }}</td>
+                <td>{{ produit.categproduit }}</td>
+                <td>{{ produit.descrproduit }}</td>
+                <td>{{ produit.prixproduit }}</td>
+                <td>{{ produit.isavailable }}</td>
+                <td>{{ produit.stockproduit }}</td>
+
+            <tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+    <center style="color: blue">
+    </br>
+<p> • Attention : This pdf contains our application datas please make sure to protect our informations
+</p>
+</br>
+    <p> • 1 in isavailable column refers to yes and 0 refers to no </p>
+    </br>
+    </br>
+    </br>
+ <strong >© 2022 Oak fitness. All rights reserved.</strong></center>
+
+
+{% endblock %}

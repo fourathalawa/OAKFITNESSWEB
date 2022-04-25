@@ -1,0 +1,58 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Transformation index{% endblock %}
+
+{% block body %}
+
+
+        <body >
+
+
+
+        <table   class="table" style="color: whitesmoke">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Descreption</th>
+                <th>Image Before</th>
+                <th>Image After</th>
+                <th>User Id</th>
+                <th>Weight Before</th>
+                <th>Weight After</th>
+                <th>Height Before</th>
+                <th>Height After</th>
+                <th>Like(s)</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for transformation in transformations %}
+                <tr>
+                    <td>{{ transformation.titreimage }}</td>
+                    <td>{{ transformation.descreptionimage }}</td>
+                    <td><img  src="{{ asset('images/'~transformation.imageavant)}}" alt="{{transformation.imageavant}}"height="70" width="70" /></td>
+                    <td><img  src="{{ asset('images/'~transformation.imageapres)}}" alt="{{transformation.imageapres}}" height="70" width="70"/></td>
+                    <td>{{ transformation.iduser }}</td>
+                    <td>{{ transformation.poidavant }}</td>
+                    <td>{{ transformation.poidapres }}</td>
+                    <td>{{ transformation.tailleavant }}</td>
+                    <td>{{ transformation.tailleapres }}</td>
+                    <td>{{ transformation.tlike }}</td>
+                    <td>
+                        <a href="{{ path('app_transformation_backshow', {'idimage': transformation.idimage}) }}">show &nbsp;</a>
+                        <a href="{{ path('app_transformation_deleteback', {'idimage': transformation.idimage}) }}">delete&nbsp;</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="9">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+        </body>
+
+
+{% endblock %}

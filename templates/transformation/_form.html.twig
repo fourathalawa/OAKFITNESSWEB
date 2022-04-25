@@ -1,0 +1,77 @@
+
+{% form_theme form 'base-front.html.twig' %}
+
+<center>
+{{ form_start(form) }}
+
+
+<div  style="background-color:lightgrey ; border-radius: 5px;  padding: 20px;">
+    <div class="form-group" style="color: black;  ">
+    {{ form_label(form.titreimage,'Title  ') }}
+    </div>
+    {{ form_widget(form.titreimage) }}
+    <div style="color: red">
+    {{ form_errors(form.titreimage) }}
+    </div>
+
+    <div class="form-group" style="color: black">
+    {{ form_label(form.descreptionimage,'Descreption  ') }}<br />
+    {{ form_widget(form.descreptionimage) }}
+    </div>
+    <div style="color: red">
+    {{ form_errors(form.descreptionimage) }}
+    </div>
+
+    <div class="form-group" style="color: black">
+    {{ form_label(form.imageavant,'Image Before ') }}<br />
+    {{ form_widget(form.imageavant) }}
+    </div>
+    <div style="color: red">
+    {{ form_errors(form.imageavant) }}
+    </div>
+
+    <div class="form-group" style="color: black">
+    {{ form_label(form.imageapres,'Image After  ') }}<br />
+    {{ form_widget(form.imageapres) }}
+    </div>
+    <div style="color: red">
+        {{ form_errors(form.imageapres) }}
+    </div>
+
+    <div class="form-check"style="color: black">
+    {{ form_label(form.poidavant,'Weight Before  ') }}<br />
+    {{ form_widget(form.poidavant) }}
+    </div>
+    <div style="color: red">
+        {{ form_errors(form.poidavant) }}
+    </div>
+
+    <div class="form-group" style="color: black">
+    {{ form_label(form.poidapres, 'Weight After  ') }}<br />
+    {{ form_widget(form.poidapres) }}
+    </div>
+    <div style="color: red">
+        {{ form_errors(form.poidapres) }}
+    </div>
+
+    <div class="form-group" style="color: black">
+    {{ form_label(form.tailleavant, 'Height Before  ') }}<br />
+    {{ form_widget(form.tailleavant) }}
+    </div>
+    <div style="color: red">
+        {{ form_errors(form.tailleavant) }}
+    </div>
+
+    <div class="form-group" style="color: black">
+    {{ form_label(form.tailleapres, 'Height After  ') }}<br />
+    {{ form_widget(form.tailleapres) }}
+    </div>
+    <div style="color: red">
+        {{ form_errors(form.tailleapres) }}
+    </div>
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+</div>
+
+
+{{ form_end(form) }}

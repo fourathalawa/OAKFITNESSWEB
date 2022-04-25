@@ -1,0 +1,91 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Voir détails Transformation{% endblock %}
+
+{% block body %}
+    <h1  class="centered" >Transformation Id {{ transformation.idimage }} </h1>
+
+    <table   class="table-bordered " style="margin-left: auto;  margin-right: auto; color: #0b0b0b"  >
+
+            <!--<tr>
+                <th>Idimage</th>
+                <td>{{ transformation.idimage }}</td>
+            </tr>-->
+            <tr >
+                <th>Title</th>
+                <td>{{ transformation.titreimage }}</td>
+            </tr>
+            <tr>
+                <th>Descreption</th>
+                <td>{{ transformation.descreptionimage }}</td>
+            </tr>
+            <tr>
+                <th>Image Before Transformation</th>
+                <td><img  src="{{ asset('images/'~transformation.imageavant)}}" alt="{{transformation.imageavant}}"height="70" width="70" /></td>
+            </tr>
+            <tr>
+                <th>Image After Transformation</th>
+                <td><img  src="{{ asset('images/'~transformation.imageapres)}}" alt="{{transformation.imageapres}}" height="70" width="70"/></td>
+            </tr>
+            <tr>
+                <th>User Id</th>
+                <td>{{ transformation.iduser }}</td>
+            </tr>
+            <tr>
+                <th>Weight Before</th>
+                <td>{{ transformation.poidavant }}</td>
+            </tr>
+            <tr>
+                <th>Weight After</th>
+                <td>{{ transformation.poidapres }}</td>
+            </tr>
+            <tr>
+                <th>Height Before</th>
+                <td>{{ transformation.tailleavant }}</td>
+            </tr>
+            <tr>
+                <th>Height After</th>
+                <td>{{ transformation.tailleapres }}</td>
+            </tr>
+            <tr>
+                <th>Like(s)</th>
+                <td>{{ transformation.tlike }}</td>
+            </tr>
+
+    </table>
+   <center> <script >  var imcavant = {{ transformation.poidavant }} / ({{ transformation.tailleavant }}*{{ transformation.tailleavant }})
+           var imcapres = {{ transformation.poidapres }} / ({{ transformation.tailleapres }}*{{ transformation.tailleapres }})
+           var test;
+           if(22<imcapres<24){test="Good Transformation !"}
+           if(imcapres<22){test="you need more Gain  !"}
+           if(24<imcapres){test="you need to lose some weight  !"}
+       </script>
+       <p style="color: blue">
+           • Imc Avant = <script type="text/javascript">
+               document.write(imcavant)
+           </script>
+           </br>
+           • Imc Apres = <script type="text/javascript">
+               document.write(imcapres)
+           </script>
+           </br>
+           • Oak Fitness Advice = <script type="text/javascript">
+               document.write(test)
+           </script>
+
+       </p></center>
+<div style="text-align:center">
+ <!-- integration if session.getIduser == transformation.id user -->
+
+    <button onclick="window.location.href='{{ path('app_transformation_index') }}';">
+        back to list
+    </button>
+    <button  onclick="window.location.href='{{ path('app_transformation_edit', {'idimage': transformation.idimage}) }}';">
+        edit
+    </button>
+
+    {{ include('transformation/_delete_form.html.twig') }}
+</div>
+
+
+{% endblock %}

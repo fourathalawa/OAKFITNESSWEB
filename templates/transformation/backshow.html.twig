@@ -1,0 +1,67 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Voir détails Transformation{% endblock %}
+
+{% block body %}
+    <h1  class="centered" >Transformation Id {{ transformation.idimage }} </h1>
+
+    <table   class="table"   >
+
+        <!--<tr>
+                <th>Idimage</th>
+                <td>{{ transformation.idimage }}</td>
+            </tr>-->
+        <tr >
+            <th>Title</th>
+            <td style="color: whitesmoke">{{ transformation.titreimage }}</td>
+        </tr>
+        <tr>
+            <th>Descreption</th>
+            <td style="color: whitesmoke"> {{ transformation.descreptionimage }}</td>
+        </tr>
+        <tr>
+            <th>Image Before Transformation</th>
+            <td><img  src="{{ asset('images/'~transformation.imageavant)}}" alt="{{transformation.imageavant}}"height="70" width="70" /></td>
+        </tr>
+        <tr>
+            <th>Image After Transformation</th>
+            <td><img  src="{{ asset('images/'~transformation.imageapres)}}" alt="{{transformation.imageapres}}" height="70" width="70"/></td>
+        </tr>
+        <tr>
+            <th>User Id</th>
+            <td style="color: whitesmoke">{{ transformation.iduser }}</td>
+        </tr>
+        <tr>
+            <th>Weight Before</th>
+            <td style="color: whitesmoke">{{ transformation.poidavant }}</td>
+        </tr>
+        <tr>
+            <th>Weight After</th>
+            <td style="color: whitesmoke">{{ transformation.poidapres }}</td>
+        </tr>
+        <tr>
+            <th>Height Before</th>
+            <td style="color: whitesmoke">{{ transformation.tailleavant }}</td>
+        </tr>
+        <tr>
+            <th>Height After</th>
+            <td style="color: whitesmoke">{{ transformation.tailleapres }}</td>
+        </tr>
+        <tr>
+            <th>Like(s)</th>
+            <td style="color: whitesmoke">{{ transformation.tlike }}</td>
+        </tr>
+
+    </table>
+    <div style="text-align:center">
+        <!-- integration if session.getIduser == transformation.id user -->
+
+        <button onclick="window.location.href='{{ path('app_transformation_indexback') }}';">
+            back to list
+        </button>
+
+        {{ include('transformation/_delete_formback.html.twig') }}
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Our Product [{{ produit.idproduit }}{% endblock %}
+
+{% block body %}
+    <style>
+
+        /* Without Container */
+        .zoom-without-container {
+            transition: transform .2s; /* Animation */
+            margin: 0 auto;
+        }
+        .zoom-without-container img{
+            width:100%;
+            height:auto;
+        }
+        .zoom-without-container:hover {
+            transform: scale(1.5);
+            /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+
+    </style>
+    <script >
+        //afficher Yes Aulieu de 1
+        var A=0;
+        var B={{ produit.isavailable }};
+        if(B===1){A="Yes";}
+        else A="No";
+    </script>
+
+    <h2 class="centered">Produit {{ produit.idproduit }}</h2>
+
+    <table class="table-bordered " style="margin-left: auto;  margin-right: auto; color: #0b0b0b ; width: 700px ; height: 500px">
+        <tbody>
+        <tr>
+            <th>Product Name</th>
+            <td>{{ produit.nomproduit }}</td>
+        </tr>
+        <tr>
+            <th>Categproduit</th>
+            <td>{{ produit.categproduit }}</td>
+        </tr>
+        <tr>
+            <th>Descrproduit</th>
+            <td>{{ produit.descrproduit }}</td>
+        </tr>
+        <tr>
+            <th>Prixproduit</th>
+            <td>{{ produit.prixproduit }}</td>
+        </tr>
+        <tr>
+            <th>Isavailable</th>
+            <td><script >
+                    document.write(A)
+                </script></td>
+        </tr>
+        <tr>
+            <th>Imageproduit</th>
+
+            <td><div class="zoom-without-container"><img id="myimage" src="{{ asset('images/'~produit.imageproduit)}}"alt="{{produit.imageproduit}}" height="50" width="50" /></div></td>
+        </tr>
+        <tr>
+            <th>Stockproduit</th>
+            <td>{{ produit.stockproduit }}</td>
+        </tr>
+        </tbody>
+    </table>
+<div style="text-align:center">
+    <button  onclick="window.location.href='{{ path('app_produit_indexfront') }}';">
+        back to list
+    </button>
+</div>
+
+{% endblock %}
