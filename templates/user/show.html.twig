@@ -13,7 +13,7 @@
                         <div class="row m-l-0 m-r-0">
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
-                                    <div class="m-b-25"> <img src="{{asset('front/images/'~user.imageuser)}}" class="img-radius" alt="User-Profile-Image"> </div>
+                                    <div class="m-b-25"> <img src="{{asset('images/'~user.imageuser)}}" class="img-radius" alt="User-Profile-Image"> </div>
                                     <h6 class="f-w-600">{{ user.nomuser }} {{ user.prenomuser }}</h6>
                                     {% if(user.roleuser == 0) %}
                                     <p>Member</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
@@ -81,7 +81,7 @@
     <br>
     <a href="{{ path('app_challenge_userchallenge', {'iduser': user.iduser}) }}">My Challenge </a>
     <br>
-    <a href="{{ path('app_user_editadherent', {'iduser': user.iduser}) }}">edit</a>
+    <a href="{{ path('app_user_editadherent') }}">edit</a>
 
     {{ include('user/_delete_form.html.twig') }}
 

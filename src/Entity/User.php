@@ -309,12 +309,12 @@ class User
         return $this;
     }
 
-    public function getImageuser(): ?string
+    public function getImageuser()
     {
         return $this->imageuser;
     }
 
-    public function setImageuser(?string $imageuser): self
+    public function setImageuser( $imageuser)
     {
         $this->imageuser = $imageuser;
 

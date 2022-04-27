@@ -3,7 +3,6 @@
 {% block title %}User index{% endblock %}
 
 {% block body %}
-    <p>hh</p>
     <br>
     <br>
     <br>
@@ -42,7 +41,7 @@
                     <a href="{{ path('app_user_show', {'iduser': user.iduser}) }}">Show</a>
                     <a href="{{ path('app_user_delete', {'iduser': user.iduser}) }}">Delete</a>
                     {% if(user.roleuser == 0) %}
-                    <a href="{{ path('app_user_editadherent', {'iduser': user.iduser}) }}">Edit</a>
+                    <a href="{{ path('app_user_editadherent') }}">Edit</a>
                     {% elseif(user.roleuser == 1) %}
                         <a href="{{ path('app_user_editcoach', {'iduser': user.iduser}) }}">Edit</a>
                     {% elseif(user.roleuser == 2) %}
