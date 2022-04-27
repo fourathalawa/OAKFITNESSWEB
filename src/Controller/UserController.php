@@ -129,7 +129,7 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
 
         if ($form->isSubmitted()) {
             $user->setRoleuser(0);
-            $code=random_int(9000, 10000);
+            $code=random_int(90000, 100000);
             $user->setCodeverification($code);
             $file = $user->getImageuser();
             $fileName = md5(uniqid()).'.'.$file->guessExtension();
