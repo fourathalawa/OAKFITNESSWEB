@@ -24,7 +24,7 @@ class ProgrammenutritionnelController extends AbstractController
             ->getRepository(Programmenutritionnel::class)
             ->findAll();
 
-        return $this->render('programmenutritionnel/index.html.twig', [
+        return $this->render('programmenutritionnel/alladherent.html.twig', [
             'programmenutritionnels' => $programmenutritionnels,
         ]);
     }

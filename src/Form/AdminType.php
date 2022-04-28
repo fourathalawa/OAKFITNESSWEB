@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -19,7 +20,9 @@ class AdminType extends AbstractType
             ->add('prenomuser')
             ->add('mailuser')
             ->add('telephonenumberuser')
-            ->add('datenaissanceuser')
+            ->add('datenaissanceuser',DateType::class,[
+        'widget' => 'single_text',
+        'format' => 'yyyy-MM-dd',])
             ->add('password',PasswordType::class)
         ;
     }

@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File;
+use Symfony\Component\HttpFoundation\File\File;
 /**
  * @Route("/user")
  */
@@ -47,29 +47,49 @@ class UserController extends AbstractController
             if($mail!="" && $pass!="") {
                 if ($form->isSubmitted()) {
                     $us = $userRepository->findOneBy(['mailuser' => $mail, 'password' => $pass]);
+                    if($us->getCodeverification()==1)
+                    {
                     if ($us->getRoleUser() == "0") {
                         $session->set('iduser', $us->getIduser());
                         $session->set('roleuser', "0");
+                        $session->set('image', $us->getImageuser());
+                        $session->set('nom',$us->getNomuser());
+                        $session->set('prenom',$us->getPrenomuser());
+
                         return $this->render('user/show.html.twig', [
                             'user' => $us
                         ]);
                     } else if ($us->getRoleUser() == "1") {
                         $session->set('iduser', $us->getIduser());
                         $session->set('roleuser', "1");
+                        $session->set('image', $us->getImageuser());
+                        $session->set('nom',$us->getNomuser());
+                        $session->set('prenom',$us->getPrenomuser());
                         return $this->render('user/show.html.twig', [
                             'user' => $us
                         ]);
                     } else if ($us->getRoleUser() == "2") {
                         $session->set('iduser', $us->getIduser());
                         $session->set('roleuser', "2");
+                        $session->set('image', $us->getImageuser());
+                        $session->set('nom',$us->getNomuser());
+                        $session->set('prenom',$us->getPrenomuser());
                         return $this->render('user/show.html.twig', [
                             'user' => $us
                         ]);
                     } else if ($us->getRoleUser() == "3") {
                         $session->set('iduser', $us->getIduser());
                         $session->set('roleuser', "3");
-                        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+                        $session->set('image', $us->getImageuser());
+                        $session->set('nom',$us->getNomuser());
+                        $session->set('prenom',$us->getPrenomuser());
+                        return $this->redirectToRoute('app_user_alladherent', [], Response::HTTP_SEE_OTHER);
                     }
+                }else
+                    {
+                        return $this->render('user/notverified.html.twig', []);
+                    }
+
                 }
             }
                 return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
@@ -78,17 +98,65 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
     }
 
     /**
-     * @Route("/all", name="app_user_index", methods={"GET"})
+     * @Route("/alladherent", name="app_user_alladherent", methods={"GET"})
      */
-    public function index(EntityManagerInterface $entityManager): Response
-    {
+    public function alladherent(Request $request,EntityManagerInterface $entityManager): Response
+    { $session=$request->getSession();
         $users = $entityManager
             ->getRepository(User::class)
-            ->findAll();
+            ->findby(['roleuser'=>0]);
 
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/alladherent.html.twig', [
             'users' => $users,
+            'image'=> $session->get('image'),
+            'nom'=> $session->get('nom'),
+            'prenom'=> $session->get('prenom'),
         ]);
+    }
+    /**
+     * @Route("/allcoach", name="app_user_allcoach", methods={"GET"})
+     */
+    public function allcoach(Request $request,EntityManagerInterface $entityManager): Response
+    {$session=$request->getSession();
+        $users = $entityManager
+            ->getRepository(User::class)
+            ->findby(['roleuser'=>1]);
+
+        return $this->render('user/allcoach.html.twig', [
+            'users' => $users,
+            'image'=> $session->get('image'),
+            'nom'=> $session->get('nom'),
+            'prenom'=> $session->get('prenom'),        ]);
+    }
+    /**
+     * @Route("/allmanager", name="app_user_allmanager", methods={"GET"})
+     */
+    public function allmanager(Request $request,EntityManagerInterface $entityManager): Response
+    {$session=$request->getSession();
+        $users = $entityManager
+            ->getRepository(User::class)
+            ->findby(['roleuser'=>2]);
+
+        return $this->render('user/allmanager.html.twig', [
+            'users' => $users,
+            'image'=> $session->get('image'),
+            'nom'=> $session->get('nom'),
+            'prenom'=> $session->get('prenom'),        ]);
+    }
+    /**
+     * @Route("/alladmin", name="app_user_alladmin", methods={"GET"})
+     */
+    public function alladmin(Request $request,EntityManagerInterface $entityManager): Response
+    {$session=$request->getSession();
+        $users = $entityManager
+            ->getRepository(User::class)
+            ->findby(['roleuser'=>3]);
+
+        return $this->render('user/alladmin.html.twig', [
+            'users' => $users,
+            'image'=> $session->get('image'),
+            'nom'=> $session->get('nom'),
+            'prenom'=> $session->get('prenom'),        ]);
     }
     /**
      * @Route("/forget", name="app_user_forget", methods={"GET", "POST"})
@@ -131,19 +199,10 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
             $user->setRoleuser(0);
             $code=random_int(90000, 100000);
             $user->setCodeverification($code);
-            $file = $user->getImageuser();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-            try {
-                $file->move(
-                    $this->getParameter('brochures_directory'),
-                    $fileName
-
-                );}catch (FileException $e) {
-                // ... handle exception if something happens during file upload
-            }
+            $file = $form->get('imageuser')->getData();
+            $fileName= md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'),$fileName);
             $user->setImageuser($fileName);
-
-
             $entityManager->persist($user);
 
             $entityManager->flush();
@@ -151,7 +210,7 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
             $email = (new TemplatedEmail())
                 ->from('fourat.halaoua@esprit.tn')
                 ->to($user->getMailuser())
-                ->subject('OAKFITNESS Password')
+                ->subject('OAKFITNESS Verify Account')
                 ->htmlTemplate('user/mailverification.html.twig')
                 ->context([
                    'url'=> 'user/verificationAccount/'.$user->getCodeverification()
@@ -162,7 +221,7 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
             } catch (TransportExceptionInterface $e) {
                 var_dump($e->getMessage());
             }
-            return $this->redirectToRoute('app_user_show', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/newadherent.html.twig', [
@@ -173,7 +232,7 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
     /**
      * @Route("/newmanager", name="app_user_newmanager", methods={"GET", "POST"})
      */
-    public function nawmanager(Request $request, EntityManagerInterface $entityManager): Response
+    public function nawmanager(Request $request,MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(ManagerType::class, $user);
@@ -181,8 +240,30 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
 
         if ($form->isSubmitted()) {
             $user->setRoleuser(2);
+            $code=random_int(90000, 100000);
+            $user->setCodeverification($code);
+            $file = $form->get('imageuser')->getData();
+            $fileName= md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $user->setImageuser($fileName);
             $entityManager->persist($user);
+
             $entityManager->flush();
+
+            $email = (new TemplatedEmail())
+                ->from('fourat.halaoua@esprit.tn')
+                ->to($user->getMailuser())
+                ->subject('OAKFITNESS Verify Account')
+                ->htmlTemplate('user/mailverification.html.twig')
+                ->context([
+                    'url'=> 'user/verificationAccount/'.$user->getCodeverification()
+                ]);
+
+            try {
+                $mailer->send($email);
+            } catch (TransportExceptionInterface $e) {
+                var_dump($e->getMessage());
+            }
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -217,7 +298,7 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
     /**
      * @Route("/newcoach", name="app_user_newcoach", methods={"GET", "POST"})
      */
-    public function newcoach(Request $request, EntityManagerInterface $entityManager): Response
+    public function newcoach(Request $request,MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
         $userC = new User();
         $form = $this->createForm(CoachType::class, $userC);
@@ -225,8 +306,30 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
 
         if ($form->isSubmitted() ) {
             $userC->setRoleuser(1);
+            $code=random_int(90000, 100000);
+            $userC->setCodeverification($code);
+            $file = $form->get('imageuser')->getData();
+            $fileName= md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $userC->setImageuser($fileName);
             $entityManager->persist($userC);
+
             $entityManager->flush();
+
+            $email = (new TemplatedEmail())
+                ->from('fourat.halaoua@esprit.tn')
+                ->to($userC->getMailuser())
+                ->subject('OAKFITNESS Verify Account')
+                ->htmlTemplate('user/mailverification.html.twig')
+                ->context([
+                    'url'=> 'user/verificationAccount/'.$userC->getCodeverification()
+                ]);
+
+            try {
+                $mailer->send($email);
+            } catch (TransportExceptionInterface $e) {
+                var_dump($e->getMessage());
+            }
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -240,10 +343,10 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
     /**
      * @Route("/show", name="app_user_show", methods={"GET"})
      */
-    public function show(User $user,Request $request,UserRepository $userRepository): Response
+    public function show(Request $request,UserRepository $userRepository): Response
     {
         $session=$request->getSession();
-        $user=$userRepository->findOneBy($session->get('iduser',0));
+        $user=$userRepository->findOneBy(['iduser'=>$session->get('iduser',0)]);
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
@@ -252,21 +355,43 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
     /**
      * @Route("/editadherent", name="app_user_editadherent", methods={"GET", "POST"})
      */
-    public function editadherent(Request $request, User $user, EntityManagerInterface $entityManager,UserRepository $userRepository): Response
+    public function editadherent(Request $request, EntityManagerInterface $entityManager,UserRepository $userRepository): Response
     {$session=$request->getSession();
-    var_dump($session);
-    die();
+        $user = $userRepository->findOneBy(['iduser'=>$session->get('iduser',0)]);
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            $file = $form->get('imageuser')->getData();
+            $fileName= md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $user->setImageuser($fileName);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_user_show', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('user/editadherent.html.twig', [
+            'user' => $user,
+            'formU' => $form->createView(),
+        ]);
 
     }
     /**
      * @Route("/{iduser}/editcoach", name="app_user_editcoach", methods={"GET", "POST"})
      */
-    public function editcoach(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function editcoach(Request $request,UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(CoachType::class, $user);
+        $session=$request->getSession();
+        $user = $userRepository->findOneBy(['iduser'=>$session->get('iduser',0)]);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
+            $file = $form->get('imageuser')->getData();
+            $fileName= md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $user->setImageuser($fileName);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_show', [], Response::HTTP_SEE_OTHER);
@@ -278,14 +403,20 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
         ]);
     }
     /**
-     * @Route("/{iduser}/editmanager", name="app_user_editmanager", methods={"GET", "POST"})
+     * @Route("/editmanager", name="app_user_editmanager", methods={"GET", "POST"})
      */
-    public function editmanager(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function editmanager(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(ManagerType::class, $user);
+        $session=$request->getSession();
+        $user = $userRepository->findOneBy(['iduser'=>$session->get('iduser',0)]);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
+            $file = $form->get('imageuser')->getData();
+            $fileName= md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $user->setImageuser($fileName);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_show', [], Response::HTTP_SEE_OTHER);
@@ -297,17 +428,23 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
         ]);
     }
     /**
-     * @Route("/{iduser}/editadmin", name="app_user_editadmin", methods={"GET", "POST"})
+     * @Route("/editadmin", name="app_user_editadmin", methods={"GET", "POST"})
      */
-    public function editadmin(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function editadmin(Request $request,UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(AdminType::class, $user);
+        $session=$request->getSession();
+        $user = $userRepository->findOneBy(['iduser'=>$session->get('iduser',0)]);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
+            $file = $form->get('imageuser')->getData();
+            $fileName= md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $user->setImageuser($fileName);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_show', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('user/editadmin.html.twig', [
@@ -325,9 +462,20 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
     }
+    /**
+     * @Route("/delete/{iduser}", name="app_user_deleteback", methods={"POST"})
+     */
+    public function deleteback(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$user->getIduser(), $request->request->get('_token'))) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
 
+        return $this->redirectToRoute('app_user_alladmin', [], Response::HTTP_SEE_OTHER);
+    }
     /**
      * @Route("/verificationAccount/{codeverificationuser}", name="app_user_verif", methods={"GET","POST"})
      */

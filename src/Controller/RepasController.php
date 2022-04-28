@@ -24,7 +24,7 @@ class RepasController extends AbstractController
             ->getRepository(Repas::class)
             ->findAll();
 
-        return $this->render('repas/index.html.twig', [
+        return $this->render('repas/alladherent.html.twig', [
             'repas' => $repas,
         ]);
     }

@@ -1,0 +1,74 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}OakFitness Admin{% endblock %}
+{% block userimage %} {{asset('images/'~image)}} {% endblock %}
+{% block Name %} {{ nom }} {{ ' ' }} {{prenom}}{% endblock %}
+{% block userimage1 %} {{asset('images/'~image)}} {% endblock %}
+{% block Name1 %} {{ nom }} {{ ' ' }} {{prenom}}{% endblock %}
+
+{% block body %}
+    <br>
+    <br>
+    <br>
+
+
+    <h1>User index</h1>
+    <div class="search_item" >
+        <input  id="myInputAct"  type="text" class="btn btn-sm btn-outline-info"  name="searchLieu" placeholder="recherche ...">
+    </div>
+
+    <table class="table">
+
+        <thead>
+        <tr>
+            <th>Nomuser</th>
+            <th>Prenomuser</th>
+            <th>Mailuser</th>
+            <th>Telephonenumberuser</th>
+            <th>Datenaissanceuser</th>
+            <th>Experienceuser</th>
+            <th>Diplomeuser</th>
+
+
+
+        </tr>
+        </thead>
+        <tbody id="myTableAct">
+        {% for user in users %}
+            <tr>
+                <td>{{ user.nomuser }}</td>
+                <td>{{ user.prenomuser }}</td>
+                <td>{{ user.mailuser }}</td>
+                <td>{{ user.telephonenumberuser }}</td>
+                <td>{{ user.datenaissanceuser ? user.datenaissanceuser|date('Y-m-d') : '' }}</td>
+                <td>{{ user.experienceuser }}</td>
+                <td>{{ user.diplomeuser }}</td>
+
+
+                <td>
+
+                    <a href="{{ path('app_user_delete', {'iduser': user.iduser}) }}">bloque</a>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="17">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInputAct").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTableAct tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -24,7 +24,7 @@ class SalledesportController extends AbstractController
             ->getRepository(Salledesport::class)
             ->findAll();
 
-        return $this->render('salledesport/index.html.twig', [
+        return $this->render('salledesport/alladherent.html.twig', [
             'salledesports' => $salledesports,
         ]);
     }

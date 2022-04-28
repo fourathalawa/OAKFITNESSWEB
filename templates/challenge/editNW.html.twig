@@ -1,0 +1,34 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creat challenge</title>
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href={{asset('front/css/challenge.css')}}>
+    <link rel="stylesheet" href={{asset('front/css/signup.css')}}>
+</head>
+<body>
+
+<fieldset>
+    <legend>Current Data</legend>
+    {{ form_label(form.poidnv,"Current weight :") }}
+    {{ form_widget(form.poidnv) }}
+    {{ form_errors(form.poidnv) }}
+
+
+    <legend>Duration</legend>
+    {{ form_label(form.datefin,"End date :") }}
+    {{ form_widget(form.datefin) }}
+    {{ form_errors(form.datefin) }}
+
+
+
+</fieldset>
+<button class="btn">{{ button_label|default('Save') }}</button>
+</form>
+
+</body>
+</html>
+
+{{ form_end(form) }}

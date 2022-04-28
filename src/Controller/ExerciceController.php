@@ -24,7 +24,7 @@ class ExerciceController extends AbstractController
             ->getRepository(Exercice::class)
             ->findAll();
 
-        return $this->render('exercice/index.html.twig', [
+        return $this->render('exercice/alladherent.html.twig', [
             'exercices' => $exercices,
         ]);
     }

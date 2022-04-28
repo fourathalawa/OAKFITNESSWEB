@@ -52,7 +52,7 @@ class User
 
     /**
      * @var \DateTime
-
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="DateNaissanceUser", type="date", nullable=false)
      */
     private $datenaissanceuser;
@@ -122,6 +122,8 @@ class User
 
     /**
      * @var string|null
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
+     * @ORM\Column(name="imageUser", type="string", nullable=false)
      * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
      */
     private $imageuser;
@@ -309,12 +311,12 @@ class User
         return $this;
     }
 
-    public function getImageuser()
+    public function getImageuser(): ?string
     {
         return $this->imageuser;
     }
 
-    public function setImageuser( $imageuser)
+    public function setImageuser(?string $imageuser) : self
     {
         $this->imageuser = $imageuser;
 

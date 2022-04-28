@@ -4,25 +4,27 @@
 namespace App\Form;
 
 
-use App\Entity\User;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use App\Entity\Challenge;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PasswordResit extends AbstractType
+class ChallengeNWType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('password',PasswordType::class);
+            ->add('poidnv')
+            ->add('datefin',DateType::class,[
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Challenge::class,
         ]);
     }
 }

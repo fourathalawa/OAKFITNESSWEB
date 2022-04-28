@@ -13,11 +13,13 @@
                 <div class="form-group input-group">
                     <div class="form-control">
                         {{ form_label(formUA.nomuser,"Name :          ") }}
+
                         {{ form_widget(formUA.nomuser) }}
                         {{ form_errors(formUA.nomuser) }}
                     </div>
 
                 </div>
+                <br>
                 <div class="form-group input-group">
                     <div class="form-control">
                         {{ form_label(formUA.prenomuser,"Last Name :") }}
@@ -26,6 +28,7 @@
                     </div>
 
                 </div>
+                <br>
                 <div class="form-group input-group">
                     <div class="form-control">
                         {{ form_label(formUA.mailuser,"Email :") }}
@@ -33,6 +36,7 @@
                         {{ form_errors(formUA.mailuser) }}
                     </div>
                 </div> <!-- form-group// -->
+                <br>
                 <div class="form-group input-group">
                     <div class="form-control">
                         {{ form_label(formUA.telephonenumberuser,"Telephone number :") }}
@@ -40,6 +44,7 @@
                         {{ form_errors(formUA.telephonenumberuser) }}
                     </div>
                 </div>
+                <br>
                 <div class="form-group input-group">
                     <div class="form-control">
                         {{ form_label(formUA.datenaissanceuser,"Date de Naissance") }}
@@ -47,6 +52,7 @@
                         {{ form_errors(formUA.datenaissanceuser) }}
                     </div>
                 </div> <!-- form-group// -->
+                <br>
                 <div class="form-group input-group">
 
                     <div class="form-control">
@@ -57,7 +63,7 @@
                         {{ form_errors(formUA.password) }}
                     </div>
                 </div> <!-- form-group// -->
-
+                <br>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
                 </div> <!-- form-group// -->

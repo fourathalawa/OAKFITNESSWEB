@@ -67,11 +67,16 @@
                             {{ form_errors(formU.telephonenumberuser) }}
                             </div>
                         </div>
-
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"> <i class="fa fa-image"></i> </span>
+                            </div>
+                            <div class="form-control">
                                 {{ form_label(formU.imageuser,"Image :") }}
                                 {{ form_widget(formU.imageuser) }}
                                 {{ form_errors(formU.imageuser) }}
-
+                            </div>
+                        </div>
 
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
@@ -87,11 +92,13 @@
 
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
+                            <button type="submit" class="btn btn-primary btn-block"> Submit  </button>
                         </div> <!-- form-group// -->
+                      {% if(user.nomuser == null) %}
                         <a href="newcoach" class="text-center">Are you a coach?</a><br>
                         <a href="newmanager" class="text-center">Are you a manager?</a>
                         <p class="text-center">Have an account? <a href="">Log In</a> </p>
+                      {% endif %}
                     </form>
                 </article>
             </div>

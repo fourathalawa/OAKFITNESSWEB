@@ -3,39 +3,84 @@
 {% block title %}Challenge{% endblock %}
 
 {% block body %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous">
     <h1>Challenge</h1>
-    {% for cha in challenge %}
+    <br>
+    <div class="container">
+        <h3> Your current IMC is {{ imcNow }} </h3>
+    </div>
+
+    <br>
     <table class="table">
         <tbody>
 
             <tr>
-                <th>Taille</th>
-                <td>{{ cha.taille }}</td>
+                <th>Height</th>
+                <td>{{ challenge.taille }}</td>
             </tr>
             <tr>
-                <th>Poidint</th>
-                <td>{{ cha.poidint }}</td>
+                <th>Original weight</th>
+                <td>{{ challenge.poidint }}</td>
             </tr>
             <tr>
-                <th>Poidob</th>
-                <td>{{ cha.poidob }}</td>
+                <th>Goal weight</th>
+                <td>{{ challenge.poidob }}</td>
             </tr>
 
             <tr>
-                <th>Datedebut</th>
-                <td>{{ cha.datedebut ? cha.datedebut|date('Y-m-d') :''  }}</td>
+                <th>Start date</th>
+                <td>{{ challenge.datedebut ? challenge.datedebut|date('Y-m-d') :''  }}</td>
             </tr>
             <tr>
-                <th>Datefin</th>
-                <td>{{ cha.datefin ? cha.datefin|date('Y-m-d') :''  }}</td>
+                <th>End date</th>
+                <td>{{ challenge.datefin ? challenge.datefin|date('Y-m-d') :''  }}</td>
+            </tr>
+            <tr>
+                <th>Current weight</th>
+                <td>{{ challenge.poidnv }}</td>
+                <td>                <a href="{{ path('app_challenge_edit', {'idchallenge': challenge.idchallenge}) }}">edit</a>
+                </td>
+
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_challenge_index') }}">back to list</a>
+    <div class="container">
+    <h2>My progress</h2>
 
-    <a href="{{ path('app_challenge_edit', {'idchallenge': cha.idchallenge}) }}">edit</a>
+        <canvas id="myChart" width="250" height="100"></canvas>
+    </div>
+<br>
+    <br>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+    <script>
 
-
-    {% endfor %}
+         ctx = document.getElementById('myChart').getContext('2d');
+         myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Done', 'In progress'],
+                datasets: [{
+                    label: '# of Votes',
+                    data:  [{{taux}},{{ taux2 }}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 {% endblock %}

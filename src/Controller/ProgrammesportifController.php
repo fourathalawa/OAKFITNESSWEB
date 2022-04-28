@@ -24,7 +24,7 @@ class ProgrammesportifController extends AbstractController
             ->getRepository(Programmesportif::class)
             ->findAll();
 
-        return $this->render('programmesportif/index.html.twig', [
+        return $this->render('programmesportif/alladherent.html.twig', [
             'programmesportifs' => $programmesportifs,
         ]);
     }

@@ -63,11 +63,33 @@
                                         <p class="m-b-10 f-w-600">Tax number</p>
                                         <h6 class="text-muted f-w-400">{{ user.matriculefiscale }}</h6>
                                     </div>
+                                        </div> {% endif %}
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            {% if(user.roleuser == 0) %}
+                                                <br>
+                                                <p class="m-b-10 f-w-600">Challenge</p>
+                                                <a href="{{ path('app_challenge_userchallenge', {'iduser': 1}) }}">My Challenge </a>
+                                            {% endif %}
+                                        </div>
                                         </div>
 
-                                        {% endif %}
+                                    <br>
+                                        <div class="row">
+                                    <div class="col-sm-6">
 
+                                        <p class="m-b-10 f-w-600">Edit profile</p>
 
+                                        <a href="{{ path('app_user_editadherent', {'iduser': 1}) }}">edit</a>
+                                    </div>
+                                        </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Delete profile</p>
+                                            {{ include('user/_delete_form.html.twig') }}
+
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -77,12 +99,6 @@
     </div>
     </div>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
-    <br>
-    <a href="{{ path('app_challenge_userchallenge', {'iduser': user.iduser}) }}">My Challenge </a>
-    <br>
-    <a href="{{ path('app_user_editadherent') }}">edit</a>
 
-    {{ include('user/_delete_form.html.twig') }}
 
 {% endblock %}

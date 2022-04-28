@@ -11,12 +11,12 @@
 <body>
 
     <fieldset>
-        <legend><span class="number">1</span>Donnée initiale</legend>
-        {{ form_label(form.poidint,"Poids initial :") }}
+        <legend><span class="number">1</span>Initial data</legend>
+        {{ form_label(form.poidint,"Original weight :") }}
         {{ form_widget(form.poidint) }}
         {{ form_errors(form.poidint) }}
 
-        {{ form_label(form.taille,"Taille :") }}
+        {{ form_label(form.taille,"Height :") }}
         {{ form_widget(form.taille) }}
         {{ form_errors(form.taille) }}
 
@@ -24,28 +24,22 @@
 
     <fieldset>
         <legend><span class="number">2</span>Objective</legend>
-        {{ form_label(form.poidob,"Poids objective :") }}
+        {{ form_label(form.poidob,"Objective weight:") }}
         {{ form_widget(form.poidob) }}
         {{ form_errors(form.poidob) }}
     </fieldset>
     <fieldset>
-        <legend><span class="number">3</span>Durée</legend>
+        <legend><span class="number">3</span>Duration</legend>
 
-        {{ form_label(form.datedebut,"Date de début :") }}
+        {{ form_label(form.datedebut,"Start Date :") }}
         {{ form_widget(form.datedebut) }}
         {{ form_errors(form.datedebut )}}
 
-        {{ form_label(form.datefin,"Date de fin :") }}
+        {{ form_label(form.datefin,"End Date :") }}
         {{ form_widget(form.datefin) }}
         {{ form_errors(form.datefin) }}
-        <legend><span class="number">4</span>poids nouveau </legend>
-        {{ form_label(form.poidnv,"poid nv:") }}
-        {{ form_widget(form.poidnv) }}
-            {{ form_errors(form.poidnv)}}
-<legend><span class="number">4</span>Id User Temporaire </legend>
-        {{ form_label(form.iduser,"Id User :") }}
-        {{ form_widget(form.iduser) }}
-        {{ form_errors(form.iduser) }}
+
+
 
     </fieldset>
     <button class="btn">{{ button_label|default('Save') }}</button>
