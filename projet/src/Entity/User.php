@@ -126,5 +126,190 @@ class User
      */
     private $imageuser;
 
+    public function getIduser(): ?int
+    {
+        return $this->iduser;
+    }
+
+    public function getNomuser(): ?string
+    {
+        return $this->nomuser;
+    }
+
+    public function setNomuser(string $nomuser): self
+    {
+        $this->nomuser = $nomuser;
+
+        return $this;
+    }
+
+    public function getPrenomuser(): ?string
+    {
+        return $this->prenomuser;
+    }
+
+    public function setPrenomuser(string $prenomuser): self
+    {
+        $this->prenomuser = $prenomuser;
+
+        return $this;
+    }
+
+    public function getMailuser(): ?string
+    {
+        return $this->mailuser;
+    }
+
+    public function setMailuser(string $mailuser): self
+    {
+        $this->mailuser = $mailuser;
+
+        return $this;
+    }
+
+    public function getTelephonenumberuser(): ?string
+    {
+        return $this->telephonenumberuser;
+    }
+
+    public function setTelephonenumberuser(string $telephonenumberuser): self
+    {
+        $this->telephonenumberuser = $telephonenumberuser;
+
+        return $this;
+    }
+
+    public function getDatenaissanceuser(): ?\DateTimeInterface
+    {
+        return $this->datenaissanceuser;
+    }
+
+    public function setDatenaissanceuser(\DateTimeInterface $datenaissanceuser): self
+    {
+        $this->datenaissanceuser = $datenaissanceuser;
+
+        return $this;
+    }
+
+    public function getRoleuser(): ?int
+    {
+        return $this->roleuser;
+    }
+
+    public function setRoleuser(int $roleuser): self
+    {
+        $this->roleuser = $roleuser;
+
+        return $this;
+    }
+
+    public function getNumeropackuser(): ?int
+    {
+        return $this->numeropackuser;
+    }
+
+    public function setNumeropackuser(?int $numeropackuser): self
+    {
+        $this->numeropackuser = $numeropackuser;
+
+        return $this;
+    }
+
+    public function getDatecommence(): ?\DateTimeInterface
+    {
+        return $this->datecommence;
+    }
+
+    public function setDatecommence(?\DateTimeInterface $datecommence): self
+    {
+        $this->datecommence = $datecommence;
+
+        return $this;
+    }
+
+    public function getExperienceuser(): ?string
+    {
+        return $this->experienceuser;
+    }
+
+    public function setExperienceuser(?string $experienceuser): self
+    {
+        $this->experienceuser = $experienceuser;
+
+        return $this;
+    }
+
+    public function getDiplomeuser(): ?string
+    {
+        return $this->diplomeuser;
+    }
+
+    public function setDiplomeuser(?string $diplomeuser): self
+    {
+        $this->diplomeuser = $diplomeuser;
+
+        return $this;
+    }
+
+    public function getAdressesallesport(): ?string
+    {
+        return $this->adressesallesport;
+    }
+
+    public function setAdressesallesport(?string $adressesallesport): self
+    {
+        $this->adressesallesport = $adressesallesport;
+
+        return $this;
+    }
+
+    public function getMatriculefiscale(): ?string
+    {
+        return $this->matriculefiscale;
+    }
+
+    public function setMatriculefiscale(?string $matriculefiscale): self
+    {
+        $this->matriculefiscale = $matriculefiscale;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(?string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getCodeverification(): ?int
+    {
+        return $this->codeverification;
+    }
+
+    public function setCodeverification(?int $codeverification): self
+    {
+        $this->codeverification = $codeverification;
+
+        return $this;
+    }
+
+    public function getImageuser(): ?string
+    {
+        return $this->imageuser;
+    }
+
+    public function setImageuser(?string $imageuser): self
+    {
+        $this->imageuser = $imageuser;
+
+        return $this;
+    }
+
 
 }

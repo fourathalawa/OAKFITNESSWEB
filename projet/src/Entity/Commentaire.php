@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Entity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -39,7 +38,6 @@ class Commentaire
     /**
      * @var string
      *
-     * @Assert\NotBlank
      * @ORM\Column(name="Commentaire", type="string", length=500, nullable=false)
      */
     private $commentaire;
@@ -52,21 +50,25 @@ class Commentaire
     private $datecommentaire;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Publication::class, inversedBy="commentaires")
+     * @var int|null
+     *
+     * @ORM\Column(name="publication_id", type="integer", nullable=true)
      */
-    private $publication;
+    private $publicationId;
 
-    public function getPublication(): ?Publication
-    {
-        return $this->publication;
-    }
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="nbLikes", type="integer", nullable=true)
+     */
+    private $nblikes;
 
-    public function setPublication(?Publication $publication): self
-    {
-        $this->publication = $publication;
-
-        return $this;
-    }
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Usernamep", type="string", length=250, nullable=true)
+     */
+    private $usernamep;
 
     public function getId(): ?int
     {
@@ -117,6 +119,42 @@ class Commentaire
     public function setDatecommentaire(string $datecommentaire): self
     {
         $this->datecommentaire = $datecommentaire;
+
+        return $this;
+    }
+
+    public function getPublicationId(): ?int
+    {
+        return $this->publicationId;
+    }
+
+    public function setPublicationId(?int $publicationId): self
+    {
+        $this->publicationId = $publicationId;
+
+        return $this;
+    }
+
+    public function getNblikes(): ?int
+    {
+        return $this->nblikes;
+    }
+
+    public function setNblikes(?int $nblikes): self
+    {
+        $this->nblikes = $nblikes;
+
+        return $this;
+    }
+
+    public function getUsernamep(): ?string
+    {
+        return $this->usernamep;
+    }
+
+    public function setUsernamep(?string $usernamep): self
+    {
+        $this->usernamep = $usernamep;
 
         return $this;
     }

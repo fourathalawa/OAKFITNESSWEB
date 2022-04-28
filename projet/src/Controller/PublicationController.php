@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Commentaire;
+use App\Entity\User;
 use App\Entity\Notecommentaire;
 use App\Entity\Publication;
 use App\Form\Commentaire1Type;
@@ -11,8 +12,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Repository\UserRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/publication")
@@ -24,20 +30,28 @@ class PublicationController extends AbstractController
      */
     public function index(EntityManagerInterface $entityManager): Response
     {
+        $session = 53;
+
         $publications = $entityManager
             ->getRepository(Publication::class)
             ->findAll();
 
         return $this->render('publication/index.html.twig', [
             'publications' => $publications,
+            'session' => $session
         ]);
     }
-
     /**
      * @Route("/new", name="app_publication_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request,USerRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
+       // $user = new User();
+        $session = 53;
+        $user = $userRepository
+            ->find($session);
+
+
         $publication = new Publication();
         $form = $this->createForm(Publication1Type::class, $publication);
         $form->handleRequest($request);
@@ -45,6 +59,8 @@ class PublicationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $time = date('d/m/Y');
             $publication->setDatepublication($time);
+            $publication->setIduser($session);
+            $publication->setUsernamep($user->getNomuser());
             $entityManager->persist($publication);
             $entityManager->flush();
 
@@ -58,30 +74,30 @@ class PublicationController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_publication_show", methods={"GET" , "POST"})
+     * @Route("/{id}/", name="app_publication_show", methods={"GET" , "POST"})
      */
-    public function show(Publication $publication,Request $request, EntityManagerInterface $entityManager,$id): Response
-    { $commentaires = $entityManager
+    public function show(Publication $publication,Request $request,USerRepository $userRepository, EntityManagerInterface $entityManager,$id): Response
+    {
+        $session = 53;
+        $user = $userRepository
+            ->find($session);
+        $commentaires = $entityManager
         ->getRepository(Commentaire::class)
         ->findAll();
-
         $output = array();
         foreach($commentaires as $commentaire)
         {
             if($publication->getId()==$commentaire->getIdpublication()) {
                 $em = $this->getDoctrine()->getManager();
          //       $qb = $em->createQueryBuilder();
-
                 $dql = "SELECT SUM(e.islike) FROM App\Entity\Notecommentaire e " .
                     "WHERE e.idcommentaire = ?1";
-
                 $balance = $em->createQuery($dql)
                     ->setParameter(1, $commentaire->getId())
                     ->getSingleScalarResult();
-                $output[] = array($balance,$commentaire->getCommentaire(), $commentaire->getDatecommentaire(),$commentaire->getId());
+                $output[] = array($balance,$commentaire->getCommentaire(), $commentaire->getDatecommentaire(),$commentaire->getId(),$commentaire->getUsernamep(),$commentaire->getIduser());
             }
         }
-
         $commentaires = $entityManager
         ->getRepository(Commentaire::class)
         ->findAll();
@@ -93,20 +109,20 @@ class PublicationController extends AbstractController
             $commentaire->setIdpublication($id);
             $time = date('d/m/Y');
             $commentaire->setDatecommentaire($time);
+            $commentaire->setIduser($session);
+            $commentaire->setUsernamep($user->getNomuser());
             $entityManager->persist($commentaire);
             $entityManager->flush();
             return $this->redirectToRoute('app_publication_show', ['id' => $id], Response::HTTP_SEE_OTHER);
         }
-
             return $this->render('publication/show.html.twig', [
                 'outputs' => $output,
                 'publication' => $publication,
                 'commentaires' => $commentaires,
+                'session' => $session,
                 'form' => $form->createView(),
-
             ]);
         }
-
 
     /**
      * @Route("/{id}/edit", name="app_publication_edit", methods={"GET", "POST"})
@@ -146,6 +162,7 @@ class PublicationController extends AbstractController
      */
     public function like(Request $request,Commentaire $commentaire, EntityManagerInterface $entityManager): Response
     {
+        $session = 44;
         $v = $commentaire->getIdpublication();
 
         $notecommentaire = $entityManager
@@ -161,7 +178,7 @@ class PublicationController extends AbstractController
 
                 $balance = $em->createQuery($dql)
                     ->setParameter(1, $commentaire->getId())
-                    ->setParameter(2, 1)
+                    ->setParameter(2, $session)
                     ->getSingleScalarResult();
 
             }
@@ -169,7 +186,7 @@ class PublicationController extends AbstractController
 
             $notecommentaire = new Notecommentaire();
             $notecommentaire->setIdcommentaire($commentaire->getId());
-            $notecommentaire->setUserid(1);
+            $notecommentaire->setUserid($session);
             $notecommentaire->setIslike(1);
             $entityManager->persist($notecommentaire);
             $entityManager->flush();
@@ -182,6 +199,8 @@ class PublicationController extends AbstractController
      */
     public function dislike(Request $request,Commentaire $commentaire, EntityManagerInterface $entityManager): Response
     {
+        $session = 44;
+
         $v = $commentaire->getIdpublication();
         $notecommentaire = $entityManager
             ->getRepository(Notecommentaire::class)
@@ -196,14 +215,14 @@ class PublicationController extends AbstractController
 
             $balance = $em->createQuery($dql)
                 ->setParameter(1, $commentaire->getId())
-                ->setParameter(2, 1)
+                ->setParameter(2, $session)
                 ->getSingleScalarResult();
 
         }
-        if($balance>-1) {
+        if($balance>-1 || $balance==0) {
             $notecommentaire = new Notecommentaire();
             $notecommentaire->setIdcommentaire($commentaire->getId());
-            $notecommentaire->setUserid(1);
+            $notecommentaire->setUserid($session);
             $notecommentaire->setIslike(-1);
             $entityManager->persist($notecommentaire);
             $entityManager->flush();
@@ -212,29 +231,36 @@ class PublicationController extends AbstractController
 
     }
     /**
-     * @Route("/testtest", name="ajax_search", methods={"GET"})
+     * Creates a new ActionItem entity.
+     *
+     * @Route("/search", name="ajax_search")
+     * @Method("GET")
      */
     public function searchAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+
         $requestString = $request->get('q');
-        var_dump($requestString);
-        die();
-        return $this->redirectToRoute('app_publication_new');
-        $Publication =  $em->getRepository(Publication::class)->findEntitiesByString($requestString);
-        if(!$Publication) {
-            $result['publication']['error'] = "Post Not found :( ";
+
+        $entities =  $em->getRepository('AppBundle:Entity')->findEntitiesByString($requestString);
+
+        if(!$entities) {
+            $result['entities']['error'] = "keine Einträge gefunden";
         } else {
-            $result['publication'] = $this->getRealEntities($Publication);
+            $result['entities'] = $this->getRealEntities($entities);
         }
+
         return new Response(json_encode($result));
     }
-    public function getRealEntities($Publication){
-        foreach ($Publication as $Publications){
-            $realEntities[$Publications->getId()] = [$Publications->getPublication(),$Publications->getDatepublication()];
 
+    public function getRealEntities($entities){
+
+        foreach ($entities as $entity){
+            $realEntities[$entity->getId()] = $entity->getFoo();
         }
+
         return $realEntities;
     }
+
 
 }

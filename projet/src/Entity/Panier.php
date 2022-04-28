@@ -34,6 +34,18 @@ class Panier
     private $total;
 
     /**
+     * @var \Produit
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Produit")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_produit", referencedColumnName="IdProduit")
+     * })
+     */
+    private $idProduit;
+
+    /**
      * @var \User
      *
      * @ORM\Id
@@ -56,18 +68,6 @@ class Panier
      * })
      */
     private $idCommande;
-
-    /**
-     * @var \Produit
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Produit")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_produit", referencedColumnName="IdProduit")
-     * })
-     */
-    private $idProduit;
 
 
 }

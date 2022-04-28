@@ -14,7 +14,6 @@ class Commentaire1Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('iduser')
             ->add('commentaire', CKEditorType::class)
 
         ;
