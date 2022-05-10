@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Produit
@@ -19,6 +20,7 @@ class Produit
      * @ORM\Column(name="IdProduit", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("produit")
      */
     private $idproduit;
 
@@ -26,6 +28,7 @@ class Produit
      * @var string
      *@Assert\NotNull
      * @ORM\Column(name="NomProduit", type="string", length=255, nullable=false)
+     * @Groups("produit")
      */
     private $nomproduit;
 
@@ -33,6 +36,7 @@ class Produit
      * @var string
      *@Assert\NotNull
      * @ORM\Column(name="CategProduit", type="string", length=255, nullable=false)
+     * @Groups("produit")
      */
     private $categproduit;
 
@@ -45,6 +49,7 @@ class Produit
      *      maxMessage = "Your descreption cannot be longer than  25  characters"
      * )
      * @ORM\Column(name="DescrProduit", type="string", length=255, nullable=false)
+     * @Groups("produit")
      */
     private $descrproduit;
 
@@ -56,6 +61,7 @@ class Produit
      * )
      *@Assert\Positive
      * @ORM\Column(name="PrixProduit", type="float", precision=10, scale=0, nullable=false)
+     * @Groups("produit")
      */
     private $prixproduit;
 
@@ -63,6 +69,7 @@ class Produit
      * @var int
      *
      * @ORM\Column(name="IsAvailable", type="integer", nullable=false)
+     * @Groups("produit")
      */
     private $isavailable;
 
@@ -70,6 +77,7 @@ class Produit
      * @var string
      *@Assert\NotNull
      * @ORM\Column(name="ImageProduit", type="string", length=255, nullable=false)
+     * @Groups("produit")
      */
     private $imageproduit;
 
@@ -81,6 +89,7 @@ class Produit
      * )
      *@Assert\Positive
      * @ORM\Column(name="StockProduit", type="integer", nullable=false)
+     * @Groups("produit")
      */
     private $stockproduit;
 

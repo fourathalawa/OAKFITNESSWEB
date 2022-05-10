@@ -5,12 +5,14 @@ use App\Repository\TransformationRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Transformation
  *
  * @ORM\Table(name="transformation")
  * @ORM\Entity(repositoryClass=TransformationRepository::class)
+ * @Groups("transformation")
  */
 class Transformation
 {
@@ -20,6 +22,7 @@ class Transformation
      * @ORM\Column(name="IdImage", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     *  @Groups("transformation")
      */
     private $idimage;
 
@@ -28,6 +31,7 @@ class Transformation
      * @Assert\NotNull
      *
      * @ORM\Column(name="TitreImage", type="string", length=255, nullable=false)
+     *  @Groups("transformation")
      */
     private $titreimage;
 
@@ -42,6 +46,7 @@ class Transformation
      *      minMessage = "Your descreption must be at least  7  characters long",
      *      maxMessage = "Your descreption cannot be longer than  25  characters"
      * )
+     *  @Groups("transformation")
      */
     private $descreptionimage;
 
@@ -49,6 +54,7 @@ class Transformation
      * @var string
      * @Assert\NotNull
      * @ORM\Column(name="ImageAvant", type="string", length=255, nullable=false)
+     *  @Groups("transformation")
      */
     private $imageavant;
 
@@ -56,6 +62,7 @@ class Transformation
      * @var string
      * @Assert\NotNull
      * @ORM\Column(name="ImageApres", type="string", length=255, nullable=false)
+     *  @Groups("transformation")
      */
     private $imageapres;
 
@@ -63,6 +70,7 @@ class Transformation
      * @var int
      * @Assert\NotNull
      * @ORM\Column(name="IdUser", type="integer", nullable=false)
+     *  @Groups("transformation")
      */
     private $iduser;
 
@@ -74,6 +82,7 @@ class Transformation
      * )
      *@Assert\Positive
      * @ORM\Column(name="PoidAvant", type="float", precision=10, scale=0, nullable=false)
+     *  @Groups("transformation")
      */
     private $poidavant;
 
@@ -85,6 +94,7 @@ class Transformation
      * )
      *@Assert\Positive
      * @ORM\Column(name="PoidApres", type="float", precision=10, scale=0, nullable=false)
+     *  @Groups("transformation")
      */
     private $poidapres;
 
@@ -96,6 +106,7 @@ class Transformation
      * )
      *  @Assert\Positive
      * @ORM\Column(name="TailleAvant", type="float", precision=10, scale=0, nullable=false)
+     *  @Groups("transformation")
      */
     private $tailleavant;
 
@@ -107,6 +118,7 @@ class Transformation
      * )
      * @Assert\Positive
      * @ORM\Column(name="TailleApres", type="float", precision=10, scale=0, nullable=false)
+     *  @Groups("transformation")
      */
     private $tailleapres;
 
@@ -114,6 +126,7 @@ class Transformation
      * @var int
      *
      * @ORM\Column(name="Tlike", type="integer", nullable=false)
+     *  @Groups("transformation")
      */
     private $tlike;
 

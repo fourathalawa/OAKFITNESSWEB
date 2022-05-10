@@ -7,10 +7,16 @@ use App\Entity\Transformation;
 use App\Form\TransformationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\SerializerInterface;
+
 /**
  * @Route("/transformation")
  */
@@ -199,7 +205,7 @@ class TransformationController extends AbstractController
     /**
      * @Route("/{idimage}/vote", name="app_transformation_upvote" )
      */
-    public function vote(Request $request, EntityManagerInterface $em ): Response
+    public function vote(Request $request, EntityManagerInterface $em , NormalizerInterface $Normalizer ): Response
     {
         $idI = $request->get('idimage');
         $transformation = $this->getDoctrine()->getRepository(Transformation::class)->findOneBy(array('idimage' => $idI)) ;
@@ -227,6 +233,133 @@ class TransformationController extends AbstractController
             $nbrlike = $nbrlikeavant - 1 ;
             $transformation->setTlike($nbrlike);
             $em->flush();
+
+        }
+
+        return $this->redirectToRoute('app_transformation_index', [], Response::HTTP_SEE_OTHER);
+
+    }
+
+    /**
+     * @Route("/codename/viewt", name="viewt")
+     */
+    public function viewt( NormalizerInterface $Normalizer)
+    {
+        $repo = $this->getDoctrine()->getRepository(Transformation::class);
+        $club = $repo->findAll();
+
+
+
+        $json=$Normalizer->normalize($club,'json',['groups'=>'transformation']);
+
+
+        return new Response(json_encode($json));
+
+        dump($json);
+
+        die;
+    }
+
+    /**
+     * @Route("/codename/deletet/{idimage}", name="deletet")
+     */
+    public function deletet (Request $request, SerializerInterface  $serializer , EntityManagerInterface $em)
+    {
+        $id = $request->get("idimage");
+        //$m = $this->getDoctrine();
+        $club  = $this->getDoctrine()->getRepository(Transformation::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
+
+        if($club != null)
+        {
+            $em->remove($club);
+            $em->flush();
+            $serializer = new Serializer([new ObjectNormalizer()]);
+            $formatted = $serializer->normalize("Trans Deleted ");
+            return new JsonResponse($formatted);
+        }
+        return new JsonResponse("rip");
+    }
+
+    /**
+     * @Route("/codename/addt", name="addp")
+     */
+    public function addpJSON(Request $request, NormalizerInterface $Normalizer){
+        $em=$this->getDoctrine()->getManager();
+        $Transformation= new Transformation();
+
+        $Transformation->setTitreimage($request->get('titreimage'));
+        $Transformation->setDescreptionimage($request->get('descreptionimage'));
+        $Transformation->setImageavant($request->get('imageavant'));
+        $Transformation->setImageapres($request->get('imageapres'));
+        $Transformation->setPoidavant($request->get('poidavant'));
+        $Transformation->setPoidapres($request->get('poidapres'));
+        $Transformation->setTailleavant($request->get('tailleavant'));
+        $Transformation->setTailleapres($request->get('tailleapres'));
+        $Transformation->setTlike($request->get('tlike'));
+        $Transformation->setIduser($request->get('iduser'));
+
+        $em->persist($Transformation);
+        $em->flush();
+        $jsonContent = $Normalizer->normalize($Transformation, 'json',['groups'=>'transforamtion']);
+        return new Response("Informations ajoutées avec succès".json_encode($jsonContent));
+    }
+
+    /**
+     * @Route("/codename/updatet/{idimage}", name="updatep")
+     */
+    public function updatet(Request $request, NormalizerInterface $Normalizer,$idimage){
+        $em=$this->getDoctrine()->getManager();
+        $Transformation=$em->getRepository(Transformation::class)->find($idimage);
+
+        $Transformation->setTitreimage($request->get('titreimage'));
+        $Transformation->setDescreptionimage($request->get('descreptionimage'));
+        $Transformation->setImageavant($request->get('imageavant'));
+        $Transformation->setImageapres($request->get('imageapres'));
+        $Transformation->setPoidavant($request->get('poidavant'));
+        $Transformation->setPoidapres($request->get('poidapres'));
+        $Transformation->setTailleavant($request->get('tailleavant'));
+        $Transformation->setTailleapres($request->get('tailleapres'));
+
+        $em->flush();
+        $jsonContent=$Normalizer->normalize($Transformation,'json',['groups'=>'transforamtion']);
+        return new Response("Informations mises à jour avec succès".json_encode($jsonContent));
+    }
+
+    /**
+     * @Route("/{idimage}/votejason", name="app_transformation_upvote" )
+     */
+    public function votejason(Request $request, EntityManagerInterface $em , NormalizerInterface $Normalizer ): Response
+    {
+        $idI = $request->get('idimage');
+        $transformation = $this->getDoctrine()->getRepository(Transformation::class)->findOneBy(array('idimage' => $idI)) ;
+        if( $transformation)
+        {   $nbrlikeavant = $transformation->getTlike();
+            $nbrlike = $nbrlikeavant + 1 ;
+            $transformation->setTlike($nbrlike);
+            $em->flush();
+            $jsonContent = $Normalizer->normalize($transformation, 'json',['groups'=>'transforamtion']);
+            return new Response("UpVOTE avec succès".json_encode($jsonContent));
+        }
+
+        return $this->redirectToRoute('app_transformation_index', [], Response::HTTP_SEE_OTHER);
+
+    }
+
+    /**
+     * @Route("/{idimage}/downvotejason", name="app_transformation_downvote" )
+     */
+    public function downvotejason(Request $request, EntityManagerInterface $em ,NormalizerInterface $Normalizer ): Response
+    {
+        $idI = $request->get('idimage');
+        $transformation = $this->getDoctrine()->getRepository(Transformation::class)->findOneBy(array('idimage' => $idI)) ;
+        if( $transformation)
+        {   $nbrlikeavant = $transformation->getTlike();
+            $nbrlike = $nbrlikeavant - 1 ;
+            $transformation->setTlike($nbrlike);
+            $em->flush();
+            $jsonContent = $Normalizer->normalize($transformation, 'json',['groups'=>'transforamtion']);
+            return new Response("DownVOTE avec succès".json_encode($jsonContent));
 
         }
 
