@@ -93,6 +93,7 @@
     },
     "knplabs/knp-paginator-bundle": {
         "version": "v5.8.0"
+        },
     "jms/metadata": {
         "version": "2.6.1"
     },

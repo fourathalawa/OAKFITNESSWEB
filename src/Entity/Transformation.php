@@ -12,7 +12,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *
  * @ORM\Table(name="transformation")
  * @ORM\Entity(repositoryClass=TransformationRepository::class)
- * @Groups("transformation")
+ *
+ * 
  */
 class Transformation
 {
