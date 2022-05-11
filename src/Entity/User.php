@@ -128,10 +128,7 @@ class User
      */
     private $imageuser;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Salledesport::class, mappedBy="user")
-     */
-    private $salles;
+
 
     public function __construct()
     {
@@ -346,34 +343,6 @@ class User
         return $this;
     }
 
-    /**
-     * @return Collection<int, Salledesport>
-     */
-    public function getSalles(): Collection
-    {
-        return $this->salles;
-    }
 
-    public function addSalle(Salledesport $salle): self
-    {
-        if (!$this->salles->contains($salle)) {
-            $this->salles[] = $salle;
-            $salle->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSalle(Salledesport $salle): self
-    {
-        if ($this->salles->removeElement($salle)) {
-            // set the owning side to null (unless already changed)
-            if ($salle->getUser() === $this) {
-                $salle->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 
 }

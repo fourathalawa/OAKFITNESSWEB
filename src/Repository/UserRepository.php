@@ -9,7 +9,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use http\Env\Response;
-
+use Symfony\Component\Serializer\SerializerInterface;
 /**
 * @method User|null find($id, $lockMode = null, $lockVersion = null)
 * @method User|null findOneBy(array $criteria, array $orderBy = null)
@@ -36,4 +36,5 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('password',$password);
      return $query->getResult();
     }
+
 }

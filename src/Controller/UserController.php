@@ -3,7 +3,11 @@
 namespace App\Controller;
 //require_once 'vendor\autoload.php';
 use App\Form\PasswordResit;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
 use Twilio\Rest\Client;
 use App\Entity\User;
 use App\Form\ForgetPasswordType;
@@ -26,6 +30,12 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Encoder\EncoderInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
 /**
  * @Route("/user")
  */
@@ -515,5 +525,88 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
         ]);
     }
 
+    /**
+     * @Route("/loginuser",name="login_mob" ,methods={"GET", "POST"})
+     */
+    public function loginuser(NormalizerInterface  $Normalizer,Request $request,UserRepository $repository){
+        $email = $request->query->get("mailuser");
+        $password= $request->query->get("password");
+        $user=$repository->findOneBy(['mailuser'=>$email]);
 
+        if ($user) {
+            if ( $password == $user->getPassword() ) {
+                $serializer = new Serializer([new ObjectNormalizer()]);
+                $formatted = $serializer->normalize($user);
+                return new JsonResponse($formatted);
+
+        }else
+            {
+                return new Response("password not found");
+            }
+        }
+        else {
+            return new Response("user not found");
+        }
+
+    }
+
+
+
+    /**
+     * @Route("/deletemobile",name="delete_userjson" ,methods={"GET"})
+     */
+    public function deleteuser(EntityManagerInterface  $entityManager,Request $request,UserRepository $repository,NormalizerInterface $normalizer):Response
+    {
+        $id = $request->query->get("IdUser");
+
+        $user=$repository->find($id);
+echo $user->getPrenomuser();
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+
+        $entityManager->remove($user);
+        $entityManager->flush();
+        $jsonContent=$normalizer->normalize($user,'json');
+        return new Response("Event deleted Sucessfully".json_encode($jsonContent));
+
+    }
+
+    /**
+     * @Route("/inscription",name="signup_mob" ,methods={"GET", "POST"})
+     */
+    public function signupUser(NormalizerInterface  $Normalizer,Request $request,UserRepository $repository){
+        $email = $request->query->get("mailuser");
+        $password= $request->query->get("password");
+        $name = $request->query->get("nomuser");
+        $lastname= $request->query->get("prenomuser");
+        $role = $request->query->get("roleuser");
+        $date= date_create_from_format("d/m/y",$request->get("datenaissanceuser"));
+        $telephone = $request->query->get("telephonenumberuser");
+        $em=$this->getDoctrine()->getManager();
+        $user=$repository->findOneBy(['mailuser'=>$email]);
+
+        if ($user) {
+
+
+
+            return new Response("User Exist!!!!");
+        }
+        else {
+            $us=new User();
+            $us->setNomuser($name);
+            $us->setPrenomuser($lastname);
+            $us->setMailuser($email);
+            $us->setDatenaissanceuser($date);
+            $us->setTelephonenumberuser($telephone);
+            $us->setRoleuser($role);
+            $us->setPassword($password);
+            $em->persist($us);
+            $em->flush();
+            $serializer = new Serializer([new ObjectNormalizer()]);
+            $formatted = $serializer->normalize($us);
+            return new JsonResponse($formatted);
+        }
+
+    }
 }
