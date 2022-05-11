@@ -1,0 +1,37 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Commentaire index{% endblock %}
+
+{% block body %}
+    <h1>Commentaire index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Idpublication</th>
+                <th>Iduser</th>
+                <th>Commentaire</th>
+                <th>Datecommentaire</th>
+                <th>vote</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for output in outputs %}
+            <tr>
+                <td>{{ output[0] }}</td>
+                <td>{{ output[1] }}</td>
+                <td>{{ output[2] }}</td>
+                <td>{{ output[3] }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_commentaire_new') }}">Create new</a>
+{% endblock %}

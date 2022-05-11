@@ -1,0 +1,58 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Reclamation{% endblock %}
+
+{% block body %}
+    <h1>Reclamation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idreclamation</th>
+                <td>{{ reclamation.idreclamation }}</td>
+            </tr>
+            <tr>
+                <th>Iduserreclamation</th>
+                <td>{{ reclamation.iduserreclamation }}</td>
+            </tr>
+            <tr>
+                <th>Descrreclam</th>
+                <td>{{ reclamation.descrreclam }}</td>
+            </tr>
+            <tr>
+                <th>Categreclam</th>
+                <td>{{ reclamation.categreclam }}</td>
+            </tr>
+            <tr>
+                <th>Datereclam</th>
+                <td>{{ reclamation.datereclam }}</td>
+            </tr>
+            <tr>
+                <th>Etatreclamation</th>
+                <td>{{ reclamation.etatreclamation }}</td>
+            </tr>
+            <tr>
+                <th>Commentairerec</th>
+                <td>{{ reclamation.commentairerec }}</td>
+            </tr>
+            <tr>
+                <th>Pubrec</th>
+                <td>{{ reclamation.pubrec }}</td>
+            </tr>
+            <tr>
+                <th>Idcommentreclam</th>
+                <td>{{ reclamation.idcommentreclam }}</td>
+            </tr>
+            <tr>
+                <th>Idreclameur</th>
+                <td>{{ reclamation.idreclameur }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reclamation_index') }}">back to list</a>
+
+    <a href="{{ path('app_reclamation_edit', {'idreclamation': reclamation.idreclamation }) }}">edit</a>
+
+    {{ include('reclamation/_delete_form.html.twig') }}
+{% endblock %}
