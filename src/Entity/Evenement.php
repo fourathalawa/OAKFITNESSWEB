@@ -40,7 +40,7 @@ class Evenement
      * @var string
      * @Assert\NotNull
      * @Assert\Length(
-     *      min = 7,
+     *      min = 3,
      *      max = 25,
      *      minMessage = "Event title must be at least  7  characters long",
      *      maxMessage = "Event title cannot be longer than  25  characters"
@@ -53,7 +53,7 @@ class Evenement
      * @var string
      * @Assert\NotNull
      * @Assert\Length(
-     *      min = 7,
+     *      min = 3,
      *      max = 200,
      *      minMessage = "Event Description must be at least  25  characters long",
      *      maxMessage = "Event Description cannot be longer than  200  characters"
@@ -66,7 +66,7 @@ class Evenement
      * @var string
      * @Assert\NotNull
      * @Assert\Length(
-     *      min = 7,
+     *      min = 3,
      *      max = 25,
      *      minMessage = "Event Address must be at least  10  characters long",
      *      maxMessage = "Event Address cannot be longer than  30  characters"
