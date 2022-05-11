@@ -28,17 +28,16 @@ class PublicationController extends AbstractController
     /**
      * @Route("/", name="app_publication_index", methods={"GET"})
      */
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager,Request $request): Response
     {
-        $session = 53;
-
+        $session=$request->getSession();
         $publications = $entityManager
             ->getRepository(Publication::class)
             ->findAll();
 
         return $this->render('publication/index.html.twig', [
             'publications' => $publications,
-            'session' => $session
+            'session' => $session->get('iduser')
         ]);
     }
     /**
@@ -47,9 +46,9 @@ class PublicationController extends AbstractController
     public function new(Request $request,USerRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
        // $user = new User();
-        $session = 53;
+        $session=$request->getSession();
         $user = $userRepository
-            ->find($session);
+            ->find($session->get('iduser'));
 
 
         $publication = new Publication();
@@ -59,7 +58,7 @@ class PublicationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $time = date('d/m/Y');
             $publication->setDatepublication($time);
-            $publication->setIduser($session);
+            $publication->setIduser($session->get('iduser'));
             $publication->setUsernamep($user->getNomuser());
             $entityManager->persist($publication);
             $entityManager->flush();
@@ -78,9 +77,9 @@ class PublicationController extends AbstractController
      */
     public function show(Publication $publication,Request $request,USerRepository $userRepository, EntityManagerInterface $entityManager,$id): Response
     {
-        $session = 44;
+        $session = $request->getSession();
         $user = $userRepository
-            ->find($session);
+            ->find($session->get('iduser'));
         $commentaires = $entityManager
         ->getRepository(Commentaire::class)
         ->findAll();
@@ -109,7 +108,7 @@ class PublicationController extends AbstractController
             $commentaire->setIdpublication($id);
             $time = date('d/m/Y');
             $commentaire->setDatecommentaire($time);
-            $commentaire->setIduser($session);
+            $commentaire->setIduser($session->get('iduser'));
             $commentaire->setUsernamep($user->getNomuser());
             $entityManager->persist($commentaire);
             $entityManager->flush();
@@ -119,7 +118,7 @@ class PublicationController extends AbstractController
                 'outputs' => $output,
                 'publication' => $publication,
                 'commentaires' => $commentaires,
-                'session' => $session,
+                'session' => $session->get('iduser'),
                 'form' => $form->createView(),
             ]);
         }
@@ -162,7 +161,7 @@ class PublicationController extends AbstractController
      */
     public function like(Request $request,Commentaire $commentaire, EntityManagerInterface $entityManager): Response
     {
-        $session = 44;
+        $session = $request->getSession();
         $v = $commentaire->getIdpublication();
 
         $notecommentaire = $entityManager
@@ -178,7 +177,7 @@ class PublicationController extends AbstractController
 
                 $balance = $em->createQuery($dql)
                     ->setParameter(1, $commentaire->getId())
-                    ->setParameter(2, $session)
+                    ->setParameter(2, $session->get('iduser'))
                     ->getSingleScalarResult();
 
             }
@@ -186,7 +185,7 @@ class PublicationController extends AbstractController
 
             $notecommentaire = new Notecommentaire();
             $notecommentaire->setIdcommentaire($commentaire->getId());
-            $notecommentaire->setUserid($session);
+            $notecommentaire->setUserid($session->get('iduser'));
             $notecommentaire->setIslike(1);
             $entityManager->persist($notecommentaire);
             $entityManager->flush();
@@ -199,7 +198,7 @@ class PublicationController extends AbstractController
      */
     public function dislike(Request $request,Commentaire $commentaire, EntityManagerInterface $entityManager): Response
     {
-        $session = 44;
+        $session =$request->getSession();
 
         $v = $commentaire->getIdpublication();
         $notecommentaire = $entityManager
@@ -215,14 +214,14 @@ class PublicationController extends AbstractController
 
             $balance = $em->createQuery($dql)
                 ->setParameter(1, $commentaire->getId())
-                ->setParameter(2, $session)
+                ->setParameter(2, $session->get('iduser'))
                 ->getSingleScalarResult();
 
         }
         if($balance>-1 || $balance==0) {
             $notecommentaire = new Notecommentaire();
             $notecommentaire->setIdcommentaire($commentaire->getId());
-            $notecommentaire->setUserid($session);
+            $notecommentaire->setUserid($session->get('iduser'));
             $notecommentaire->setIslike(-1);
             $entityManager->persist($notecommentaire);
             $entityManager->flush();

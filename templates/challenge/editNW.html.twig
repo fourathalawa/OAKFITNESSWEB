@@ -1,4 +1,9 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Edit Challenge{% endblock %}
+
+
 {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
 <head>
     <meta charset="utf-8">

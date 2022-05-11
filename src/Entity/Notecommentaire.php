@@ -42,45 +42,68 @@ class Notecommentaire
      */
     private $islike;
 
-    public function getIdnote(): ?int
+    /**
+     * @return int
+     */
+    public function getIdnote(): int
     {
         return $this->idnote;
     }
 
-    public function getUserid(): ?int
+    /**
+     * @param int $idnote
+     */
+    public function setIdnote(int $idnote): void
+    {
+        $this->idnote = $idnote;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserid(): int
     {
         return $this->userid;
     }
 
-    public function setUserid(int $userid): self
+    /**
+     * @param int $userid
+     */
+    public function setUserid(int $userid): void
     {
         $this->userid = $userid;
-
-        return $this;
     }
 
-    public function getIdcommentaire(): ?int
+    /**
+     * @return int
+     */
+    public function getIdcommentaire(): int
     {
         return $this->idcommentaire;
     }
 
-    public function setIdcommentaire(int $idcommentaire): self
+    /**
+     * @param int $idcommentaire
+     */
+    public function setIdcommentaire(int $idcommentaire): void
     {
         $this->idcommentaire = $idcommentaire;
-
-        return $this;
     }
 
-    public function getIslike(): ?int
+    /**
+     * @return int
+     */
+    public function getIslike(): int
     {
         return $this->islike;
     }
 
-    public function setIslike(int $islike): self
+    /**
+     * @param int $islike
+     */
+    public function setIslike(int $islike): void
     {
         $this->islike = $islike;
-
-        return $this;
     }
 
 

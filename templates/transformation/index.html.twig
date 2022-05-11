@@ -10,16 +10,17 @@
         <div  style=" background-color: whitesmoke; width: 1515px; border: 10px solid #ccc; margin: 1px; float:left;">
             <center>
         <B style="color: black ; width: 500px" >Title : {{ transformation.titreimage }} </B><br />
-        <em style="color: black">Before : </em><img src="{{ asset('images/'~transformation.imageavant)}}" alt="{{transformation.imageavant}}"height="70" width="70"><br />
-        <em style="color: black">After : </em><img src="{{ asset('images/'~transformation.imageapres)}}" alt="{{transformation.imageapres}}"height="70" width="70">
+        <em style="color: black">Before : </em><img src="{{ asset('uploads/brochures/'~transformation.imageavant)}}" alt="{{transformation.imageavant}}"height="70" width="70"><br />
+        <em style="color: black">After : </em><img src="{{ asset('uploads/brochures/'~transformation.imageapres)}}" alt="{{transformation.imageapres}}"height="70" width="70">
         <p>Weight Before : {{ transformation.poidavant }}   Weight After : {{ transformation.poidapres }}</p>
         <p>Height Before : {{ transformation.tailleavant }}   Height After : {{ transformation.tailleapres }}</p>
         <B style="color: black">Descreption :</B>{{ transformation.descreptionimage }}
             </br>
-            <!-- Integration if transformation.IdUser == Session.IdUser-->
+                {% if(transformation.iduser== id) %}
         <a href="{{ path('app_transformation_show', {'idimage': transformation.idimage}) }}">show &nbsp;</a>
         <a href="{{ path('app_transformation_edit', {'idimage': transformation.idimage}) }}">edit&nbsp;</a>
         <a href="{{ path('app_transformation_delete', {'idimage': transformation.idimage}) }}">delete&nbsp;</a>
+                {% endif %}
                 </br>
                 <img src="/upvote.png" alt=""height="15" width="15">   <a style="color: blue" onclick = "upvote();" href="{{ path('app_transformation_upvote', {'idimage': transformation.idimage}) }}">UpVote&nbsp;</a>
                 <script >

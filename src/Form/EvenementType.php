@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Evenement;
+use App\Entity\User;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -16,12 +18,21 @@ class EvenementType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var \Doctrine\ORM\EntityManager $entityManager */
+
+
+        $entityManager = $options['entity_manager'];
+        $creators = $entityManager
+            ->getRepository(User::class)
+            ->getCreators();
+
+        foreach($creators as $k=>$v) {
+            $creatorsfinal[$k] = $v['nomuser'];
+        }
+        $values = array_flip($creatorsfinal);
         $builder
             ->add('idcreatorevenement', ChoiceType::class, [
-                'choices'  => [
-                    '1' => '1',
-                    '2' => '2'
-                ],
+                'choices'  => $values,
             ])
             ->add('dateevenement',DateType::class,[
                 'widget' => 'single_text',
@@ -49,6 +60,7 @@ class EvenementType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Evenement::class
-        ]);
+        ])
+        ->setRequired('entity_manager');
     }
 }

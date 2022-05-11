@@ -9,6 +9,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use http\Env\Response;
+use PhpParser\Node\Expr\Array_;
 use Symfony\Component\Serializer\SerializerInterface;
 /**
 * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -35,6 +36,29 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('mail',$mail)
             ->setParameter('password',$password);
      return $query->getResult();
+    }
+
+    /**
+     * @return Array
+     */
+    public function getallemails():Array
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->select('e.mailuser')
+            ->getQuery()
+            ->getResult();
+        return $qb;
+    }
+    /**
+     * @return array
+     */
+    public function getCreators():array
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->select('e.nomuser')
+            ->distinct();
+        $query = $qb->getQuery();
+        return $query->execute();
     }
 
 }

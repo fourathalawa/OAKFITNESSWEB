@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * Commentaire
@@ -18,6 +20,7 @@ class Commentaire
      * @ORM\Column(name="IDCommentaire", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("commentaire")
      */
     private $idcommentaire;
 
@@ -25,6 +28,7 @@ class Commentaire
      * @var int
      *
      * @ORM\Column(name="IDPublication", type="integer", nullable=false)
+     * @Groups("commentaire")
      */
     private $idpublication;
 
@@ -32,6 +36,7 @@ class Commentaire
      * @var int
      *
      * @ORM\Column(name="IDUser", type="integer", nullable=false)
+     * @Groups("commentaire")
      */
     private $iduser;
 
@@ -39,6 +44,7 @@ class Commentaire
      * @var string
      *
      * @ORM\Column(name="Commentaire", type="string", length=500, nullable=false)
+     * @Groups("commentaire")
      */
     private $commentaire;
 
@@ -46,10 +52,35 @@ class Commentaire
      * @var string
      *
      * @ORM\Column(name="DateCommentaire", type="string", length=255, nullable=false)
+     * @Groups("commentaire")
      */
     private $datecommentaire;
 
-    public function getIdcommentaire(): ?int
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="publication_id", type="integer", nullable=true)
+     * @Groups("commentaire")
+     */
+    private $publicationId;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="nbLikes", type="integer", nullable=true)
+     * @Groups("commentaire")
+     */
+    private $nblikes;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Usernamep", type="string", length=250, nullable=true)
+     * @Groups("commentaire")
+     */
+    private $usernamep;
+
+    public function getId(): ?int
     {
         return $this->idcommentaire;
     }
@@ -98,6 +129,42 @@ class Commentaire
     public function setDatecommentaire(string $datecommentaire): self
     {
         $this->datecommentaire = $datecommentaire;
+
+        return $this;
+    }
+
+    public function getPublicationId(): ?int
+    {
+        return $this->publicationId;
+    }
+
+    public function setPublicationId(?int $publicationId): self
+    {
+        $this->publicationId = $publicationId;
+
+        return $this;
+    }
+
+    public function getNblikes(): ?int
+    {
+        return $this->nblikes;
+    }
+
+    public function setNblikes(?int $nblikes): self
+    {
+        $this->nblikes = $nblikes;
+
+        return $this;
+    }
+
+    public function getUsernamep(): ?string
+    {
+        return $this->usernamep;
+    }
+
+    public function setUsernamep(?string $usernamep): self
+    {
+        $this->usernamep = $usernamep;
 
         return $this;
     }

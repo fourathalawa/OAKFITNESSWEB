@@ -115,7 +115,6 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
         $users = $entityManager
             ->getRepository(User::class)
             ->findby(['roleuser'=>0]);
-
         return $this->render('user/alladherent.html.twig', [
             'users' => $users,
             'image'=> $session->get('image'),
@@ -137,6 +136,18 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
             'image'=> $session->get('image'),
             'nom'=> $session->get('nom'),
             'prenom'=> $session->get('prenom'),        ]);
+    }
+    public function session(Request $request,EntityManagerInterface $entityManager):Response
+    {$session=$request->getSession();
+        $users = $entityManager
+            ->getRepository(User::class)
+            ->findby(['roleuser'=>1]);
+        return $this->render('base-back.html.twig', [
+            'users' => $users,
+            'image'=> $session->get('image'),
+            'nom'=> $session->get('nom'),
+            'prenom'=> $session->get('prenom'),
+        ]);
     }
     /**
      * @Route("/allmanager", name="app_user_allmanager", methods={"GET"})

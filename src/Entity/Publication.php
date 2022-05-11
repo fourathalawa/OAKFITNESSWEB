@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Publication
@@ -18,6 +19,7 @@ class Publication
      * @ORM\Column(name="IDpublication", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("publication")
      */
     private $idpublication;
 
@@ -25,6 +27,7 @@ class Publication
      * @var int
      *
      * @ORM\Column(name="IDuser", type="integer", nullable=false)
+     * @Groups("publication")
      */
     private $iduser;
 
@@ -32,6 +35,7 @@ class Publication
      * @var string
      *
      * @ORM\Column(name="DatePublication", type="string", length=255, nullable=false)
+     * @Groups("publication")
      */
     private $datepublication;
 
@@ -39,10 +43,19 @@ class Publication
      * @var string
      *
      * @ORM\Column(name="Publication", type="string", length=255, nullable=false)
+     * @Groups("publication")
      */
     private $publication;
 
-    public function getIdpublication(): ?int
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="Usernamep", type="string", length=250, nullable=true)
+     * @Groups("publication")
+     */
+    private $usernamep;
+
+    public function getId(): ?int
     {
         return $this->idpublication;
     }
@@ -81,6 +94,23 @@ class Publication
         $this->publication = $publication;
 
         return $this;
+    }
+
+    public function getUsernamep(): ?string
+    {
+        return $this->usernamep;
+    }
+
+    public function setUsernamep(?string $usernamep): self
+    {
+        $this->usernamep = $usernamep;
+
+        return $this;
+    }
+
+    public function getIdpublication(): ?int
+    {
+        return $this->idpublication;
     }
 
 

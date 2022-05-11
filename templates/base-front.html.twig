@@ -38,9 +38,9 @@
 
 
 
-        <link rel="shortcut icon" href="{{asset('front/images/favicon.png')}}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{asset('front/images/oak.png')}}" type="image/x-icon">
 
-        <link rel="icon" href="{{asset('front/images/favicon.png')}}" type="image/x-icon">
+        <link rel="icon" href="{{asset('front/images/oak.png')}}" type="image/x-icon">
 
 
 
@@ -92,7 +92,7 @@
 
                     <div class="pull-left logo-box">
 
-                        <div class="logo"><a href="index-2.html"><img src="front/images/logo-2.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="{{ path('app_default') }}"><img src="{{ asset('front/images/oak.png')}}" style="max-height: 75px; max-width: 75px;" alt="" title=""></a></div>
 
                     </div>
 
@@ -141,35 +141,25 @@
 
                                     </li>
 
-                                    <li class="dropdown"><a href="#">Shop</a>
-
-                                        <ul>
-
-                                            <li><a href="shop.html">Our Products</a></li>
-
-                                            <li><a href="shop-single.html">Product Single</a></li>
-
-                                            <li><a href="shopping-cart.html">Shopping Cart</a></li>
-
-                                            <li><a href="checkout.html">Checkout</a></li>
-
-                                            <li><a href="account.html">Account</a></li>
-
-                                        </ul>
+                                    <li class=""><a href="{{ path('app_produit_indexfront') }}">Shop</a>
 
                                     </li>
+                                    <li class=""><a href="{{ path('app_transformation_index') }}">Transformation</a>
 
-                                    <li class="dropdown"><a href="#">Blog</a>
+                                    </li>
+                                    </li>
 
-                                        <ul>
 
-                                            <li><a href="blog.html">Our Blog</a></li>
+{% block session %}
+    <li class=""><a href="{{ path('login') }}">Sign In</a>
 
-                                            <li><a href="blog-single.html">Blog Single</a></li>
+                                    </li>
+                                    <li class=""><a href="{{ path('app_user_newadherent') }}">Sign Up</a>
+                                    </li>
+                                    {% endblock %}
+                                    <li class=""><a href="{{ path('app_publication_index') }}">Blog</a>
 
-                                            <li><a href="not-found.html">Not Found</a></li>
 
-                                        </ul>
 
                                     </li>
 
@@ -191,69 +181,6 @@
 
                             <!-- Cart Box -->
 
-                            <div class="cart-box">
-
-                                <div class="dropdown">
-
-                                    <button class="cart-box-btn dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="flaticon-shopping-cart-3"></span><span class="total-cart">2</span></button>
-
-                                    <div class="dropdown-menu pull-right cart-panel" aria-labelledby="dropdownMenu3">
-
-
-
-                                        <div class="cart-product">
-
-                                            <div class="inner">
-
-                                                <div class="cross-icon"><span class="icon fa fa-remove"></span></div>
-
-                                                <div class="image"><img src="images/resource/post-thumb-1.jpg" alt="" /></div>
-
-                                                <h3><a href="shop-single.html">Flying Ninja</a></h3>
-
-                                                <div class="quantity-text">Quantity 1</div>
-
-                                                <div class="price">$99.00</div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="cart-product">
-
-                                            <div class="inner">
-
-                                                <div class="cross-icon"><span class="icon fa fa-remove"></span></div>
-
-                                                <div class="image"><img src="images/resource/post-thumb-2.jpg" alt="" /></div>
-
-                                                <h3><a href="shop-single.html">Patient Ninja</a></h3>
-
-                                                <div class="quantity-text">Quantity 1</div>
-
-                                                <div class="price">$99.00</div>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="cart-total">Sub Total: <span>$198</span></div>
-
-                                        <ul class="btns-boxed">
-
-                                            <li><a href="shoping-cart.html">View Cart</a></li>
-
-                                            <li><a href="checkout.html">CheckOut</a></li>
-
-                                        </ul>
-
-
-
-                                    </div>
-
-                                </div>
-
-                            </div>
 
 
 

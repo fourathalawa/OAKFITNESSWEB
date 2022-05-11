@@ -2,7 +2,14 @@
 {% extends 'base-front.html.twig' %}
 
 {% block title %}User{% endblock %}
+{% block session %}{% if(user.iduser !=0) %}
+{% elseif(user.iduser==3) %}
+    <li class=""><a href="{{ path('app_user_alladmin') }}">Dashboard</a>
 
+    </li>
+    {% endif %}
+
+{% endblock %}
 {% block body %}
     <link rel="stylesheet" href={{asset('front/css/show.css')}}>
     <div class="page-content page-container" id="page-content">
@@ -13,7 +20,7 @@
                         <div class="row m-l-0 m-r-0">
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
-                                    <div class="m-b-25"> <img src="{{asset('images/'~user.imageuser)}}" class="img-radius" alt="User-Profile-Image"> </div>
+                                    <div class="m-b-25"> <img src="{{asset('uploads/brochures/'~user.imageuser)}}" class="img-radius" alt="User-Profile-Image"> </div>
                                     <h6 class="f-w-600">{{ user.nomuser }} {{ user.prenomuser }}</h6>
                                     {% if(user.roleuser == 0) %}
                                     <p>Member</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
@@ -98,7 +105,6 @@
         </div>
     </div>
     </div>
-
 
 
 {% endblock %}

@@ -28,21 +28,36 @@ class Suppression
      */
     private $idusers;
 
-    public function getIds(): ?int
+    /**
+     * @return int
+     */
+    public function getIds(): int
     {
         return $this->ids;
     }
 
-    public function getIdusers(): ?int
+    /**
+     * @param int $ids
+     */
+    public function setIds(int $ids): void
+    {
+        $this->ids = $ids;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdusers(): int
     {
         return $this->idusers;
     }
 
-    public function setIdusers(int $idusers): self
+    /**
+     * @param int $idusers
+     */
+    public function setIdusers(int $idusers): void
     {
         $this->idusers = $idusers;
-
-        return $this;
     }
 
 

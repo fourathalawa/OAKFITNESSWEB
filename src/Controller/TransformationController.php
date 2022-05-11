@@ -27,6 +27,9 @@ class TransformationController extends AbstractController
      */
     public function index(Request $request, PaginatorInterface $paginator): Response
     {
+
+        $session=$request->getSession();
+        $id=$session->get('iduser');
         $donnes = $this->getDoctrine()
             ->getRepository(Transformation::class)
             ->findAll();
@@ -38,6 +41,7 @@ class TransformationController extends AbstractController
 
         return $this->render('transformation/index.html.twig', [
             'transformations' => $transformations,
+            'id'=>$id,
         ]);
     }
     /**
@@ -85,6 +89,8 @@ class TransformationController extends AbstractController
             } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                 }
+            $session=$request->getSession();
+            $transformation->setTitreimage($session->get('iduser'));
             $entityManager = $this->getDoctrine()->getManager();
             $transformation->setImageavant($fileName1);
             $transformation->setImageapres($fileName2);
@@ -327,7 +333,7 @@ class TransformationController extends AbstractController
     }
 
     /**
-     * @Route("/{idimage}/votejason", name="app_transformation_upvote" )
+     * @Route("/{idimage}/votejason", name="app_transformation_upvotej" )
      */
     public function votejason(Request $request, EntityManagerInterface $em , NormalizerInterface $Normalizer ): Response
     {
@@ -347,7 +353,7 @@ class TransformationController extends AbstractController
     }
 
     /**
-     * @Route("/{idimage}/downvotejason", name="app_transformation_downvote" )
+     * @Route("/{idimage}/downvotejason", name="app_transformation_downvotej" )
      */
     public function downvotejason(Request $request, EntityManagerInterface $em ,NormalizerInterface $Normalizer ): Response
     {

@@ -17,10 +17,7 @@ class TransformationType extends AbstractType
     {
         $builder
              //integration sessions
-            ->add('iduser',  HiddenType::class ,[
-            'required'   => false,
-            'empty_data' => '22',
-             ])
+            ->add('iduser',  HiddenType::class )
             ->add('titreimage')
             ->add('descreptionimage' ,TextareaType::class)
             ->add('imageavant',FileType::class , array('data_class' => null ,'required' => false))

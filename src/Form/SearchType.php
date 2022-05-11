@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Data\SearchData;
 use App\Entity\Evenement;
+use App\Entity\User;
 use App\Repository\EvenementRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -28,7 +29,7 @@ class SearchType extends AbstractType
         foreach($creators as $k=>$v) {
             $creatorsChoices[$k] = $v['idcreatorevenement'];
         }
-
+        $values = array_flip($creatorsChoices);
         $builder
             ->add('creators',ChoiceType::class, [
                 'mapped'=>true,
@@ -36,7 +37,7 @@ class SearchType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'label'    => "Select form the below",
-                'choices' => $creatorsChoices,
+                'choices' => $values,
             ])
             ->add('minDate',DateType::class, [
                 'label'=>false,

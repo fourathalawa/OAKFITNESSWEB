@@ -136,7 +136,9 @@ class EventController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $evenement = new Evenement();
-        $form = $this->createForm(EvenementType::class, $evenement);
+        $form = $this->createForm(EvenementType::class, $evenement, [
+            'entity_manager' => $entityManager,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

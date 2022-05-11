@@ -50,7 +50,7 @@ class CommentaireController extends AbstractController
             $result = $qb->select('COUNT(u)')
                 ->from('App\Entity\Notecommentaire' , 'u')
                 ->where('u.idcommentaire= :id')
-                ->setParameter('id', 70)
+
                 ->setParameter('id',$commentaire->getId())
                 ->getQuery()
                 ->getSingleScalarResult();

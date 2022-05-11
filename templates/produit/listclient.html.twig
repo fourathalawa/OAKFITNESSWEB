@@ -15,7 +15,7 @@
                     <B style="color: black ; width: 500px" >Product ID : {{ produit.idproduit }}  </B><br />
                     <B style="color: black ; width: 500px" >Product: {{ produit.nomproduit }} </B><br />
                     <em style="color: black">Category : </em> {{ produit.categproduit }}</br>
-                    <img src="{{ asset('images/'~produit.imageproduit)}}" alt="{{ asset('images/'~produit.imageproduit)}}"height="70" width="70">
+                    <img src="{{ asset('uploads/brochures/'~produit.imageproduit)}}" alt="{{ asset('uploads/brochures/'~produit.imageproduit)}}"height="70" width="70">
                     <B style="color: black">Price (tnd) : {{ produit.prixproduit }}</B>
                     <p>STOCK : {{ produit.stockproduit }} </p>
                     <B style="color: black">Descreption :</B>{{ produit.descrproduit }}

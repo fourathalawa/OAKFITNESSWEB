@@ -5,6 +5,7 @@ namespace App\Command;
 
 
 use App\Entity\Evenement;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,6 +26,13 @@ class SendEmails extends Command
         $this->eventstoemail = $em
             ->getRepository(Evenement::class)
             ->get1Day();
+        $this->emailtosend = $em
+            ->getRepository(User::class)
+            ->getallemails();
+        foreach($this->emailtosend as $k=>$v) {
+            $this->emailtosendfinal[$k] = $v['mailuser'];
+        }
+        var_dump($this->emailtosendfinal);
         $this->mailer= $mailer;
         $this->twig = $twig;
         parent::__construct();
@@ -41,8 +49,8 @@ class SendEmails extends Command
 
 
         $email = (new \Swift_Message('your next day events in a bundle'))
-            ->setFrom('heni.m.nechi@gmail.com')
-            ->setTo('heni.nechi@esprit.tn');
+            ->setFrom('oakfitness.noreply@gmail.com')
+            ->setTo($this->emailtosendfinal);
             $twitter = $email->embed(\Swift_Image::fromPath('public/back/images/email/image-3.png'));
         $linkedin = $email->embed(\Swift_Image::fromPath('public/back/images/email/image-9.png'));
         $instagram = $email->embed(\Swift_Image::fromPath('public/back/images/email/image-6.png'));

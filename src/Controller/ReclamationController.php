@@ -50,14 +50,14 @@ $reclamations = $entityManager
      */
     public function new(Request $request,Publication $publication,Commentaire $commentaire,EntityManagerInterface $entityManager): Response
     {
-        $session = 53;
+        $session=$request->getSession();
         $v = $commentaire->getIdpublication();
         $em = $this->getDoctrine()->getManager();
         $dql = "SELECT SUM(e.idcommentreclam) FROM App\Entity\Reclamation e " .
             "WHERE e.idcommentreclam = ?1 and e.idreclameur = ?2";
         $balance = $em->createQuery($dql)
             ->setParameter(1, $commentaire->getId())
-            ->setParameter(2, $session)
+            ->setParameter(2, $session->get('iduser'))
             ->getSingleScalarResult();
         if ($balance == 0) {
             $reclamation = new Reclamation();
@@ -67,7 +67,7 @@ $reclamations = $entityManager
             if ($form->isSubmitted() && $form->isValid()) {
                 $time = date('d/m/Y');
                 $traitement = "non traite";
-                $reclamation->setIdreclameur($session);
+                $reclamation->setIdreclameur($session->get('iduser'));
                 $reclamation->setPubrec($publication->getPublication());
                 $reclamation->setCommentairerec($commentaire->getCommentaire());
                 $reclamation->setIduserreclamation($commentaire->getIduser());
@@ -135,13 +135,13 @@ $reclamations = $entityManager
         $entityManager->persist($suppression);
         $entityManager->flush();
         $em = $this->getDoctrine()->getManager();
-        $dql = "SELECT SUM(e) FROM App\Entity\Suppression e " .
+        $dql = "SELECT COUNT(e) FROM App\Entity\Suppression e " .
             "WHERE e.idusers = ?1";
         $balance = $em->createQuery($dql)
             ->setParameter(1, $commentaire->getIduser())
             ->getSingleScalarResult();
         if ($balance >= 3){
-
+            echo $balance;
             $entityManager->remove($user);
             $entityManager->flush();
             $email = (new TemplatedEmail())
