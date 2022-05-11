@@ -3,44 +3,95 @@
 {% block title %}Repas{% endblock %}
 
 {% block body %}
-    <h1>Repas</h1>
+    <div class="sidebar-page-container grey-bg mt-">
+        <div class="auto-container">
+            <div class="row clearfix">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Idrepas</th>
-                <td>{{ repa.idrepas }}</td>
-            </tr>
-            <tr>
-                <th>Pdej</th>
-                <td>{{ repa.pdej }}</td>
-            </tr>
-            <tr>
-                <th>Dej</th>
-                <td>{{ repa.dej }}</td>
-            </tr>
-            <tr>
-                <th>Dinn</th>
-                <td>{{ repa.dinn }}</td>
-            </tr>
-            <tr>
-                <th>Calorie</th>
-                <td>{{ repa.calorie }}</td>
-            </tr>
-            <tr>
-                <th>Restoractive</th>
-                <td>{{ repa.restoractive }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ repa.image }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <!-- Sidebar Side -->
+                <div class="sidebar-side col-lg-4 col-md-12 col-sm-12">
+                    <aside class="sidebar padding-right">
 
-    <a href="{{ path('app_repas_index') }}">back to list</a>
 
-    <a href="{{ path('app_repas_edit', {'idrepas': repa.idrepas}) }}">edit</a>
+                        <!-- Brochure -->
+                        <div class="sidebar-widget brochure-widget">
+                            <div class="brochure-box">
+                                <div class="inner">
+                                    <span class="icon flaticon-pdf"></span>
+                                    <a href="{{ path('app_repa_show_download',{'idrepas':repa.idrepas}) }}">
+                                    <div class="text">Download. PDF</div>
+                                    </a>
+                                </div>
 
-    {{ include('repas/_delete_form.html.twig') }}
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+                <!-- Content Side -->
+                <div class="content-side col-lg-8 col-md-12 col-sm-12">
+                    <div class="classes-detail">
+                        <div class="inner-box">
+                            <div class="image">
+                                <img src="{{asset('uploads/images/' ~ repa.image )}}" alt="" />
+                            </div>
+                            <div class="lower-content">
+                                <h3>Eat Healthy</h3>
+
+                            </div>
+                            <h3>Breakfast : </h3>
+                            <div class="row clearfix">
+                                <div class="column col-lg-12 col-md-12 col-sm-12">
+                                    <ul class="list-style-two">
+                                        <li>{{ repa.pdej }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <h3>Lunch :</h3>
+                            <div class="row clearfix">
+
+                                <!-- Schedule Column -->
+                                <div class="schedule-column col-lg-12 col-md-12 col-sm-12">
+                                    <ul class="list-style-two">
+                                        <li>{{repa.dej }}</li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                        <h3>Dinner :  </h3>
+                        <div class="row clearfix">
+
+                            <!-- Schedule Column -->
+                            <div class="schedule-column col-lg-12 col-md-12 col-sm-12">
+                                <ul class="list-style-two">
+                                    <li>{{repa.dinn }}</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <h3>Calories :  </h3>
+                        <div class="row clearfix">
+                            <div class="column col-lg-12 col-md-12 col-sm-12">
+                                <ul class="list-style-two">
+                                    <li>{{ repa.calorie }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <h3> Rest / Active : </h3>
+                        <div class="row clearfix">
+                            <div class="column col-lg-12 col-md-12 col-sm-12">
+                                <ul class="list-style-two">
+                                    <li>{{ repa.restoractive }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    </div>
+
 {% endblock %}

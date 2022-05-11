@@ -1,0 +1,34 @@
+<h1>Repas</h1>
+{% for repa in repas %}
+<table class="table">
+    <tbody>
+    <tr>
+        <th>Idrepas</th>
+        <td>{{ repa.idrepas }}</td>
+    </tr>
+    <tr>
+        <th>Pdej</th>
+        <td>{{ repa.pdej }}</td>
+    </tr>
+    <tr>
+        <th>Dej</th>
+        <td>{{ repa.dej }}</td>
+    </tr>
+    <tr>
+        <th>Dinn</th>
+        <td>{{ repa.dinn }}</td>
+    </tr>
+    <tr>
+        <th>Calorie</th>
+        <td>{{ repa.calorie }}</td>
+    </tr>
+    <tr>
+        <th>Restoractive</th>
+        <td>{{ repa.restoractive }}</td>
+    </tr>
+    <tr>
+    </tr>
+    </tbody>
+</table>
+    <br/>
+{% endfor %}

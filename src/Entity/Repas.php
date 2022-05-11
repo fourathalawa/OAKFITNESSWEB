@@ -3,12 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Repas
  *
  * @ORM\Table(name="repas")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\RepasRepository")
  */
 class Repas
 {
@@ -23,42 +24,60 @@ class Repas
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
+     * @Assert\Length(
+     *      min = 7,
+     *      max = 25,
+     *      minMessage = "Event title must be at least  50  characters long",
+     *      maxMessage = "Event title cannot be longer than  125  characters"
+     * )
      * @ORM\Column(name="PDej", type="string", length=2000, nullable=false)
      */
     private $pdej;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
+     * @Assert\Length(
+     *      min = 7,
+     *      max = 25,
+     *      minMessage = "Event title must be at least  50  characters long",
+     *      maxMessage = "Event title cannot be longer than  125  characters"
+     * )
      * @ORM\Column(name="Dej", type="string", length=2000, nullable=false)
      */
     private $dej;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
+     * @Assert\Length(
+     *      min = 7,
+     *      max = 25,
+     *      minMessage = "Event title must be at least  50  characters long",
+     *      maxMessage = "Event title cannot be longer than  125  characters"
+     * )
      * @ORM\Column(name="Dinn", type="string", length=2000, nullable=false)
      */
     private $dinn;
 
     /**
      * @var int
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="Calorie", type="integer", nullable=false)
      */
     private $calorie;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="RestOrActive", type="string", length=20, nullable=false)
      */
     private $restoractive;
 
     /**
      * @var string
-     *
+     * @Assert\File(mimeTypes={ "image/jpeg","image/png"})
      * @ORM\Column(name="Image", type="string", length=200, nullable=false)
      */
     private $image;

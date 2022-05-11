@@ -1,5 +1,8 @@
-{{ form_start(form) }}
-    {{ form_lable() }}
+{% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
+<div class="p-4">
+    {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+    <button class="btn btn-outline-green" style='width: 100%;background-color: cadetblue;'>{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+</div>

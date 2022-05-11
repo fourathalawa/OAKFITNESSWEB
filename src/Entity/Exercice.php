@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 /**
  * Exercice
  *
  * @ORM\Table(name="exercice")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ExerciceRepository")
  */
 class Exercice
 {
@@ -19,68 +22,89 @@ class Exercice
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+
     private $idexercice;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 25,
+     *      minMessage = "Exercice type must be at least  7  characters long",
+     *      maxMessage = "Exercice type cannot be longer than  25  characters"
+     * )
      * @ORM\Column(name="TypeExercice", type="string", length=20, nullable=false)
      */
     private $typeexercice;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
+     * @Assert\Length(
+     *      min = 7,
+     *      max = 25,
+     *      minMessage = "Exercice name must be at least  7  characters long",
+     *      maxMessage = "Exercice name cannot be longer than  25  characters"
+     * )
      * @ORM\Column(name="NomExercice", type="string", length=50, nullable=false)
      */
     private $nomexercice;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="Muscle", type="string", length=70, nullable=false)
      */
     private $muscle;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="Video", type="string", length=150, nullable=false)
+     * @Assert\NotNull
+     * @Assert\Url(
+     *    message = "The url '{{ value }}' is not a valid url",
+     * )
+     * @ORM\Column(name="video", type="string", length=50, nullable=false)
      */
     private $video;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
+     * @Assert\Length(
+     *      min = 7,
+     *      max = 250,
+     *      minMessage = "Your descreption must be at least  25  characters long",
+     *      maxMessage = "Your video cannot be longer than  250  characters"
+     * )
      * @ORM\Column(name="DescrExercice", type="string", length=2000, nullable=false)
      */
     private $descrexercice;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="DiffExercice", type="string", length=20, nullable=false)
      */
     private $diffexercice;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="JusteSalleExercice", type="string", length=20, nullable=false)
      */
     private $justesalleexercice;
 
     /**
      * @var string
-     *
+     * @Assert\NotNull
      * @ORM\Column(name="DureeExercice", type="string", length=30, nullable=false)
      */
     private $dureeexercice;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="Image", type="string", length=200, nullable=false)
+     * @ORM\Column(name="Image",type="string", length=255)
+     * @Assert\File(mimeTypes={"image/jpeg","image/png"})
      */
     private $image;
 

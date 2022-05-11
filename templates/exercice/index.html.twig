@@ -1,51 +1,106 @@
-{% extends 'base-front.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
-{% block title %}Exercice index{% endblock %}
+{% block title %}Exercices{% endblock %}
 
 {% block body %}
-    <h1>Exercice index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Idexercice</th>
-                <th>Typeexercice</th>
-                <th>Nomexercice</th>
-                <th>Muscle</th>
-                <th>Video</th>
-                <th>Descrexercice</th>
-                <th>Diffexercice</th>
-                <th>Justesalleexercice</th>
-                <th>Dureeexercice</th>
-                <th>Image</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for exercice in exercices %}
-            <tr>
-                <td>{{ exercice.idexercice }}</td>
-                <td>{{ exercice.typeexercice }}</td>
-                <td>{{ exercice.nomexercice }}</td>
-                <td>{{ exercice.muscle }}</td>
-                <td>{{ exercice.video }}</td>
-                <td>{{ exercice.descrexercice }}</td>
-                <td>{{ exercice.diffexercice }}</td>
-                <td>{{ exercice.justesalleexercice }}</td>
-                <td>{{ exercice.dureeexercice }}</td>
-                <td>{{ exercice.image }}</td>
-                <td>
-                    <a href="{{ path('app_exercice_show', {'idexercice': exercice.idexercice}) }}">show</a>
-                    <a href="{{ path('app_exercice_edit', {'idexercice': exercice.idexercice}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="11">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <div class="row text-center mt-4">
+                <div class="col-12">
+                    <h3 class="f-w-600">Exercices</h3>
+                </div>
+            </div>
+<div class="container-fluid product-wrapper mb-3 p-2">
+    <div class="product-grid">
+        <div class="feature-products">
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-sidebar">
+                        <div class="filter-section">
+                            <div class="card shadow-lg">
+                                <a href="{{ path('app_exercice_new')}}" style="color:whitesmoke;">
+                                    <div class="card-header">
+                                        <h6 class="mb-0">Add an Exercice<span class="pull-right">+</span></h6>
+                                    </div>
+                                </a>
 
-    <a href="{{ path('app_exercice_new') }}">Create new</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="container-fluid default-dash mb-3 text-white">
+        <div class="row">
+            <div class="col-16">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <div class="best-dealer-table responsive-tbl">
+                            <div class="item">
+                                <div class="table-responsive product-list">
+                                    <table class="table table-bordernone">
+                                        <thead>
+                                        <tr>
+
+                                            <th>Name</th>
+                                            <th>Type</th>
+                                            <th>Muscle</th>
+                                            <th>Video</th>
+                                            <th>Description</th>
+                                            <th>Difficulty</th>
+                                            <th>only gym</th>
+                                            <th>time</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for exercice in exercices %}
+                                            <tr>
+
+                                                <td>
+                                                    <div class="t-title d-inline-block align-middle"><a href="#1"><img class="img-40 m-r-15 rounded-circle align-top" src="{{asset('uploads/images/' ~ exercice.image )}}" alt="" data-original-title="" title=""></a>
+                                                        <div class="d-inline-block mt-2"><span>{{ exercice.nomexercice }}</span></div>
+                                                    </div>
+                                                </td>
+                                                <td>{{ exercice.typeexercice }}</td>
+                                                <td>{{ exercice.muscle }}</td>
+                                                <td>{{ exercice.video }}</td>
+                                                <td>{{ exercice.descrexercice }}</td>
+                                                <td>{{ exercice.diffexercice }}</td>
+                                                <td>{{ exercice.justesalleexercice }}</td>
+                                                <td>{{ exercice.dureeexercice }}</td>
+                                                <td>
+                                                    <a href="{{ path('app_exercice_edit', {'idexercice': exercice.idexercice}) }}" class="btn btn-pill btn-warning btn-air-warning btn-air-warning mb-2"><i class="mdi mdi-feather"></i></i></a>
+                                                    <form method="post" action="{{ path('app_exercice_delete', {'idexercice': exercice.idexercice}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ exercice.idexercice) }}">
+                                                        <button class="btn btn-pill btn-danger btn-air-secondary btn-air-secondary"><i class="mdi mdi-trash-can"></i></button>
+                                                    </form>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="11">no records found</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

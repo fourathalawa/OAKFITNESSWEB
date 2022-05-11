@@ -3,56 +3,123 @@
 {% block title %}Exercice{% endblock %}
 
 {% block body %}
-    <h1>Exercice</h1>
+    <div class="sidebar-page-container grey-bg mt-">
+        <div class="auto-container">
+            <div class="row clearfix">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Idexercice</th>
-                <td>{{ exercice.idexercice }}</td>
-            </tr>
-            <tr>
-                <th>Typeexercice</th>
-                <td>{{ exercice.typeexercice }}</td>
-            </tr>
-            <tr>
-                <th>Nomexercice</th>
-                <td>{{ exercice.nomexercice }}</td>
-            </tr>
-            <tr>
-                <th>Muscle</th>
-                <td>{{ exercice.muscle }}</td>
-            </tr>
-            <tr>
-                <th>Video</th>
-                <td>{{ exercice.video }}</td>
-            </tr>
-            <tr>
-                <th>Descrexercice</th>
-                <td>{{ exercice.descrexercice }}</td>
-            </tr>
-            <tr>
-                <th>Diffexercice</th>
-                <td>{{ exercice.diffexercice }}</td>
-            </tr>
-            <tr>
-                <th>Justesalleexercice</th>
-                <td>{{ exercice.justesalleexercice }}</td>
-            </tr>
-            <tr>
-                <th>Dureeexercice</th>
-                <td>{{ exercice.dureeexercice }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ exercice.image }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <!-- Sidebar Side -->
+                <div class="sidebar-side col-lg-4 col-md-12 col-sm-12">
+                    <aside class="sidebar padding-right">
 
-    <a href="{{ path('app_exercice_index') }}">back to list</a>
+                        <!-- Services -->
+                        <div class="sidebar-widget">
+                            <ul class="service-list">
+                                <li class="current"><a href="">{{ exercice.nomexercice }}</a></li>
+                            </ul>
+                        </div>
 
-    <a href="{{ path('app_exercice_edit', {'idexercice': exercice.idexercice}) }}">edit</a>
+                        <!-- Brochure -->
+                        <div class="sidebar-widget brochure-widget">
+                            <div class="brochure-box">
+                                <div class="inner">
 
-    {{ include('exercice/_delete_form.html.twig') }}
+                                    <span class="icon flaticon-pdf"></span>
+                                    <a href="{{ path('app_exercice_show_download',{'idexercice':exercice.idexercice}) }}">
+                                    <div class="text">Download. PDF</div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+                <!-- Content Side -->
+                <div class="content-side col-lg-8 col-md-12 col-sm-12">
+                    <div class="classes-detail">
+                        <div class="inner-box">
+                            <div class="image">
+                                <img src="{{asset('uploads/images/' ~ exercice.image )}}" alt="" />
+                            </div>
+                            <div class="lower-content">
+                                <h3>Get Ready For Perfect Fitness Training</h3>
+                                <p>{{ exercice.descrexercice }}</p>
+
+                            </div>
+                            <h3>Exercice Type : </h3>
+                            <div class="row clearfix">
+                                <div class="column col-lg-12 col-md-12 col-sm-12">
+                                    <ul class="list-style-two">
+                                        <li>{{ exercice.typeexercice }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                                <h3>Targeted Muscle :</h3>
+                                <div class="row clearfix">
+
+                                    <!-- Schedule Column -->
+                                    <div class="schedule-column col-lg-12 col-md-12 col-sm-12">
+                                        <ul class="list-style-two">
+                                            <li>{{exercice.muscle }}</li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                </div>
+                                <h3>Exercice Diffuclty : </h3>
+                        <div class="row clearfix">
+
+                            <!-- Schedule Column -->
+                            <div class="schedule-column col-lg-12 col-md-12 col-sm-12">
+                                <ul class="list-style-two">
+                                    <li>{{exercice.diffexercice }}</li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <h3>Can this exercice only be done in the gym ? : </h3>
+                                <div class="row clearfix">
+                                    <div class="column col-lg-12 col-md-12 col-sm-12">
+                                        <ul class="list-style-two">
+                                            <li>{{ exercice.justesalleexercice }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                        <h3>Exercice Length : </h3>
+                        <div class="row clearfix">
+                        <div class="column col-lg-12 col-md-12 col-sm-12">
+                            <ul class="list-style-two">
+                                <li>{{ exercice.dureeexercice }}</li>
+                            </ul>
+                        </div>
+                        </div>
+                        <h3>Exercice video : </h3>
+                                    <div class="row clearfix">
+                                        <div class="column col-lg-12 col-md-12 col-sm-12 justify-content-center">
+
+
+                                        <div class="outer-container">
+
+                                            <div class="inner-container">
+
+                                                <!--Video Box-->
+
+                                                <iframe width="600" height="315"
+                                                        src="{{ exercice.video }}">
+                                                </iframe>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 {% endblock %}

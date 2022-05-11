@@ -1,0 +1,47 @@
+{% extends 'base-front.html.twig' %}
+{% block title %}Events{% endblock %}
+
+{% block body %}
+<section class="testimonial-page-section" style="padding-bottom: 110px;">
+    <div class="auto-container">
+        <!-- Sec Title -->
+        <div class="sec-title centered">
+            <div class="title">EVENTS</div>
+            <h2>EVENTS FOR <br> YOU</h2>
+        </div>
+
+        <div class="row clearfix pb-4">
+            {% for evenement in evenements %}
+            <!-- Testimonial Block Three -->
+            <div class="testimonial-block-three col-lg-4 col-md-6 col-sm-12">
+                <div class="inner-box">
+                    <div class="text">{{ evenement.descrevenement }}</div>
+                    <div class="rating">
+                        {{ evenement.dateevenement ? evenement.dateevenement|date('Y-m-d') : '' }}
+                    </div>
+                    <h4>{{ evenement.titreevenement }}</h4>
+                    <div class="designation">{{ evenement.adresseevenement }}</div>
+                    <div class="author-image">
+                        <div class="image">
+                            <img src="{{asset('uploads/images/' ~ evenement.image )}}" alt="" data-original-title="" title="">
+                        </div>
+                        <span class="quote-icon flaticon-quote"></span>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <tr>
+                    <td colspan="11">no records found</td>
+                </tr>
+            {% endfor %}
+        </div>
+        <div class="">
+            {{ knp_pagination_render(evenements, null, {}, {
+                'align': 'center',
+                'size': 'large',
+                'rounded': true,
+            }) }}
+        </div>
+    </div>
+</section>
+{% endblock %}

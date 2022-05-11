@@ -53,6 +53,7 @@
 
         <!--[if lt IE 9]><script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js')}}"></script><![endif]-->
 
+        <!--[if lt IE 9]><script src="{{asset('front/js/respond.js')}}"></script><![endif]-->
 
 </head>
 
@@ -78,71 +79,6 @@
 
 
 
-            <!-- Header Top -->
-
-            <div class="header-top">
-
-                <div class="auto-container">
-
-                    <div class="clearfix">
-
-
-
-                        <!-- Top Left -->
-
-                        <div class="top-left pull-left">
-
-                            <!-- Info List -->
-
-                            <ul class="info-list">
-
-                                <li><span class="icon fa fa-location-arrow"></span> 27 Division St, New York, USA</li>
-
-                                <li><span class="icon fa fa-phone"></span> <a href="tel:+1-044-123-456-789"> +1 (044) 123 456 789</a></li>
-
-                                <li><span class="icon fa fa-envelope-o"></span> <a href="mailto:info@example.com"> info@example.com</a></li>
-
-                            </ul>
-
-                        </div>
-
-
-
-                        <!-- Top Right -->
-
-                        <div class="top-right pull-right">
-
-
-
-                            <!--Language-->
-
-                            <div class="language dropdown"><a class="btn btn-default dropdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" href="#"><span class="flag-icon fa fa-globe"></span>EN &nbsp;<span class="icon fa fa-angle-down"></span></a>
-
-                                <ul class="dropdown-menu style-one" aria-labelledby="dropdownMenu2">
-
-                                    <li><a href="#">English</a></li>
-
-                                    <li><a href="#">German</a></li>
-
-                                    <li><a href="#">Arabic</a></li>
-
-                                    <li><a href="#">Hindi</a></li>
-
-                                </ul>
-
-                            </div>
-
-
-
-                        </div>
-
-
-
-                    </div>
-
-                </div>
-
-            </div>
 
 
 
@@ -156,7 +92,7 @@
 
                     <div class="pull-left logo-box">
 
-                        <div class="logo"><a href="index-2.html"><img src="{{asset('front/images/logo-2.png')}}" alt="" title=""></a></div>
+                        <div class="logo"><a href="index-2.html"><img src="front/images/logo-2.png" alt="" title=""></a></div>
 
                     </div>
 
@@ -194,77 +130,14 @@
 
                                 <ul class="navigation clearfix">
 
-                                    <li class="current dropdown"><a href="#">Home</a>
 
-                                        <ul>
-
-                                            <li><a href="index-2.html">Home Page 01</a></li>
-
-                                            <li><a href="index-3.html">Home Page 02</a></li>
-
-                                            <li><a href="index-4.html">Home Page 03</a></li>
-
-                                            <li class="dropdown"><a href="#">Header Styles</a>
-
-                                                <ul>
-
-                                                    <li><a href="index-2.html">Header Style 01</a></li>
-
-                                                    <li><a href="index-3.html">Header Style 02</a></li>
-
-                                                    <li><a href="index-4.html">Header Style 03</a></li>
-
-                                                </ul>
-
-                                            </li>
-
-                                        </ul>
-
+                                        <li class=""><a href="{{ path('app_event_all') }}">Events</a>
                                     </li>
 
-                                    <li class="dropdown"><a href="#">About</a>
-
-                                        <ul>
-
-                                            <li><a href="about  .html">About Us</a></li>
-
-                                            <li><a href="faq.html">Faq</a></li>
-
-                                            <li><a href="price.html">Price</a></li>
-
-                                            <li><a href="team.html">Team</a></li>
-
-                                            <li><a href="time-table.html">Time Table</a></li>
-
-                                            <li><a href="testimonial.html">Testimonial</a></li>
-
-                                            <li><a href="comming-soon.html">Comming Soon</a></li>
-
-                                        </ul>
-
+                                    <li class=""><a href="{{ path('app_exercice_all') }}">Exercices</a>
                                     </li>
 
-                                    <li class="dropdown"><a href="#">Classes</a>
-
-                                        <ul>
-
-                                            <li><a href="classes.html">Classes</a></li>
-
-                                            <li><a href="classes-detail.html">Classes Detail</a></li>
-
-                                        </ul>
-
-                                    </li>
-
-                                    <li class="dropdown"><a href="#">Portfolio</a>
-
-                                        <ul>
-
-                                            <li><a href="portfolio.html">Portfolio</a></li>
-
-                                            <li><a href="portfolio-detail.html">Portfolio Detail</a></li>
-
-                                        </ul>
+                                    <li class=""><a href="{{ path('app_repas_all') }}">Meals</a>
 
                                     </li>
 
@@ -352,7 +225,7 @@
 
                                                 <div class="cross-icon"><span class="icon fa fa-remove"></span></div>
 
-                                                <div class="image"><img src="{{asset('images/resource/post-thumb-2.jpg')}}" alt="" /></div>
+                                                <div class="image"><img src="images/resource/post-thumb-2.jpg" alt="" /></div>
 
                                                 <h3><a href="shop-single.html">Patient Ninja</a></h3>
 
@@ -392,11 +265,6 @@
 
                             <!-- Quote Btn -->
 
-                            <div class="btn-box">
-
-                                <a href="contact.html" class="pass-btn theme-btn">Get A Free Pass</a>
-
-                            </div>
 
 
 
@@ -426,7 +294,7 @@
 
                     <div class="logo pull-left">
 
-                        <a href="index-2.html" title=""><img src="{{asset('images/logo-small.png')}}" alt="" title=""></a>
+                        <a href="index-2.html" title=""><img src="images/logo-small.png" alt="" title=""></a>
 
                     </div>
 
@@ -466,7 +334,7 @@
 
                                                 <div class="cross-icon"><span class="icon fa fa-remove"></span></div>
 
-                                                <div class="image"><img src="{{asset('images/resource/post-thumb-1.jpg')}}" alt="" /></div>
+                                                <div class="image"><img src="images/resource/post-thumb-1.jpg" alt="" /></div>
 
                                                 <h3><a href="shop-single.html">Flying Ninja</a></h3>
 
@@ -484,7 +352,7 @@
 
                                                 <div class="cross-icon"><span class="icon fa fa-remove"></span></div>
 
-                                                <div class="image"><img src="{{asset('images/resource/post-thumb-2.jpg')}}" alt="" /></div>
+                                                <div class="image"><img src="images/resource/post-thumb-2.jpg" alt="" /></div>
 
                                                 <h3><a href="shop-single.html">Patient Ninja</a></h3>
 
@@ -544,7 +412,7 @@
 
                 <nav class="menu-box">
 
-                    <div class="nav-logo"><a href="index-2.html"><img src="{{asset('images/logo-2.png')}}" alt="" title=""></a></div>
+                    <div class="nav-logo"><a href="index-2.html"><img src="images/logo-2.png" alt="" title=""></a></div>
 
                     <div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header--></div>
 
@@ -986,25 +854,25 @@
 
                             <div class="image">
 
-                                <img src="{{asset('/front/images/resource/benefit-1.jpg')}}" alt="" />
+                                <img src="/front/images/resource/benefit-1.jpg" alt="" />
 
                             </div>
 
                             <div class="image-one">
 
-                                <img src="{{asset('front/images/resource/benefit-2.jpg')}}" alt="" />
+                                <img src="front/images/resource/benefit-2.jpg" alt="" />
 
                             </div>
 
                             <div class="image-two">
 
-                                <img src="{{asset('front/images/resource/benefit-3.jpg')}}" alt="" />
+                                <img src="front/images/resource/benefit-3.jpg" alt="" />
 
                             </div>
 
                             <div class="image-three">
 
-                                <img src="{{asset('front/images/resource/benefit-4.jpg')}}" alt="" />
+                                <img src="front/images/resource/benefit-4.jpg" alt="" />
 
                             </div>
 
@@ -1432,7 +1300,7 @@
 
                             <div class="image">
 
-                                <img src="{{asset('/front/images/resource/faq.png')}}" alt="" />
+                                <img src="/front/images/resource/faq.png" alt="" />
 
                             </div>
 
@@ -1618,7 +1486,7 @@
 
                             <div class="image">
 
-                                <a href="#"><img src="{{asset('front/images/resource/team-1.jpg')}}" alt="" /></a>
+                                <a href="#"><img src="front/images/resource/team-1.jpg" alt="" /></a>
 
                             </div>
 
@@ -1646,7 +1514,7 @@
 
                             <div class="image">
 
-                                <a href="#"><img src="{{asset('front/images/resource/team-2.jpg')}}" alt="" /></a>
+                                <a href="#"><img src="front/images/resource/team-2.jpg" alt="" /></a>
 
                             </div>
 
@@ -1674,7 +1542,7 @@
 
                             <div class="image">
 
-                                <a href="#"><img src="{{asset('front/images/resource/team-3.jpg')}}" alt="" /></a>
+                                <a href="#"><img src="front/images/resource/team-3.jpg" alt="" /></a>
 
                             </div>
 
@@ -1718,15 +1586,15 @@
 
                     <div class="clearfix">
 
-                        <figure class="image-box"><a href="#"><img src="{{asset('front/images/clients/1.png')}}" alt=""></a></figure>
+                        <figure class="image-box"><a href="#"><img src="front/images/clients/1.png" alt=""></a></figure>
 
-                        <figure class="image-box"><a href="#"><img src="{{asset('front/images/clients/2.png')}}" alt=""></a></figure>
+                        <figure class="image-box"><a href="#"><img src="front/images/clients/2.png" alt=""></a></figure>
 
-                        <figure class="image-box"><a href="#"><img src="{{asset('front/images/clients/3.png')}}" alt=""></a></figure>
+                        <figure class="image-box"><a href="#"><img src="front/images/clients/3.png" alt=""></a></figure>
 
-                        <figure class="image-box"><a href="#"><img src="{{asset('front/images/clients/4.png')}}" alt=""></a></figure>
+                        <figure class="image-box"><a href="#"><img src="front/images/clients/4.png" alt=""></a></figure>
 
-                        <figure class="image-box"><a href="#"><img src="{{asset('front/images/clients/5.png')}}" alt=""></a></figure>
+                        <figure class="image-box"><a href="#"><img src="front/images/clients/5.png" alt=""></a></figure>
 
                     </div>
 
@@ -1776,7 +1644,7 @@
 
                             <div class="image">
 
-                                <a href="blog-single.html"><img src="{{asset('front/images/resource/news-4.jpg')}}" alt="" /></a>
+                                <a href="blog-single.html"><img src="images/resource/news-4.jpg" alt="" /></a>
 
                             </div>
 
@@ -1836,7 +1704,7 @@
 
                             <div class="image">
 
-                                <a href="blog-single.html"><img src="{{asset('front/images/resource/news-5.jpg')}}" alt="" /></a>
+                                <a href="blog-single.html"><img src="images/resource/news-5.jpg" alt="" /></a>
 
                             </div>
 
@@ -1896,7 +1764,7 @@
 
                             <div class="image">
 
-                                <a href="blog-single.html"><img src="{{asset('front/images/resource/news-6.jpg')}}" alt="" /></a>
+                                <a href="blog-single.html"><img src="images/resource/news-6.jpg" alt="" /></a>
 
                             </div>
 
@@ -1990,7 +1858,7 @@
 
                                         <div class="logo">
 
-                                            <a href="index-2.html"><img src="{{asset('front/images/footer-logo.png')}}" alt="" /></a>
+                                            <a href="index-2.html"><img src="images/footer-logo.png" alt="" /></a>
 
                                         </div>
 
@@ -2150,8 +2018,6 @@
 
 
 
-
-
     <!-- Search Popup -->
 
     <div class="search-popup">
@@ -2220,11 +2086,11 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIJ_QKHN-bi6_1C9f5eYE3pZs1zhQIo5o"></script>
 
-    <script src="{{asset('front/js/map-script.js')}}"></script>
+    <script src="{{asset('front/js/map-script.js')}}></script>
 
     <!--End Google Map APi-->
 
-{% endblock  %}
+{% endblock js %}
 
 </body>
 

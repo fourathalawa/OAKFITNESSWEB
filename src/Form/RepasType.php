@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Repas;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,15 +18,25 @@ class RepasType extends AbstractType
             ->add('dej')
             ->add('dinn')
             ->add('calorie')
-            ->add('restoractive')
-            ->add('image')
+            ->add('restoractive', ChoiceType::class, [
+                'choices'  => [
+                    'REST' => 'REST',
+                    'ACTIVE' => 'ACTIVE'
+                ],
+            ])
+            ->add('image', FileType::class, [
+                'data_class' => null,
+                'mapped' => false,
+                'required' => false,
+
+            ])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Repas::class,
+            'data_class' => Repas::class
         ]);
     }
 }

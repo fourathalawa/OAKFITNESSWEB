@@ -1,0 +1,45 @@
+{% extends 'base-front.html.twig' %}
+{% block title %}Exercices{% endblock %}
+
+{% block body %}
+<section class="classess-page-section">
+    <div class="auto-container">
+        <div class="brochure-box">
+            <div class="inner">
+
+                <span class="icon flaticon-pdf"></span>
+                <a href="{{ path('app_exercice_all_download') }}">
+                    <div class="text">Download. PDF</div>
+                </a>
+            </div>
+
+        </div>
+        <div class="row clearfix">
+            {% for exercice in exercices %}
+            <!-- Classess Block -->
+            <div class="classess-block col-lg-4 col-md-6 col-sm-12">
+                <div class="inner-box">
+                    <div class="image">
+                        <a href="{{ path('app_exercice_show',{'idexercice':exercice.idexercice}) }}"><img src="{{asset('uploads/images/' ~ exercice.image )}}" alt="" /></a>
+                        <div class="icon-box">
+                            <span class="icon flaticon-tools-and-utensils-1"></span>
+                        </div>
+                    </div>
+                    <div class="lower-content">
+                        <div class="title">{{ exercice.typeexercice }}</div>
+                        <h4><a href="{{ path('app_exercice_show',{'idexercice':exercice.idexercice}) }}">{{ exercice.nomexercice }}</a></h4>
+                        <div class="text">{{ exercice.descrexercice }}</div>
+                        <a class="read-more" href="{{ path('app_exercice_show',{'idexercice':exercice.idexercice}) }}">{{ exercice.diffexercice }}</a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+                <tr>
+                    <td colspan="11">no records found</td>
+                </tr>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+{% endblock %}

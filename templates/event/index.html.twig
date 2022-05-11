@@ -1,47 +1,107 @@
-{% extends 'base-front.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
 {% block title %}Evenement index{% endblock %}
 
 {% block body %}
-    <h1>Evenement index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Idevenement</th>
-                <th>Idcreatorevenement</th>
-                <th>Dateevenement</th>
-                <th>Titreevenement</th>
-                <th>Descrevenement</th>
-                <th>Adresseevenement</th>
-                <th>Typeevenement</th>
-                <th>Image</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for evenement in evenements %}
-            <tr>
-                <td>{{ evenement.idevenement }}</td>
-                <td>{{ evenement.idcreatorevenement }}</td>
-                <td>{{ evenement.dateevenement ? evenement.dateevenement|date('Y-m-d') : '' }}</td>
-                <td>{{ evenement.titreevenement }}</td>
-                <td>{{ evenement.descrevenement }}</td>
-                <td>{{ evenement.adresseevenement }}</td>
-                <td>{{ evenement.typeevenement }}</td>
-                <td>{{ evenement.image }}</td>
-                <td>
-                    <a href="{{ path('app_event_show', {'idevenement': evenement.idevenement}) }}">show</a>
-                    <a href="{{ path('app_event_edit', {'idevenement': evenement.idevenement}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_event_new') }}">Create new</a>
+    <div class="row text-center mt-4">
+        <div class="col-12">
+            <h3 class="f-w-600">Events</h3>
+        </div>
+    </div>
+    <div class="container-fluid product-wrapper mb-1    ">
+        <div class="product-grid">
+            <div class="feature-products">
+                <br>
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <div class="product-sidebar">
+                            <div class="filter-section">
+                                <div class="card shadow-lg">
+                                    <a href="{{ path('app_event_new')}}" style="color:whitesmoke;">
+                                        <div class="card-header">
+                                            <h6 class="mb-0">Add an Event<span class=""><i class="mdi mdi-plus"></i></span></h6>
+                                        </div>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% include 'event/_filter.html.twig' with {form: form} only %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid default-dash mt-4 mb-3 ">
+        <div class="row">
+            <div class="col-16">
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <div class="best-dealer-table responsive-tbl">
+                            <div class="item">
+                                <div class="table-responsive product-list">
+                                    <table class="table table-bordernone">
+                                        <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Creator</th>
+                                            <th>Date</th>
+                                            <th>Description</th>
+                                            <th>Address</th>
+                                            <th>Type</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for evenement in evenements %}
+                                            <tr>
+
+                                                <td>
+                                                    <div class="t-title d-inline-block align-middle"><a href="#1"><img class="img-40 m-r-15 rounded-circle align-top" src="{{asset('uploads/images/' ~ evenement.image )}}" alt="" data-original-title="" title=""></a>
+                                                        <div class="d-inline-block mt-2"><span>{{ evenement.titreevenement }}</span></div>
+                                                    </div>
+                                                </td>
+                                                <td>{{ evenement.idcreatorevenement }}</td>
+                                                <td>{{ evenement.dateevenement ? evenement.dateevenement|date('Y-m-d') : '' }}</td>
+                                                <td>{{ evenement.descrevenement }}</td>
+                                                <td>{{ evenement.adresseevenement }}</td>
+                                                <td>{{ evenement.typeevenement }}</td>
+                                                <td>
+                                                    <a href="{{ path('app_event_edit', {'idevenement': evenement.idevenement}) }}" class="btn btn-pill btn-warning btn-air-warning btn-air-warning mb-2"><i class="mdi mdi-feather"></i></a>
+                                                    <form method="post" action="{{ path('app_event_delete', {'idevenement': evenement.idevenement}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evenement.idevenement) }}">
+                                                        <button class="btn btn-pill btn-danger btn-air-secondary btn-air-secondary"><i class="mdi mdi-trash-can"></i></button>
+                                                    </form>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="11">no records found</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="">
+        {{ knp_pagination_render(evenements, null, {}, {
+            'align': 'center',
+            'size': 'large',
+            'rounded': true,
+        }) }}
+    </div>
+    </div>
+
+
 {% endblock %}

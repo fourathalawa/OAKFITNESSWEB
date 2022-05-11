@@ -1,0 +1,46 @@
+<h1>Exercice</h1>
+{% for exercice in exercices %}
+<table class="table">
+    <tbody>
+    <tr>
+        <th>Idexercice</th>
+        <td>{{ exercice.idexercice }}</td>
+    </tr>
+    <tr>
+        <th>Typeexercice</th>
+        <td>{{ exercice.typeexercice }}</td>
+    </tr>
+    <tr>
+        <th>Nomexercice</th>
+        <td>{{ exercice.nomexercice }}</td>
+    </tr>
+    <tr>
+        <th>Muscle</th>
+        <td>{{ exercice.muscle }}</td>
+    </tr>
+    <tr>
+        <th>Video</th>
+        <td>{{ exercice.video }}</td>
+    </tr>
+    <tr>
+        <th>Descrexercice</th>
+        <td>{{ exercice.descrexercice }}</td>
+    </tr>
+    <tr>
+        <th>Diffexercice</th>
+        <td>{{ exercice.diffexercice }}</td>
+    </tr>
+    <tr>
+        <th>Justesalleexercice</th>
+        <td>{{ exercice.justesalleexercice }}</td>
+    </tr>
+    <tr>
+        <th>Dureeexercice</th>
+        <td>{{ exercice.dureeexercice }}</td>
+    </tr>
+    <tr>
+    </tr>
+    </tbody>
+</table>
+    <br/>
+{% endfor %}

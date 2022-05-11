@@ -1,0 +1,44 @@
+{% extends 'base-front.html.twig' %}
+{% block title %}Meals{% endblock %}
+
+{% block body %}
+    <section class="classess-page-section">
+        <div class="auto-container">
+            <div class="brochure-box">
+                <div class="inner">
+
+                    <span class="icon flaticon-pdf"></span>
+                    <a href="{{ path('app_repas_all_download') }}">
+                        <div class="text">Download. PDF</div>
+                    </a>
+                </div>
+
+            </div>
+            <div class="row clearfix">
+                {% for repa in repas %}
+                    <!-- Classess Block -->
+                    <div class="classess-block col-lg-4 col-md-6 col-sm-12">
+                        <div class="inner-box">
+                            <div class="image">
+                                <a href="{{ path('app_repas_show',{'idrepas':repa.idrepas}) }}"><img src="{{asset('uploads/images/' ~ repa.image )}}" alt="" /></a>
+                                <div class="icon-box">
+                                    <span class="mdi flaticon-pin"></span>
+                                </div>
+                            </div>
+                            <div class="lower-content">
+                                <div class="title">{{ repa.calorie }}</div>
+                                <h4><a href="{{ path('app_repas_show',{'idrepas':repa.idrepas}) }}">{{ repa.restoractive }}</a></h4>
+                                <a class="read-more" href="{{ path('app_repas_show',{'idrepas':repa.idrepas}) }}">MORE</a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <tr>
+                        <td colspan="11">no records found</td>
+                    </tr>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+{% endblock %}
