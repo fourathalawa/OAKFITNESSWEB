@@ -1,0 +1,11 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}New Transformation{% endblock %}
+
+{% block body %}
+<center > <h1 > new Transformation</h1></center>
+
+    {{ include('transformation/_form.html.twig') }}
+
+    <a href="{{ path('app_transformation_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,61 @@
+{{ form_start(form) }}
+
+<div class="form-group" >
+    {{ form_label(form.nomproduit,'Product Name  ') }}<br />
+
+    {{ form_widget(form.nomproduit) }}
+    <div style="color: red">
+        {{ form_errors(form.nomproduit) }}
+    </div>
+
+
+        {{ form_label(form.categproduit,'Category  ') }}<br />
+        {{ form_widget(form.categproduit) }}
+
+    <div style="color: red">
+        {{ form_errors(form.categproduit) }}
+    </div>
+
+
+        {{ form_label(form.descrproduit,'Descreption  ') }}<br />
+        {{ form_widget(form.descrproduit) }}
+
+    <div style="color: red">
+        {{ form_errors(form.descrproduit) }}
+    </div>
+
+
+        {{ form_label(form.prixproduit,'Price(tnd)   ') }}<br />
+        {{ form_widget(form.prixproduit) }}
+
+    <div style="color: red">
+        {{ form_errors(form.prixproduit) }}
+    </div>
+
+
+        {{ form_label(form.isavailable,'Availability  ') }}<br />
+        {{ form_widget(form.isavailable) }}
+
+    <div style="color: red">
+        {{ form_errors(form.isavailable) }}
+    </div>
+
+
+        {{ form_label(form.imageproduit, 'Product Image  ') }}<br />
+        {{ form_widget(form.imageproduit) }}
+
+    <div style="color: red">
+        {{ form_errors(form.imageproduit) }}
+    </div>
+
+
+        {{ form_label(form.stockproduit, 'Stock  ') }}<br />
+        {{ form_widget(form.stockproduit) }}
+
+    <div style="color: red">
+        {{ form_errors(form.stockproduit) }}
+    </div>
+
+    <button class="create-new-button">{{ button_label|default('Save') }}</button>
+</div>
+{{ form_end(form) }}

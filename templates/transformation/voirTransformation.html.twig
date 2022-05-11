@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block title %}Listes des Transformations{% endblock %}
+
+{% block body %}
+    {% if Transformations %}
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Transformations</th>
+                <th scope="col">titre image</th>
+                <th scope="col">descreption image</th>
+                <th scope="col">iduser</th>
+                <th scope="col">poidavant</th>
+                <th scope="col">poidapres</th>
+                <th scope="col">consulter</th>
+                <th scope="col">Modif</th>
+                <th scope="col">supp</th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for trans in transformations %}
+                <tr class="table-primary">
+                    <th scope="row">{{trans.getTitreimage}}</th>
+                    <td>{{trans.getDescreptionimage()}}</td>
+                    <td>{{trans.getIduser()}}</td>
+                    <td>{{trans.getPoidavant()}}</td>
+                    <td>{{trans.getPoidapres()}}</td>
+                    <td><a href="/voir/{{ trans.idimage }}" class="btn btn-info">Détails</a></td>
+                    <td><a href="/modifier/{{ trans.idimage }}" class="btn btn-info">Modifier</a></td>
+                    <td><a href="{{ path('delete', {'id' : trans.idimage}) }}"><button class="btn btn-info">Delete</button></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

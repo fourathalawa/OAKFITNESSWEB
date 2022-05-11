@@ -1,0 +1,74 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Produit index{% endblock %}
+
+{% block body %}
+
+  <center ><h1 class="title" >Produit index</h1></center >
+
+<body >
+    <table class="table" style="color: whitesmoke">
+        <thead>
+            <tr>
+                <th>Idproduit</th>
+                <th>Nomproduit</th>
+                <th>Categproduit</th>
+                <th>Descrproduit</th>
+                <th>Prixproduit</th>
+                <th>Isavailable</th>
+                <th>Imageproduit</th>
+                <th>Stockproduit</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for produit in produits %}
+            <script >
+                //afficher Yes Aulieu de 1
+                var A=0;
+                var B={{ produit.isavailable }};
+                if(B===1){A="Yes";}
+                else A="No";
+            </script>
+
+            <tr>
+                <td>{{ produit.idproduit }}</td>
+                <td>{{ produit.nomproduit }}</td>
+                <td>{{ produit.categproduit }}</td>
+                <td>{{ produit.descrproduit }}</td>
+                <td>{{ produit.prixproduit }}</td>
+                <td><script >
+                        document.write(A)
+                    </script></td>
+                <td><img class="card-img-top" src="{{ asset('images/'~produit.imageproduit)}}"alt="{{produit.imageproduit}}" width="50" height="60"/></td>
+                <td>{{ produit.stockproduit }}</td>
+                <td>
+                    <a href="{{ path('app_produit_showb', {'idproduit': produit.idproduit}) }}">show &nbsp;</a>
+                    <a href="{{ path('app_produit_edit', {'idproduit': produit.idproduit}) }}">edit &nbsp;</a>
+                    <a href="{{ path('app_produit_delete', {'idproduit': produit.idproduit}) }}">delete &nbsp;</a>
+
+                </td>
+            </tr>
+
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+     </br>
+    <div style="text-align:center">
+        <button  class="fc-button" style="color: green" onclick="window.location.href='{{ path('app_produit_list') }}';">
+            generate pdf
+        </button>
+    </br>
+        <button  class="create-new-button" onclick="window.location.href='{{ path('app_produit_new') }}';">
+            Create New
+        </button>
+    </div>
+
+
+{% endblock %}

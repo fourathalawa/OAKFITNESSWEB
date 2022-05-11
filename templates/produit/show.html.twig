@@ -1,0 +1,91 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <h2 class="centered" style="color: #777777">Produit{{ produit.idproduit }}</h2>
+    <script >
+        //afficher Yes Aulieu de 1
+        var A=0;
+        var B={{ produit.isavailable }};
+        if(B===1){A="Yes";}
+        else A="No";
+    </script>
+    <style>
+        /* Without Container */
+        .zoom-without-container {
+            transition: transform .2s; /* Animation */
+            margin: 0 auto;
+        }
+        .zoom-without-container img{
+            width:100%;
+            height:auto;
+        }
+        .zoom-without-container:hover {
+            transform: scale(1.5);
+            /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+    </style>
+
+<center >
+    <table class="table"  >
+        <tbody>
+            <tr>
+                <th>Nomproduit</th>
+                <td style="color: whitesmoke">{{ produit.nomproduit }}</td>
+            </tr>
+            <tr>
+                <th>Categproduit</th>
+                <td style="color: whitesmoke">{{ produit.categproduit }}</td>
+            </tr>
+            <tr>
+                <th>Descrproduit</th>
+                <td style="color: whitesmoke">{{ produit.descrproduit }}</td>
+            </tr>
+            <tr>
+                <th>Prixproduit</th>
+                <td style="color: whitesmoke">{{ produit.prixproduit }}</td>
+            </tr>
+            <tr>
+                <th>Isavailable</th>
+                <td style="color: whitesmoke"><script >
+                        document.write(A)
+                    </script></td>
+            </tr>
+            <tr>
+                <th>Imageproduit</th>
+                <td ><div class="zoom-without-container"><img  src="{{ asset('images/'~produit.imageproduit)}}"alt="{{produit.imageproduit}}" width="50" height="50"/></div></td>
+            </tr>
+            <tr>
+                <th>Stockproduit</th>
+                <td style="color: whitesmoke">{{ produit.stockproduit }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <!--alerte de stock si stock de produit < 10-->
+    <script >  var chiffreaffaire = ({{ produit.stockproduit }}*{{ produit.prixproduit }})
+        var stock = {{ produit.stockproduit }}
+        var alertestock;
+        if(stock<10){alertestock="Need to increase this product Quantity !"}
+        else{alertestock=" Satisfied "}
+    </script>
+    <p style="color: red">
+        • Total Revenue of this product  = <script type="text/javascript">
+            document.write(chiffreaffaire)
+        </script>
+        (tnd)
+        </br>
+        • Stock Alert = <script type="text/javascript">
+            document.write(alertestock)
+        </script>
+
+
+    </p></center>
+
+    <a href="{{ path('app_produit_indexback') }}">back to list</a>
+
+    <a href="{{ path('app_produit_edit', {'idproduit': produit.idproduit}) }}">edit</a>
+
+    {{ include('produit/_delete_form.html.twig') }}
+</center>
+{% endblock %}
