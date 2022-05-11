@@ -1,0 +1,109 @@
+{% form_theme formUM 'bootstrap_4_layout.html.twig' %}
+{{ form_start(formUM,{'attr':{'novalidate':'novalidate'}}) }}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+
+<div class="container">
+
+    <hr>
+
+    <div class="card bg-light">
+        <article class="card-body mx-auto" style="max-width: 400px;">
+            <h4 class="card-title mt-3 text-center">Create Account</h4>
+            <form>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <div class="form-control">
+                        {{ form_label(formUM.nomuser,"Name :") }}
+                        {{ form_widget(formUM.nomuser) }}
+                        {{ form_errors(formUM.nomuser) }}
+                    </div>
+
+                </div>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <div class="form-control">
+                        {{ form_label(formUM.prenomuser,"Last Name :") }}
+                        {{ form_widget(formUM.prenomuser) }}
+                        {{ form_errors(formUM.prenomuser) }}
+                    </div>
+
+                </div>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                    </div>
+                    <div class="form-control">
+                        {{ form_label(formUM.mailuser,"Email :") }}
+                        {{ form_widget(formUM.mailuser) }}
+                        {{ form_errors(formUM.mailuser) }}
+                    </div>
+                </div> <!-- form-group// -->
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-text-height"></i> </span>
+                    </div>
+                    <div class="form-control">
+                        {{ form_label(formUM.telephonenumberuser,"Telephone number :") }}
+                        {{ form_widget(formUM.telephonenumberuser) }}
+                        {{ form_errors(formUM.telephonenumberuser) }}
+                    </div>
+                </div>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-calendar"></i> </span>
+                    </div>
+
+                    <div class="form-control">
+                        {{ form_label(formUM.datenaissanceuser,"Date de Naissance") }}
+                        {{ form_widget(formUM.datenaissanceuser) }}
+                        {{ form_errors(formUM.datenaissanceuser) }}
+                    </div>
+                </div> <!-- form-group// -->
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-sort-numeric-asc"></i> </span>
+                    </div>
+                    <div class="form-control">
+                        {{ form_label(formUM.matriculefiscale,"Matricule :") }}
+                        {{ form_widget(formUM.matriculefiscale) }}
+                        {{ form_errors(formUM.matriculefiscale) }}
+                    </div>
+                </div>
+
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-file-image-o"></i> </span>
+                    </div>
+
+                    <div class="form-control">
+                        {{ form_label(formUM.password,"Password") }}
+                        {{ form_widget(formUM.password) }}
+                        {{ form_errors(formUM.password) }}
+                    </div>
+                </div> <!-- form-group// -->
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
+                </div> <!-- form-group// -->
+                <p class="text-center">Have an account? <a href="">Log In</a> </p>
+            </form>
+        </article>
+    </div>
+
+</div>
+
+
+
+
+{{ form_end(formUM) }}
+<br>
+
+
+

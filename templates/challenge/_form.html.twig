@@ -1,0 +1,51 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creat challenge</title>
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href={{asset('front/css/challenge.css')}}>
+    <link rel="stylesheet" href={{asset('front/css/signup.css')}}>
+</head>
+<body>
+
+    <fieldset>
+        <legend><span class="number">1</span>Initial data</legend>
+        {{ form_label(form.poidint,"Original weight :") }}
+        {{ form_widget(form.poidint) }}
+        {{ form_errors(form.poidint) }}
+
+        {{ form_label(form.taille,"Height :") }}
+        {{ form_widget(form.taille) }}
+        {{ form_errors(form.taille) }}
+
+    </fieldset>
+
+    <fieldset>
+        <legend><span class="number">2</span>Objective</legend>
+        {{ form_label(form.poidob,"Objective weight:") }}
+        {{ form_widget(form.poidob) }}
+        {{ form_errors(form.poidob) }}
+    </fieldset>
+    <fieldset>
+        <legend><span class="number">3</span>Duration</legend>
+
+        {{ form_label(form.datedebut,"Start Date :") }}
+        {{ form_widget(form.datedebut) }}
+        {{ form_errors(form.datedebut )}}
+
+        {{ form_label(form.datefin,"End Date :") }}
+        {{ form_widget(form.datefin) }}
+        {{ form_errors(form.datefin) }}
+
+
+
+    </fieldset>
+    <button class="btn">{{ button_label|default('Save') }}</button>
+</form>
+
+</body>
+</html>
+
+{{ form_end(form) }}

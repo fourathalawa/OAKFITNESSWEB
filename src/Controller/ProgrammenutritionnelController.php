@@ -24,7 +24,7 @@ class ProgrammenutritionnelController extends AbstractController
             ->getRepository(Programmenutritionnel::class)
             ->findAll();
 
-        return $this->render('programmenutritionnel/index.html.twig', [
+        return $this->render('programmenutritionnel/alladherent.html.twig', [
             'programmenutritionnels' => $programmenutritionnels,
         ]);
     }
@@ -45,7 +45,7 @@ class ProgrammenutritionnelController extends AbstractController
             return $this->redirectToRoute('app_programmenutritionnel_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('programmenutritionnel/new.html.twig', [
+        return $this->render('programmenutritionnel/newadherent.html.twig', [
             'programmenutritionnel' => $programmenutritionnel,
             'form' => $form->createView(),
         ]);
@@ -75,7 +75,7 @@ class ProgrammenutritionnelController extends AbstractController
             return $this->redirectToRoute('app_programmenutritionnel_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('programmenutritionnel/edit.html.twig', [
+        return $this->render('programmenutritionnel/editadherent.html.twig', [
             'programmenutritionnel' => $programmenutritionnel,
             'form' => $form->createView(),
         ]);

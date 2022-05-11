@@ -35,5 +35,34 @@ class Session
      */
     private $idsession;
 
+    public function getIduser(): ?int
+    {
+        return $this->iduser;
+    }
+
+    public function setIduser(int $iduser): self
+    {
+        $this->iduser = $iduser;
+
+        return $this;
+    }
+
+    public function getRoleuser(): ?int
+    {
+        return $this->roleuser;
+    }
+
+    public function setRoleuser(int $roleuser): self
+    {
+        $this->roleuser = $roleuser;
+
+        return $this;
+    }
+
+    public function getIdsession(): ?int
+    {
+        return $this->idsession;
+    }
+
 
 }

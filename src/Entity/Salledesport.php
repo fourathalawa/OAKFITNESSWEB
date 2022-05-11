@@ -50,4 +50,61 @@ class Salledesport
     private $prixseance;
 
 
+
+    public function getIdSalle(): ?int
+    {
+        return $this->idSalle;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getIdResponsable(): ?int
+    {
+        return $this->idResponsable;
+    }
+
+    public function setIdResponsable(?int $idResponsable): self
+    {
+        $this->idResponsable = $idResponsable;
+
+        return $this;
+    }
+
+    public function getNomsalle(): ?string
+    {
+        return $this->nomsalle;
+    }
+
+    public function setNomsalle(string $nomsalle): self
+    {
+        $this->nomsalle = $nomsalle;
+
+        return $this;
+    }
+
+    public function getPrixseance(): ?float
+    {
+        return $this->prixseance;
+    }
+
+    public function setPrixseance(float $prixseance): self
+    {
+        $this->prixseance = $prixseance;
+
+        return $this;
+    }
+
+
+
+
 }

@@ -24,7 +24,7 @@ class ExerciceController extends AbstractController
             ->getRepository(Exercice::class)
             ->findAll();
 
-        return $this->render('exercice/index.html.twig', [
+        return $this->render('exercice/alladherent.html.twig', [
             'exercices' => $exercices,
         ]);
     }
@@ -45,7 +45,7 @@ class ExerciceController extends AbstractController
             return $this->redirectToRoute('app_exercice_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('exercice/new.html.twig', [
+        return $this->render('exercice/newadherent.html.twig', [
             'exercice' => $exercice,
             'form' => $form->createView(),
         ]);
@@ -75,7 +75,7 @@ class ExerciceController extends AbstractController
             return $this->redirectToRoute('app_exercice_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('exercice/edit.html.twig', [
+        return $this->render('exercice/editadherent.html.twig', [
             'exercice' => $exercice,
             'form' => $form->createView(),
         ]);

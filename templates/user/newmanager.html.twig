@@ -1,0 +1,11 @@
+{% extends 'base-front.html.twig' %}
+{% block title %}New User{% endblock %}
+
+{% block body %}
+
+    <h1 align="center">Create new User</h1>
+    {{ include('user/formmanager.html.twig') }}
+
+    <a href="{{ path('login') }}">back</a>
+
+{% endblock %}

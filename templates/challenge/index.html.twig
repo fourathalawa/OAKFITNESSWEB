@@ -1,0 +1,47 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Challenge index{% endblock %}
+
+{% block body %}
+    <h1>Challenge index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Idchallenge</th>
+                <th>Datedebut</th>
+                <th>Datefin</th>
+                <th>Poidint</th>
+                <th>Poidob</th>
+                <th>Taille</th>
+                <th>Poidnv</th>
+                <th>Iduser</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for challenge in challenges %}
+            <tr>
+                <td>{{ challenge.idchallenge }}</td>
+                <td>{{ challenge.datedebut ? challenge.datedebut|date('Y-m-d') :''  }}</td>
+                <td>{{ challenge.datefin ? challenge.datefin|date('Y-m-d') :  '' }}</td>
+                <td>{{ challenge.poidint }}</td>
+                <td>{{ challenge.poidob }}</td>
+                <td>{{ challenge.taille }}</td>
+                <td>{{ challenge.poidnv }}</td>
+                <td>{{ challenge.iduser }}</td>
+                <td>
+                    <a href="{{ path('app_challenge_show', {'idchallenge': challenge.idchallenge}) }}">Show</a>
+                    <a href="{{ path('app_challenge_edit', {'idchallenge': challenge.idchallenge}) }}">Edit</a>
+                    {{ include('challenge/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

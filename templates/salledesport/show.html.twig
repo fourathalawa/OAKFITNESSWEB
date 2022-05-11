@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Salledesport{% endblock %}
+
+{% block body %}
+    <h1>Salledesport</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdSalle</th>
+                <td>{{ salledesport.idSalle }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ salledesport.adresse }}</td>
+            </tr>
+            <tr>
+                <th>IdResponsable</th>
+                <td>{{ salledesport.idResponsable }}</td>
+            </tr>
+            <tr>
+                <th>Nomsalle</th>
+                <td>{{ salledesport.nomsalle }}</td>
+            </tr>
+            <tr>
+                <th>Prixseance</th>
+                <td>{{ salledesport.prixseance }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_salledesport_index') }}">back to list</a>
+
+    <a href="{{ path('app_salledesport_edit', {'idSalle': salledesport.idSalle}) }}">edit</a>
+
+    {{ include('salledesport/_delete_form.html.twig') }}
+{% endblock %}

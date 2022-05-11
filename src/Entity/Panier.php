@@ -69,5 +69,77 @@ class Panier
      */
     private $idClient;
 
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getTotal(): ?string
+    {
+        return $this->total;
+    }
+
+    public function setTotal(string $total): self
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    public function getIdCommande(): ?Commande
+    {
+        return $this->idCommande;
+    }
+
+    public function setIdCommande(?Commande $idCommande): self
+    {
+        $this->idCommande = $idCommande;
+
+        return $this;
+    }
+
+    public function getIdProduit(): ?Produit
+    {
+        return $this->idProduit;
+    }
+
+    public function setIdProduit(?Produit $idProduit): self
+    {
+        $this->idProduit = $idProduit;
+
+        return $this;
+    }
+
+    public function getIdClient(): ?User
+    {
+        return $this->idClient;
+    }
+
+    public function setIdClient(?User $idClient): self
+    {
+        $this->idClient = $idClient;
+
+        return $this;
+    }
+
 
 }
