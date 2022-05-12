@@ -276,7 +276,7 @@ class ProduitController extends AbstractController
         $produit->setDescrproduit($request->get('descrproduit'));
         $produit->setPrixproduit($request->get('prixproduit'));
         $produit->setIsavailable($request->get('isavailable'));
-        $produit->setImageproduit($request->get('imageproduit'));
+        $produit->setImageproduit($filename);
         $produit->setStockproduit($request->get('stockproduit'));
 
         $em->persist($produit);
@@ -303,7 +303,7 @@ class ProduitController extends AbstractController
         $produit->setDescrproduit($request->get('descrproduit'));
         $produit->setPrixproduit($request->get('prixproduit'));
         $produit->setIsavailable($request->get('isavailable'));
-        $produit->setImageproduit($request->get('imageproduit'));
+        $produit->setImageproduit($filenamea);
         $produit->setStockproduit($request->get('stockproduit'));
 
         $em->flush();

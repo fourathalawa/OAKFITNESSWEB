@@ -357,8 +357,8 @@ class TransformationController extends AbstractController
         //end move image
         $Transformation->setTitreimage($request->get('titreimage'));
         $Transformation->setDescreptionimage($request->get('descreptionimage'));
-        $Transformation->setImageavant($request->get('imageavant'));
-        $Transformation->setImageapres($request->get('imageapres'));
+        $Transformation->setImageavant($filename1);
+        $Transformation->setImageapres($filename2);
         $Transformation->setPoidavant($request->get('poidavant'));
         $Transformation->setPoidapres($request->get('poidapres'));
         $Transformation->setTailleavant($request->get('tailleavant'));

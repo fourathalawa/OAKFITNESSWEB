@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Reclamation
@@ -18,6 +19,7 @@ class Reclamation
      * @ORM\Column(name="IDReclamation", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups("reclamation")
      */
     private $idreclamation;
 
@@ -25,6 +27,7 @@ class Reclamation
      * @var int|null
      *
      * @ORM\Column(name="IDUserReclamation", type="integer", nullable=true)
+     * @Groups("reclamation")
      */
     private $iduserreclamation;
 
@@ -32,6 +35,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="DescrReclam", type="string", length=500, nullable=false)
+     * @Groups("reclamation")
      */
     private $descrreclam;
 
@@ -39,6 +43,7 @@ class Reclamation
      * @var int
      *
      * @ORM\Column(name="CategReclam", type="integer", nullable=false)
+     * @Groups("reclamation")
      */
     private $categreclam;
 
@@ -46,6 +51,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="DateReclam", type="string", length=255, nullable=false)
+     * @Groups("reclamation")
      */
     private $datereclam;
 
@@ -53,6 +59,7 @@ class Reclamation
      * @var string
      *
      * @ORM\Column(name="EtatReclamation", type="string", length=110, nullable=false)
+     * @Groups("reclamation")
      */
     private $etatreclamation;
 
@@ -60,6 +67,7 @@ class Reclamation
      * @var string|null
      *
      * @ORM\Column(name="CommentaireRec", type="string", length=255, nullable=true)
+     * @Groups("reclamation")
      */
     private $commentairerec;
 
@@ -67,6 +75,7 @@ class Reclamation
      * @var string|null
      *
      * @ORM\Column(name="PubRec", type="string", length=255, nullable=true)
+     * @Groups("reclamation")
      */
     private $pubrec;
 
@@ -74,6 +83,7 @@ class Reclamation
      * @var int|null
      *
      * @ORM\Column(name="idCommentReclam", type="integer", nullable=true)
+     * @Groups("reclamation")
      */
     private $idcommentreclam;
 
@@ -81,6 +91,7 @@ class Reclamation
      * @var int|null
      *
      * @ORM\Column(name="idReclameur", type="integer", nullable=true)
+     * @Groups("reclamation")
      */
     private $idreclameur;
 

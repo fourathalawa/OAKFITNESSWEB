@@ -169,5 +169,10 @@ class Commentaire
         return $this;
     }
 
+    public function getIdcommentaire(): ?int
+    {
+        return $this->idcommentaire;
+    }
+
 
 }

@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @Route("/exercice")
@@ -90,6 +91,9 @@ class ExerciceController extends AbstractController
      */
     public function newMobile(Request $request, EntityManagerInterface $entityManager,SerializerInterface $serializer)
     {
+        $file = new File($request->query->get('image'));
+        $filename=$file->getFilename();
+        $file->move($this->getParameter('kernel.project_dir'). '/public/uploads/images',$filename);
         $type = $request->query->get("TypeExercice");
         $nom = $request->query->get("NomExercice");
         $muscle= $request->query->get("Muscle");
@@ -107,6 +111,7 @@ class ExerciceController extends AbstractController
         $exercice->setMuscle($muscle);
         $exercice->setVideo($video);
         $exercice->setJustesalleexercice($gym);
+        $exercice->setImage($filename);
         $entityManager->persist($exercice);
         $entityManager->flush();
         $json=$serializer->serialize($exercice,"json");
@@ -232,6 +237,37 @@ class ExerciceController extends AbstractController
         $entityManager->flush();
         $jsonContent=$normalizer->normalize($exercice,'json');
         return new Response("Event deleted Sucessfully".json_encode($jsonContent));
+    }
+    /**
+     * @Route("/editMobile/{idexercice}", name="app_exercice_edit_mobile", methods={"GET", "POST"})
+     */
+    public function eMobile(Request $request, EntityManagerInterface $entityManager,SerializerInterface $serializer,$idexercice): Response
+    {
+        $file = new File($request->query->get('image'));
+        $filename=$file->getFilename();
+        $file->move($this->getParameter('kernel.project_dir'). '/public/uploads/images',$filename);
+        $exercice = $entityManager->getRepository(Exercice::class)->find($idexercice);
+        $type = $request->query->get("TypeExercice");
+        $nom = $request->query->get("NomExercice");
+        $muscle= $request->query->get("Muscle");
+        $video = $request->query->get("video");
+        $dscr = $request->query->get("DescrExercice");
+        $diff= $request->query->get("DiffExercice");
+        $gym = $request->query->get("JusteSalleExercice");
+        $length = $request->query->get("DureeExercice");
+        $exercice->setTypeexercice($type);
+        $exercice->setDescrexercice($dscr);
+        $exercice->setDiffexercice($diff);
+        $exercice->setDureeexercice($length);
+        $exercice->setNomexercice($nom);
+        $exercice->setMuscle($muscle);
+        $exercice->setVideo($video);
+        $exercice->setJustesalleexercice($gym);
+        $exercice->setImage($filename);
+        $entityManager->persist($exercice);
+        $entityManager->flush();
+        $json=$serializer->serialize($exercice,"json");
+        return new Response($json);
     }
 
 }

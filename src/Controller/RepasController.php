@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @Route("/repas")
@@ -62,6 +63,9 @@ class RepasController extends AbstractController
      */
     public function newMobile(Request $request, EntityManagerInterface $entityManager,SerializerInterface $serializer)
     {
+        $file = new File($request->query->get('image'));
+        $filename=$file->getFilename();
+        $file->move($this->getParameter('kernel.project_dir'). '/public/uploads/images',$filename);
         $pdej = $request->query->get("PDej");
         $dej = $request->query->get("Dej");
         $din= $request->query->get("Dinn");
@@ -73,6 +77,7 @@ class RepasController extends AbstractController
         $repa->setPdej($pdej);
         $repa->setDinn($din);
         $repa->setRestoractive($rest);
+        $repa->setImage($filename);
         $entityManager->persist($repa);
         $entityManager->flush();
         $json=$serializer->serialize($repa,"json");
@@ -236,4 +241,30 @@ class RepasController extends AbstractController
         $jsonContent=$normalizer->normalize($repas,'json');
         return new Response("Event deleted Sucessfully".json_encode($jsonContent));
     }
+    /**
+     * @Route("/editMobile/{idrepas}", name="app_repas_edit_mobile", methods={"GET", "POST"})
+     */
+    public function eMobile(Request $request, EntityManagerInterface $entityManager,SerializerInterface $serializer,$idrepas): Response
+    {
+        $file = new File($request->query->get('image'));
+        $filename=$file->getFilename();
+        $file->move($this->getParameter('kernel.project_dir'). '/public/uploads/images',$filename);
+        $repa = $entityManager->getRepository(Repas::class)->find($idrepas);
+        $pdej = $request->query->get("PDej");
+        $dej = $request->query->get("Dej");
+        $din= $request->query->get("Dinn");
+        $calorie = $request->query->get("Calorie");
+        $rest = $request->query->get("RestOrActive");
+        $repa->setCalorie($calorie);
+        $repa->setDej($dej);
+        $repa->setPdej($pdej);
+        $repa->setDinn($din);
+        $repa->setRestoractive($rest);
+        $repa->setImage($filename);
+        $entityManager->persist($repa);
+        $entityManager->flush();
+        $json=$serializer->serialize($repa,"json");
+        return new Response($json);
+    }
+
 }

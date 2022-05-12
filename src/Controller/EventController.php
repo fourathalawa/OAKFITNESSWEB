@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @Route("/event")
@@ -52,6 +53,10 @@ class EventController extends AbstractController
      */
     public function newMobile(Request $request, EntityManagerInterface $entityManager,SerializerInterface $serializer): Response
     {
+        $file = new File($request->query->get('image'));
+        $filename=$file->getFilename();
+
+        $file->move($this->getParameter('kernel.project_dir'). '/public/uploads/images',$filename);
         $idcreator = $request->query->get("IDCreatorEvenement");
         $titre = $request->query->get("TitreEvenement");
         $descr= $request->query->get("DescrEvenement");
@@ -65,6 +70,7 @@ class EventController extends AbstractController
         $evenement->setDescrevenement($descr);
         $evenement->setTypeevenement($type);
         $evenement->setTitreevenement($titre);
+        $evenement->setImage($filename);
         $entityManager->persist($evenement);
         $entityManager->flush();
         $json=$serializer->serialize($evenement,"json");
@@ -75,6 +81,9 @@ class EventController extends AbstractController
      */
     public function eMobile(Request $request, EntityManagerInterface $entityManager,SerializerInterface $serializer,$idevenement): Response
     {
+        $file = new File($request->get('image'));
+        $filename=$file->getFilename();
+        $file->move($this->getParameter('kernel.project_dir'). '/public/uploads/images',$filename);
         $evenement = $entityManager->getRepository(Evenement::class)->find($idevenement);
         $idcreator = $request->query->get("IDCreatorEvenement");
         $titre = $request->query->get("TitreEvenement");
@@ -88,6 +97,7 @@ class EventController extends AbstractController
         $evenement->setDescrevenement($descr);
         $evenement->setTypeevenement($type);
         $evenement->setTitreevenement($titre);
+        $evenement->setImage($filename);
         $entityManager->persist($evenement);
         $entityManager->flush();
         $json=$serializer->serialize($evenement,"json");
@@ -136,9 +146,7 @@ class EventController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $evenement = new Evenement();
-        $form = $this->createForm(EvenementType::class, $evenement, [
-            'entity_manager' => $entityManager,
-        ]);
+        $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

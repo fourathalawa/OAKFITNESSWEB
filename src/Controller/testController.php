@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 
+use App\Entity\Commentaire;
 use App\Entity\Publication;
+use App\Entity\Reclamation;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,7 +23,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 
 
-    /**
+/**
  * @Route("/liste")
  */
 class testController extends AbstractController
@@ -53,7 +55,7 @@ class testController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="app_event_new_mobile", methods={"GET", "POST"})
+     * @Route("/create", name="newpub", methods={"GET", "POST"})
      */
     public function newMobile(Request $request,USerRepository $userRepository, EntityManagerInterface $entityManager, SerializerInterface $serializer)
     {
@@ -75,7 +77,7 @@ class testController extends AbstractController
         return new Response($json);
     }
     /**
-     * @Route("/deleteclub/{idpublication}", name="app_repas_delete_mobile", methods={"GET"})
+     * @Route("/deleteclub/{idpublication}", name="deletepub", methods={"GET"})
      */
     public function deleteMobile(Request $request, EntityManagerInterface $entityManager,$idpublication,NormalizerInterface $normalizer): Response
     {
@@ -87,7 +89,7 @@ class testController extends AbstractController
         return new Response("Event deleted Sucessfully".json_encode($jsonContent));
     }
     /**
-     * @Route("/modifier/{pub}/{idpub}", name="app_repas_delete_mobile", methods={"GET"})
+     * @Route("/modifier/{pub}/{idpub}", name="modifierpub", methods={"GET"})
      */
     public function modifer(Request $request, EntityManagerInterface $entityManager,$pub,$idpub,NormalizerInterface $normalizer): Response
     {
@@ -98,7 +100,99 @@ class testController extends AbstractController
         $jsonContent=$normalizer->normalize($publication,'json');
         return new Response("Event modified Sucessfully".json_encode($jsonContent));
     }
+    /**
+     * @Route("/comment/{idpublication}", name="newcomment", methods={"GET"})
+     */
+    public function comment(Request $request,$idpublication, EntityManagerInterface $entityManager,NormalizerInterface $normalizer,SerializerInterface $serializer): Response
+    {
+        $publication= $entityManager->getRepository(Publication::class)->find($idpublication);
+        $em = $this->getDoctrine()->getManager();
+        //       $qb = $em->createQueryBuilder();
+        $dql = "SELECT e FROM App\Entity\Commentaire e " .
+            "WHERE e.idpublication = ?1";
 
+        $balance = $em->createQuery($dql)
+            ->setParameter(1, $publication->getId())
+            ->getResult();
 
+        $json = $serializer->serialize($balance, 'json', ['groups' => 'commentaire']);
+        return new Response($json);
+    }
+    /**
+     * @Route("/createcomm/{idp}", name="app_new_comment", methods={"GET", "POST"})
+     */
+    public function newComment(Request $request,$idp,USerRepository $userRepository, EntityManagerInterface $entityManager, SerializerInterface $serializer)
+    {
+        $session = 52;
+        $user = $userRepository
+            ->find($session);
+
+        $com = $request->query->get("commentaire");
+        $comment = new Commentaire();
+        $comment->setCommentaire($com);
+        $comment->setIduser($session);
+        $time = date('d/m/Y');
+        $comment->setDatecommentaire($time);
+        $comment->setUsernamep($user->getNomuser());
+        $comment->setIdpublication($idp);
+
+        $entityManager->persist($comment);
+        $entityManager->flush();
+        $json = $serializer->serialize($comment, "json");
+        return new Response($json);
+    }
+
+    /**
+     * @Route("/deletecomment/{idcomm}", name="app_delete_comment", methods={"GET"})
+     */
+    public function delteComm(Request $request, EntityManagerInterface $entityManager,$idcomm,NormalizerInterface $normalizer): Response
+    {
+        $Commentaire= $entityManager->getRepository(Commentaire::class)->find($idcomm);
+        $entityManager->remove($Commentaire);
+        $entityManager->flush();
+        $jsonContent=$normalizer->normalize($Commentaire,'json');
+        return new Response("Event deleted Sucessfully".json_encode($jsonContent));
+    }
+    /**
+     * @Route("/modifierC/{comm}/{idcomm}", name="app_edit_comment", methods={"GET"})
+     */
+    public function modiferC(Request $request, EntityManagerInterface $entityManager,$comm,$idcomm,NormalizerInterface $normalizer): Response
+    {
+        $Commentaire= $entityManager->getRepository(Commentaire::class)->find($idcomm);
+
+        $Commentaire->setCommentaire($comm);
+        $entityManager->flush();
+        $jsonContent=$normalizer->normalize($Commentaire,'json');
+        return new Response("Event modified Sucessfully".json_encode($jsonContent));
+    }
+    /**
+     * @Route("/addreclam/{com}/{desc}/{idc}", name="addreclam", methods={"GET", "POST"})
+     */
+    public function newReclam(Request $request,$idc,$com,$desc,USerRepository $userRepository, EntityManagerInterface $entityManager, SerializerInterface $serializer)
+    {
+
+        $reclamation = new Reclamation();
+        $reclamation->setCommentairerec($com);
+        $reclamation->setDescrreclam($desc);
+        $reclamation->setIdcommentreclam($idc);
+
+        $entityManager->persist($reclamation);
+        $entityManager->flush();
+        $json = $serializer->serialize($reclamation, "json");
+        return new Response($json);
+    }
+    /**
+     * @Route("/reclam", name="listreports")
+     */
+    public function getReclams(EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
+    {
+        $publications = $entityManager
+            ->getRepository(Reclamation::class)
+            ->findAll();
+        $json = $serializer->serialize($publications, 'json', ['groups' => 'reclamation']);
+        return new Response($json);
+        // dump($json);
+        //  die();
+    }
 
 }
