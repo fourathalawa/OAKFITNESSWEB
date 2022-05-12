@@ -22,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Validator\Constraints\Json;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\HttpFoundation\File\File;
 
 
 /**
@@ -72,6 +73,14 @@ class ProduitController extends AbstractController
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
+        //start move image
+        $file = new File($request->get('imageproduit'));
+        //Move image
+        $filename= $file->getFilename();
+        $file->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename);
+        //end move image
+
+        //end move image
         if ($form->isSubmitted() && $form->isValid()) {
           $file = $produit->getImageproduit();
           $fileName = md5(uniqid()).'.'.$file->guessExtension();
@@ -87,7 +96,6 @@ class ProduitController extends AbstractController
             $produit->setImageproduit($fileName);
             $entityManager->persist($produit);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_produit_indexback', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -124,6 +132,13 @@ class ProduitController extends AbstractController
     {
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
+
+        //start move image
+        $file = new File($request->get('imageproduit'));
+        //Move image
+        $filename="equipe";
+        $file->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename);
+        //end move image
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $produit->getImageproduit();
@@ -203,7 +218,7 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/codename/viewp", name="viewp")
+     * @Route("/codename/viewp", name="viewp" )
      */
     public function viewp( NormalizerInterface $Normalizer)
     {
@@ -245,12 +260,17 @@ class ProduitController extends AbstractController
     }
 
     /**
-     * @Route("/codename/addp", name="addp")
+     * @Route("/codename/addp", name="addp" )
      */
-    public function addpJSON(Request $request, NormalizerInterface $Normalizer){
+    public function addp(Request $request, NormalizerInterface $Normalizer){
         $em=$this->getDoctrine()->getManager();
+        //start move image
+        $file = new File($request->get('imageproduit'));
+        //Move image
+        $filename= $file->getFilename();
+        $file->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename);
+        //end move image
         $produit= new Produit();
-
         $produit->setNomproduit($request->get('nomproduit'));
         $produit->setCategproduit($request->get('categproduit'));
         $produit->setDescrproduit($request->get('descrproduit'));
@@ -270,7 +290,14 @@ class ProduitController extends AbstractController
     public function updatep(Request $request, NormalizerInterface $Normalizer,$idproduit){
         $em=$this->getDoctrine()->getManager();
         $produit=$em->getRepository(Produit::class)->find($idproduit);
-
+        $form = $this->createForm(ProduitType::class, $produit);
+        $form->handleRequest($request);
+        //start move image
+        $file1 = new File($request->get('imageproduit'));
+        //Move image
+        $filenamea= $file1->getFilename();
+        $file1->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filenamea);
+        //end move image
         $produit->setNomproduit($request->get('nomproduit'));
         $produit->setCategproduit($request->get('categproduit'));
         $produit->setDescrproduit($request->get('descrproduit'));
@@ -280,7 +307,7 @@ class ProduitController extends AbstractController
         $produit->setStockproduit($request->get('stockproduit'));
 
         $em->flush();
-        $jsonContent=$Normalizer->normalize($produit,'json',['groups'=>'student']);
+        $jsonContent=$Normalizer->normalize($produit,'json',['groups'=>'produit']);
         return new Response("Informations mises à jour avec succès".json_encode($jsonContent));
     }
 

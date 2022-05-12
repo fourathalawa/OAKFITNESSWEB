@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Entity\Transformation;
+use App\Form\ProduitType;
 use App\Form\TransformationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use phpDocumentor\Reflection\DocBlock\Serializer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,6 +69,16 @@ class TransformationController extends AbstractController
         $form = $this->createForm(TransformationType::class, $transformation);
         $form->handleRequest($request);
 
+        //start move image
+        $filea = new File($request->get('imageavant'));
+        $fileb = new File($request->get('imageapres'));
+        //Move image
+        $filename="equipe";
+        $filea->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename);
+        $fileb->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename);
+
+        //end move image
+
         if ($form->isSubmitted() && $form->isValid()) {
             $file1 = $transformation->getImageavant();
             $file2= $transformation->getImageapres();
@@ -74,17 +86,14 @@ class TransformationController extends AbstractController
             $fileName2 = md5(uniqid()).'.'.$file2->guessExtension();
             try {
                 $file1->move(
-                    $this->getParameter('brochures_directory'),
-                    $fileName1
+                    $this->getParameter('kernel.project_dir'). 'public/uploads/images',$fileName1
 
                 );}catch (FileException $e) {
                 // ... handle exception if something happens during file upload
             }
                 try {
                     $file2->move(
-                        $this->getParameter('brochures_directory'),
-                        $fileName2
-
+                        $this->getParameter('kernel.project_dir'). 'public/uploads/images',$fileName2
                     );
             } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
@@ -133,6 +142,19 @@ class TransformationController extends AbstractController
     {
         $form = $this->createForm(TransformationType::class, $transformation);
         $form->handleRequest($request);
+        //start move image
+        $filea = new File($request->get('imageavant'));
+        $fileb = new File($request->get('imageapres'));
+        //Move image
+        $filename="equipe";
+        $filea->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename);
+        $fileb->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename);
+
+        //end move image
+        $form = $this->createForm(TransformationType::class, $transformation);
+        $form->handleRequest($request);
+        $file = new File($request->get('idimage'));
+        //Move image
 
         if ($form->isSubmitted() && $form->isValid()) {
             $file1 = $transformation->getImageavant();
@@ -141,17 +163,14 @@ class TransformationController extends AbstractController
             $fileName2 = md5(uniqid()).'.'.$file2->guessExtension();
             try {
                 $file1->move(
-                    $this->getParameter('brochures_directory'),
-                    $fileName1
+                    $this->getParameter('kernel.project_dir'). 'public/uploads/images',$fileName1
 
                 );}catch (FileException $e) {
                 // ... handle exception if something happens during file upload
             }
             try {
                 $file2->move(
-                    $this->getParameter('brochures_directory'),
-                    $fileName2
-
+                    $this->getParameter('kernel.project_dir'). 'public/uploads/images',$fileName2
                 );
             } catch (FileException $e) {
                 // ... handle exception if something happens during file upload
@@ -288,11 +307,21 @@ class TransformationController extends AbstractController
     }
 
     /**
-     * @Route("/codename/addt", name="addp")
+     * @Route("/codename/addt", name="addt")
      */
     public function addpJSON(Request $request, NormalizerInterface $Normalizer){
         $em=$this->getDoctrine()->getManager();
         $Transformation= new Transformation();
+
+        //start move image
+        $filea = new File($request->get('imageavant'));
+        $fileb = new File($request->get('imageapres'));
+        //Move image
+        $filename1= $filea->getFilename();
+        $filename2= $fileb->getFilename();
+        $filea->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename1);
+        $fileb->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename2);
+        //end move image
 
         $Transformation->setTitreimage($request->get('titreimage'));
         $Transformation->setDescreptionimage($request->get('descreptionimage'));
@@ -312,12 +341,20 @@ class TransformationController extends AbstractController
     }
 
     /**
-     * @Route("/codename/updatet/{idimage}", name="updatep")
+     * @Route("/codename/updatet/{idimage}", name="updatet")
      */
     public function updatet(Request $request, NormalizerInterface $Normalizer,$idimage){
         $em=$this->getDoctrine()->getManager();
-        $Transformation=$em->getRepository(Transformation::class)->find($idimage);
-
+        $Transformation=$em->getRepository(TransformationType::class)->find($idimage);
+        //start move image
+        $filea = new File($request->get('imageavant'));
+        $fileb = new File($request->get('imageapres'));
+        //Move image
+        $filename1= $filea->getFilename();
+        $filename2= $fileb->getFilename();
+        $filea->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename1);
+        $fileb->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename2);
+        //end move image
         $Transformation->setTitreimage($request->get('titreimage'));
         $Transformation->setDescreptionimage($request->get('descreptionimage'));
         $Transformation->setImageavant($request->get('imageavant'));

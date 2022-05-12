@@ -2,7 +2,11 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\String_;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * Commande
@@ -22,11 +26,11 @@ class Commande
     private $id;
 
     /**
-     * @var \DateTime|null
+     * @var \Date
      *
-     * @ORM\Column(name="datecommande", type="datetime", nullable=true)
+     * @ORM\Column(name="datecommande", type="date", nullable=true, options={"default"="NULL"})
      */
-    private $datecommande;
+    private $dateCommande = 'NULL';
 
     /**
      * @var int
@@ -36,18 +40,18 @@ class Commande
     private $total;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(name="etat", type="boolean", nullable=false)
+     * @ORM\Column(name="etat", type="integer", nullable=false)
      */
     private $etat;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="avisclient", type="string", length=255, nullable=true)
+     * @ORM\Column(name="avisclient", type="string", length=255, nullable=true, options={"default"="NULL"})
      */
-    private $avisclient;
+    private $avisclient = 'NULL';
 
     /**
      * @var \User
@@ -59,70 +63,115 @@ class Commande
      */
     private $idClient;
 
+    /**
+     * @return int
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDatecommande(): ?\DateTimeInterface
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
     {
-        return $this->datecommande;
+        $this->id = $id;
     }
 
-    public function setDatecommande(?\DateTimeInterface $datecommande): self
+    /**
+     * @return DateTime
+     */
+    public function getDateCommande(): DateTime|string
     {
-        $this->datecommande = $datecommande;
-
-        return $this;
+        return $this->dateCommande;
     }
 
-    public function getTotal(): ?string
+    /**
+     * @param DateTime $dateCommande
+     */
+    public function setDateCommande(DateTime|string $dateCommande): void
+    {
+        $this->dateCommande = $dateCommande;
+    }
+
+
+
+
+    /**
+     * @return int
+     */
+    public function getTotal(): ?int
     {
         return $this->total;
     }
 
-    public function setTotal(string $total): self
+    /**
+     * @param int $total
+     */
+    public function setTotal(int $total): void
     {
         $this->total = $total;
-
-        return $this;
     }
 
-    public function getEtat(): ?bool
+    /**
+     * @return int
+     */
+    public function getEtat(): int
     {
         return $this->etat;
     }
 
-    public function setEtat(bool $etat): self
+
+
+    /**
+     * @param int $etat
+     */
+    public function setEtat(int $etat): void
     {
         $this->etat = $etat;
-
-        return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getAvisclient(): ?string
     {
         return $this->avisclient;
     }
 
-    public function setAvisclient(?string $avisclient): self
+    /**
+     * @param string|null $avisclient
+     */
+    public function setAvisclient(?string $avisclient): void
     {
         $this->avisclient = $avisclient;
-
-        return $this;
     }
 
+    /**
+     * @return \User
+     */
     public function getIdClient(): ?User
     {
         return $this->idClient;
     }
 
+    /**
+     * @param \User $idClient
+     */
     public function setIdClient(?User $idClient): self
     {
         $this->idClient = $idClient;
-
         return $this;
     }
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
 
+
+        $metadata->addPropertyConstraint('etat', new Assert\LessThan([
+
+            'value' =>4 ,
+        ]));
+    }
 
 }
