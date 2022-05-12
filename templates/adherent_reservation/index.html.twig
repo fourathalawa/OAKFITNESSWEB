@@ -1,0 +1,36 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Hello AdherentReservationController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>Liste de Mes reservations</h2>
+        {% for reserv in reservations %}
+            <div class="card">
+                <div class="card-header">
+                    <strong>Reservation num {{ reserv.idreservation }}:</strong>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">nom de la Salle: <strong>{{ reserv.nomsalle }}</strong></h5>
+                    <br>
+                    acceptation de coach: <span style="{{ reserv.acccoach? 'color:green' : 'color:red' }}">{{ reserv.acccoach? 'Accepté' : 'Refusé' }}</span>
+                    <br>
+                    acceptation de responsable: <span style="{{ reserv.accresponsable? 'color:green' : 'color:red' }}">{{ reserv.accresponsable? 'Accepté' : 'Refusé' }}</span>
+                    <br>
+                    {% if reserv.acccoach and reserv.accresponsable %}
+                    <p class="btn btn-success">reservation acceptée</p>
+                        {% else %}
+                    <p class="btn btn-danger">reservation refusée</p>
+                    {% endif %}
+                    <br>
+                    <p class="float-right">{{ reserv.datereservation | date }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        <br>
+        <div class="row">
+            {{ pagerfanta(reservations) }}
+        </div>
+
+    </div>
+{% endblock %}
