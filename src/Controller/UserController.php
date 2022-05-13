@@ -44,158 +44,153 @@ class UserController extends AbstractController
     /**
      * @Route("/login", name="login" ,methods={"GET", "POST"})
      */
-    public function Login (Request $request, UserRepository $userRepository,SessionInterface $session) :Response
+    public function Login(Request $request, UserRepository $userRepository, SessionInterface $session): Response
     {
 
         $user = new User();
         $form = $this->createForm(LoginType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
-            $mail= $user->getMailuser();
-            $pass= $user->getPassword();
+            $mail = $user->getMailuser();
+            $pass = $user->getPassword();
 
-            if($mail!="" && $pass!="") {
+            if ($mail != "" && $pass != "") {
                 if ($form->isSubmitted()) {
                     $us = $userRepository->findOneBy(['mailuser' => $mail, 'password' => $pass]);
-                    if($us->getCodeverification()==1)
-                    {
-                    if ($us->getRoleUser() == "0") {
-                        $session->set('iduser', $us->getIduser());
-                        $session->set('roleuser', "0");
-                        $session->set('image', $us->getImageuser());
-                        $session->set('nom',$us->getNomuser());
-                        $session->set('prenom',$us->getPrenomuser());
+                    if ($us->getCodeverification() == 1) {
+                        if ($us->getRoleUser() == "0") {
+                            $session->set('iduser', $us->getIduser());
+                            $session->set('roleuser', "0");
+                            $session->set('image', $us->getImageuser());
+                            $session->set('nom', $us->getNomuser());
+                            $session->set('prenom', $us->getPrenomuser());
 
-                        return $this->render('user/show.html.twig', [
-                            'user' => $us
-                        ]);
-                    } else if ($us->getRoleUser() == "1") {
-                        $session->set('iduser', $us->getIduser());
-                        $session->set('roleuser', "1");
-                        $session->set('image', $us->getImageuser());
-                        $session->set('nom',$us->getNomuser());
-                        $session->set('prenom',$us->getPrenomuser());
-                        return $this->render('user/show.html.twig', [
-                            'user' => $us
-                        ]);
-                    } else if ($us->getRoleUser() == "2") {
-                        $session->set('iduser', $us->getIduser());
-                        $session->set('roleuser', "2");
-                        $session->set('image', $us->getImageuser());
-                        $session->set('nom',$us->getNomuser());
-                        $session->set('prenom',$us->getPrenomuser());
-                        return $this->render('user/show.html.twig', [
-                            'user' => $us
-                        ]);
-                    } else if ($us->getRoleUser() == "3") {
-                        $session->set('iduser', $us->getIduser());
-                        $session->set('roleuser', "3");
-                        $session->set('image', $us->getImageuser());
-                        $session->set('nom',$us->getNomuser());
-                        $session->set('prenom',$us->getPrenomuser());
-                        return $this->redirectToRoute('app_user_alladherent', [], Response::HTTP_SEE_OTHER);
-                    }
-                }else
-                    {
+                            return $this->render('user/show.html.twig', [
+                                'user' => $us
+                            ]);
+                        } else if ($us->getRoleUser() == "1") {
+                            $session->set('iduser', $us->getIduser());
+                            $session->set('roleuser', "1");
+                            $session->set('image', $us->getImageuser());
+                            $session->set('nom', $us->getNomuser());
+                            $session->set('prenom', $us->getPrenomuser());
+                            return $this->render('user/show.html.twig', [
+                                'user' => $us
+                            ]);
+                        } else if ($us->getRoleUser() == "2") {
+                            $session->set('iduser', $us->getIduser());
+                            $session->set('roleuser', "2");
+                            $session->set('image', $us->getImageuser());
+                            $session->set('nom', $us->getNomuser());
+                            $session->set('prenom', $us->getPrenomuser());
+                            return $this->render('user/show.html.twig', [
+                                'user' => $us
+                            ]);
+                        } else if ($us->getRoleUser() == "3") {
+                            $session->set('iduser', $us->getIduser());
+                            $session->set('roleuser', "3");
+                            $session->set('image', $us->getImageuser());
+                            $session->set('nom', $us->getNomuser());
+                            $session->set('prenom', $us->getPrenomuser());
+                            return $this->redirectToRoute('app_user_alladherent', [], Response::HTTP_SEE_OTHER);
+                        }
+                    } else {
                         return $this->render('user/notverified.html.twig', []);
                     }
 
                 }
             }
-                return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
         }
-return $this->render('user/login.html.twig',['formL' => $form->createView()]);
+        return $this->render('user/login.html.twig', ['formL' => $form->createView()]);
     }
 
     /**
      * @Route("/alladherent", name="app_user_alladherent", methods={"GET"})
      */
-    public function alladherent(Request $request,EntityManagerInterface $entityManager): Response
-    { $session=$request->getSession();
+    public function alladherent(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $session = $request->getSession();
         $users = $entityManager
             ->getRepository(User::class)
-            ->findby(['roleuser'=>0]);
+            ->findby(['roleuser' => 0]);
+
         return $this->render('user/alladherent.html.twig', [
             'users' => $users,
-            'image'=> $session->get('image'),
-            'nom'=> $session->get('nom'),
-            'prenom'=> $session->get('prenom'),
+            'image' => $session->get('image'),
+            'nom' => $session->get('nom'),
+            'prenom' => $session->get('prenom'),
         ]);
     }
+
     /**
      * @Route("/allcoach", name="app_user_allcoach", methods={"GET"})
      */
-    public function allcoach(Request $request,EntityManagerInterface $entityManager): Response
-    {$session=$request->getSession();
+    public function allcoach(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $session = $request->getSession();
         $users = $entityManager
             ->getRepository(User::class)
-            ->findby(['roleuser'=>1]);
+            ->findby(['roleuser' => 1]);
 
         return $this->render('user/allcoach.html.twig', [
             'users' => $users,
-            'image'=> $session->get('image'),
-            'nom'=> $session->get('nom'),
-            'prenom'=> $session->get('prenom'),        ]);
+            'image' => $session->get('image'),
+            'nom' => $session->get('nom'),
+            'prenom' => $session->get('prenom'),]);
     }
-    public function session(Request $request,EntityManagerInterface $entityManager):Response
-    {$session=$request->getSession();
-        $users = $entityManager
-            ->getRepository(User::class)
-            ->findby(['roleuser'=>1]);
-        return $this->render('base-back.html.twig', [
-            'users' => $users,
-            'image'=> $session->get('image'),
-            'nom'=> $session->get('nom'),
-            'prenom'=> $session->get('prenom'),
-        ]);
-    }
+
     /**
      * @Route("/allmanager", name="app_user_allmanager", methods={"GET"})
      */
-    public function allmanager(Request $request,EntityManagerInterface $entityManager): Response
-    {$session=$request->getSession();
+    public function allmanager(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $session = $request->getSession();
         $users = $entityManager
             ->getRepository(User::class)
-            ->findby(['roleuser'=>2]);
+            ->findby(['roleuser' => 2]);
 
         return $this->render('user/allmanager.html.twig', [
             'users' => $users,
-            'image'=> $session->get('image'),
-            'nom'=> $session->get('nom'),
-            'prenom'=> $session->get('prenom'),        ]);
+            'image' => $session->get('image'),
+            'nom' => $session->get('nom'),
+            'prenom' => $session->get('prenom'),]);
     }
+
     /**
      * @Route("/alladmin", name="app_user_alladmin", methods={"GET"})
      */
-    public function alladmin(Request $request,EntityManagerInterface $entityManager): Response
-    {$session=$request->getSession();
+    public function alladmin(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $session = $request->getSession();
         $users = $entityManager
             ->getRepository(User::class)
-            ->findby(['roleuser'=>3]);
+            ->findby(['roleuser' => 3]);
 
         return $this->render('user/alladmin.html.twig', [
             'users' => $users,
-            'image'=> $session->get('image'),
-            'nom'=> $session->get('nom'),
-            'prenom'=> $session->get('prenom'),        ]);
+            'image' => $session->get('image'),
+            'nom' => $session->get('nom'),
+            'prenom' => $session->get('prenom'),]);
     }
+
     /**
      * @Route("/forget", name="app_user_forget", methods={"GET", "POST"})
      */
-    public function ForgetPassword(Request $request, MailerInterface $mailer,UserRepository $userRepository): Response
+    public function ForgetPassword(Request $request, MailerInterface $mailer, UserRepository $userRepository): Response
     {
         $user = new User();
         $form = $this->createForm(ForgetPasswordType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
-            $us=$userRepository->findOneBy(['mailuser' => $user->getMailuser()]);
+            $us = $userRepository->findOneBy(['mailuser' => $user->getMailuser()]);
             $email = (new TemplatedEmail())
                 ->from('fourat.halaoua@esprit.tn')
                 ->to($user->getMailuser())
                 ->subject('OAKFITNESS Password')
                 ->htmlTemplate('user/mailmotdepasse.html.twig')
                 ->context([
-                    'url'=>'user/motdepasse/'.$us->getIduser()
+                    'url' => 'user/motdepasse/' . $us->getIduser()
                 ]);
 
             try {
@@ -205,8 +200,9 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
             }
             return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
         }
-        return $this->render('user/forgetpassword.html.twig',['formF' => $form->createView()]);
+        return $this->render('user/forgetpassword.html.twig', ['formF' => $form->createView()]);
     }
+
     /**
      * @Route("/newadherent", name="app_user_newadherent", methods={"GET", "POST"})
      */
@@ -218,11 +214,11 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
 
         if ($form->isSubmitted()) {
             $user->setRoleuser(0);
-            $code=random_int(90000, 100000);
+            $code = random_int(90000, 100000);
             $user->setCodeverification($code);
             $file = $form->get('imageuser')->getData();
-            $fileName= md5(uniqid()).'.'.$file->guessExtension();
-            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'), $fileName);
             $user->setImageuser($fileName);
             $entityManager->persist($user);
 
@@ -234,7 +230,7 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
                 ->subject('OAKFITNESS Verify Account')
                 ->htmlTemplate('user/mailverification.html.twig')
                 ->context([
-                   'url'=> 'user/verificationAccount/'.$user->getCodeverification()
+                    'url' => 'user/verificationAccount/' . $user->getCodeverification()
                 ]);
 
             try {
@@ -250,10 +246,11 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
             'formU' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/newmanager", name="app_user_newmanager", methods={"GET", "POST"})
      */
-    public function nawmanager(Request $request,MailerInterface $mailer, EntityManagerInterface $entityManager): Response
+    public function nawmanager(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(ManagerType::class, $user);
@@ -261,11 +258,11 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
 
         if ($form->isSubmitted()) {
             $user->setRoleuser(2);
-            $code=random_int(90000, 100000);
+            $code = random_int(90000, 100000);
             $user->setCodeverification($code);
             $file = $form->get('imageuser')->getData();
-            $fileName= md5(uniqid()).'.'.$file->guessExtension();
-            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'), $fileName);
             $user->setImageuser($fileName);
             $entityManager->persist($user);
 
@@ -277,7 +274,7 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
                 ->subject('OAKFITNESS Verify Account')
                 ->htmlTemplate('user/mailverification.html.twig')
                 ->context([
-                    'url'=> 'user/verificationAccount/'.$user->getCodeverification()
+                    'url' => 'user/verificationAccount/' . $user->getCodeverification()
                 ]);
 
             try {
@@ -294,6 +291,7 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
             'formUM' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/newadmin", name="app_user_newadmin", methods={"GET", "POST"})
      */
@@ -316,22 +314,23 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
             'formUA' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/newcoach", name="app_user_newcoach", methods={"GET", "POST"})
      */
-    public function newcoach(Request $request,MailerInterface $mailer, EntityManagerInterface $entityManager): Response
+    public function newcoach(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
         $userC = new User();
         $form = $this->createForm(CoachType::class, $userC);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() ) {
+        if ($form->isSubmitted()) {
             $userC->setRoleuser(1);
-            $code=random_int(90000, 100000);
+            $code = random_int(90000, 100000);
             $userC->setCodeverification($code);
             $file = $form->get('imageuser')->getData();
-            $fileName= md5(uniqid()).'.'.$file->guessExtension();
-            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'), $fileName);
             $userC->setImageuser($fileName);
             $entityManager->persist($userC);
 
@@ -343,7 +342,7 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
                 ->subject('OAKFITNESS Verify Account')
                 ->htmlTemplate('user/mailverification.html.twig')
                 ->context([
-                    'url'=> 'user/verificationAccount/'.$userC->getCodeverification()
+                    'url' => 'user/verificationAccount/' . $userC->getCodeverification()
                 ]);
 
             try {
@@ -364,10 +363,10 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
     /**
      * @Route("/show", name="app_user_show", methods={"GET"})
      */
-    public function show(Request $request,UserRepository $userRepository): Response
+    public function show(Request $request, UserRepository $userRepository): Response
     {
-        $session=$request->getSession();
-        $user=$userRepository->findOneBy(['iduser'=>$session->get('iduser',0)]);
+        $session = $request->getSession();
+        $user = $userRepository->findOneBy(['iduser' => $session->get('iduser', 0)]);
         return $this->render('user/show.html.twig', [
             'user' => $user,
         ]);
@@ -376,16 +375,17 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
     /**
      * @Route("/editadherent", name="app_user_editadherent", methods={"GET", "POST"})
      */
-    public function editadherent(Request $request, EntityManagerInterface $entityManager,UserRepository $userRepository): Response
-    {$session=$request->getSession();
-        $user = $userRepository->findOneBy(['iduser'=>$session->get('iduser',0)]);
+    public function editadherent(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
+    {
+        $session = $request->getSession();
+        $user = $userRepository->findOneBy(['iduser' => $session->get('iduser', 0)]);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             $file = $form->get('imageuser')->getData();
-            $fileName= md5(uniqid()).'.'.$file->guessExtension();
-            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'), $fileName);
             $user->setImageuser($fileName);
             $entityManager->flush();
 
@@ -398,20 +398,21 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
         ]);
 
     }
+
     /**
      * @Route("/{iduser}/editcoach", name="app_user_editcoach", methods={"GET", "POST"})
      */
-    public function editcoach(Request $request,UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function editcoach(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $session=$request->getSession();
-        $user = $userRepository->findOneBy(['iduser'=>$session->get('iduser',0)]);
+        $session = $request->getSession();
+        $user = $userRepository->findOneBy(['iduser' => $session->get('iduser', 0)]);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             $file = $form->get('imageuser')->getData();
-            $fileName= md5(uniqid()).'.'.$file->guessExtension();
-            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'), $fileName);
             $user->setImageuser($fileName);
             $entityManager->flush();
 
@@ -423,20 +424,21 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
             'formUC' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/editmanager", name="app_user_editmanager", methods={"GET", "POST"})
      */
     public function editmanager(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $session=$request->getSession();
-        $user = $userRepository->findOneBy(['iduser'=>$session->get('iduser',0)]);
+        $session = $request->getSession();
+        $user = $userRepository->findOneBy(['iduser' => $session->get('iduser', 0)]);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             $file = $form->get('imageuser')->getData();
-            $fileName= md5(uniqid()).'.'.$file->guessExtension();
-            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'), $fileName);
             $user->setImageuser($fileName);
             $entityManager->flush();
 
@@ -448,20 +450,21 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
             'formUM' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/editadmin", name="app_user_editadmin", methods={"GET", "POST"})
      */
-    public function editadmin(Request $request,UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function editadmin(Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $session=$request->getSession();
-        $user = $userRepository->findOneBy(['iduser'=>$session->get('iduser',0)]);
+        $session = $request->getSession();
+        $user = $userRepository->findOneBy(['iduser' => $session->get('iduser', 0)]);
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             $file = $form->get('imageuser')->getData();
-            $fileName= md5(uniqid()).'.'.$file->guessExtension();
-            $file->move($this->getParameter('brochures_directory'),$fileName);
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move($this->getParameter('brochures_directory'), $fileName);
             $user->setImageuser($fileName);
             $entityManager->flush();
 
@@ -473,57 +476,60 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
             'formUA' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/{iduser}", name="app_user_delete", methods={"POST"})
      */
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getIduser(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getIduser(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('login', [], Response::HTTP_SEE_OTHER);
     }
+
     /**
      * @Route("/delete/{iduser}", name="app_user_deleteback", methods={"POST"})
      */
     public function deleteback(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getIduser(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getIduser(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_user_alladmin', [], Response::HTTP_SEE_OTHER);
     }
+
     /**
      * @Route("/verificationAccount/{codeverificationuser}", name="app_user_verif", methods={"GET","POST"})
      */
-    public function verifAccount($codeverificationuser,UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function verifAccount($codeverificationuser, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $user = $userRepository->findOneBy(['codeverification'=>$codeverificationuser]);
-        if($user != null)
-        {
+        $user = $userRepository->findOneBy(['codeverification' => $codeverificationuser]);
+        if ($user != null) {
             $user->setCodeverification(1);
             $entityManager->persist($user);
             $entityManager->flush();
         }
         return $this->render('user/verificationaccount.html.twig', [
-'user'=>$user
+            'user' => $user
         ]);
 
     }
+
     /**
      * @Route("/motdepasse/{iduser}", name="app_user_motdepasse", methods={"GET", "POST"})
      */
-    public function passwordresit($iduser,Request $request, User $user,UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    public function passwordresit($iduser, Request $request, User $user, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(PasswordResit::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $us=$userRepository->findOneBy(['iduser' =>$iduser ]);
+            $us = $userRepository->findOneBy(['iduser' => $iduser]);
             $us->setPassword($user->getPassword());
             $entityManager->persist($us);
             $entityManager->flush();
@@ -539,76 +545,72 @@ return $this->render('user/login.html.twig',['formL' => $form->createView()]);
     /**
      * @Route("/loginuser",name="login_mob" ,methods={"GET", "POST"})
      */
-    public function loginuser(NormalizerInterface  $Normalizer,Request $request,UserRepository $repository){
+    public function loginuser(NormalizerInterface $Normalizer, Request $request, UserRepository $repository)
+    {
         $email = $request->query->get("mailuser");
-        $password= $request->query->get("password");
-        $user=$repository->findOneBy(['mailuser'=>$email]);
+        $password = $request->query->get("password");
+        $user = $repository->findOneBy(['mailuser' => $email]);
 
         if ($user) {
-            if ( $password == $user->getPassword() ) {
+            if ($password == $user->getPassword()) {
                 $serializer = new Serializer([new ObjectNormalizer()]);
                 $formatted = $serializer->normalize($user);
                 return new JsonResponse($formatted);
 
-        }else
-            {
+            } else {
                 return new Response("password not found");
             }
-        }
-        else {
+        } else {
             return new Response("user not found");
         }
 
     }
 
 
-
     /**
-     * @Route("/deletemobile",name="delete_userjson" ,methods={"GET"})
+     * @Route("/deletemobile/{iduser}",name="delete_userjson" )
      */
-    public function deleteuser(EntityManagerInterface  $entityManager,Request $request,UserRepository $repository,NormalizerInterface $normalizer):Response
+    public function deleteuser($iduser,EntityManagerInterface $entityManager, Request $request, UserRepository $repository): Response
     {
-        $id = $request->query->get("IdUser");
+      //  $id = $request->query->get("IdUser");
 
-        $user=$repository->find($id);
-echo $user->getPrenomuser();
-        $entityManager->remove($user);
-        $entityManager->flush();
+        $user = $repository->findOneBy(['iduser'=>$iduser]);
+        echo $user->getPrenomuser();
+        if ($user != null) {
+            $entityManager->remove($user);
+            $entityManager->flush();
 
-
-        $entityManager->remove($user);
-        $entityManager->flush();
-        $jsonContent=$normalizer->normalize($user,'json');
-        return new Response("Event deleted Sucessfully".json_encode($jsonContent));
-
+            $serializer = new Serializer([new ObjectNormalizer()]);
+            $jsonContent = $serializer->normalize("c bon");
+            return new JsonResponse($jsonContent);
+        }
+        return new JsonResponse("non");
     }
 
     /**
      * @Route("/inscription",name="signup_mob" ,methods={"GET", "POST"})
      */
-    public function signupUser(NormalizerInterface  $Normalizer,Request $request,UserRepository $repository){
+    public function signupUser(NormalizerInterface $Normalizer, Request $request, UserRepository $repository)
+    {
         $email = $request->query->get("mailuser");
-        $password= $request->query->get("password");
+        $password = $request->query->get("password");
         $name = $request->query->get("nomuser");
-        $lastname= $request->query->get("prenomuser");
+        $lastname = $request->query->get("prenomuser");
         $role = $request->query->get("roleuser");
-        $date= date_create_from_format("d/m/y",$request->get("datenaissanceuser"));
+        // $date= date_create_from_format("d/m/y",$request->get("datenaissanceuser"));
         $telephone = $request->query->get("telephonenumberuser");
-        $em=$this->getDoctrine()->getManager();
-        $user=$repository->findOneBy(['mailuser'=>$email]);
+        $em = $this->getDoctrine()->getManager();
 
+        $date= date_create_from_format("d/m/y",$request->get("datenaissanceuser"));
+        $user = $repository->findOneBy(['mailuser' => $email]);
         if ($user) {
-
-
-
             return new Response("User Exist!!!!");
-        }
-        else {
-            $us=new User();
+        } else {
+            $us = new User();
             $us->setNomuser($name);
             $us->setPrenomuser($lastname);
             $us->setMailuser($email);
-            $us->setDatenaissanceuser($date);
+             $us->setDatenaissanceuser($date);
             $us->setTelephonenumberuser($telephone);
             $us->setRoleuser($role);
             $us->setPassword($password);
@@ -620,4 +622,54 @@ echo $user->getPrenomuser();
         }
 
     }
-}
+
+
+    /**
+     * @Route("/getAllUsers",name="getusers" ,methods={"GET", "POST"})
+     */
+    public function GetAllUsers(NormalizerInterface $Normalizer, Request $request, UserRepository $repository)
+    {
+        $users = $repository->findAll();
+        foreach ($users as $us) {
+            $mails[] = $us->getMailuser();
+        }
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($mails);
+        return new JsonResponse($formatted);
+
+
+    }
+
+    /**
+     * @Route("/allusers",name="getusers" ,methods={"GET", "POST"})
+     */
+    public function allusers(NormalizerInterface $Normalizer, Request $request, UserRepository $repository)
+    {
+        $users = $repository->findAll();
+        $serializer = new Serializer([new ObjectNormalizer()]);
+        $formatted = $serializer->normalize($users);
+        return new JsonResponse($formatted);
+    }
+    /**
+     * @Route("/editUser", name="app_user_editUser", methods={"GET", "POST"})
+     */
+    public function editUserMobile(Request $request, NormalizerInterface $normalizer, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+        $email = $request->query->get("mailuser");
+        $password = $request->query->get("password");
+        $name = $request->query->get("nomuser");
+        $lastname = $request->query->get("prenomuser");
+        $telephone = $request->query->get("telephonenumberuser");
+        $id = $request->query->get("iduser");
+        $userinit= $entityManager->getRepository(User::class)->find($id);
+
+        $userinit->setNomuser($name);
+        $userinit->setPrenomuser($lastname);
+        $userinit->setMailuser($email);
+        $userinit->setTelephonenumberuser($telephone);
+        $userinit->setPassword($password);
+
+        $entityManager->flush();
+        $jsonContent=$normalizer->normalize($userinit,'json');
+        return new Response("User modified Sucessfully".json_encode($jsonContent));
+}}

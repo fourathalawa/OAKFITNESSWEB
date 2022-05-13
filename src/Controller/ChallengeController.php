@@ -8,12 +8,18 @@ use App\Repository\ChallengeRepository;
 use App\Form\ChallengeType;
 use App\Form\ChallengeNWType;
 use App\Repository\UserRepository;
+use Cassandra\Float_;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\RepositoryException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @Route("/challenge")
@@ -57,7 +63,7 @@ class ChallengeController extends AbstractController
         ]);
     }
 
-    /**
+   /* /**
      * @Route("/{idchallenge}", name="app_challenge_show", methods={"GET"})
      */
     public function show(Challenge $challenge): Response
@@ -134,5 +140,85 @@ else {
         'imcNow' => round($imcNow, 2)
     ]);
 }
+    }
+    /**
+     * @Route("/newchallenge",name="add" ,methods={"GET", "POST"})
+     */
+    public function newmobile(Request $request, ChallengeRepository $repository):Response
+{
+
+
+        $id=$request->query->get('iduser');
+        $poidinit=$request->query->get('poidinit');
+        $poidoj=$request->query->get('poidob');
+        $taille=$request->query->get('taille');
+        $date1=date_create_from_format("d/m/y",$request->query->get("datedebut"));
+        $date2=date_create_from_format("d/m/y",$request->query->get("datefin"));
+        $challenge = $repository->findOneBy(['iduser' => $id]);
+
+        if ($challenge) {
+            return new Response("challenge Exist!!!!");
+        } else {
+            $ch = new Challenge();
+         $ch->setPoidint($poidinit);
+            $ch->setPoidob($poidoj);
+            $ch->setTaille($taille);
+            $ch->setDatedebut($date1);
+            $ch->setDatefin($date2);
+            $ch->setIduser($id);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($ch);
+            $em->flush();
+            $serializer = new Serializer([new ObjectNormalizer()]);
+            $formatted = $serializer->normalize($ch);
+            return new JsonResponse($formatted);
+        }
+
+    }
+    /**
+     * @Route ("/getCH/{iduser}", name="displayaaachallenge")
+     */
+    public function DisplayallChallenge($iduser,SerializerInterface $serializer,ChallengeRepository $repository):Response
+    {
+        $users = $repository->findOneBy(['iduser'=>$iduser]);
+        $json=$serializer->serialize($users,'json');
+        return  new Response($json);
+
+    }
+
+    /**
+     * @Route("/deletemobile/{idchallenge}",name="delete_challengejson" )
+     */
+    public function deletechallenge($idchallenge,EntityManagerInterface $entityManager, Request $request, ChallengeRepository $repository): Response
+    {
+        //  $id = $request->query->get("IdUser");
+
+        $challenge = $repository->findOneBy(['idchallenge'=>$idchallenge]);
+        if ($challenge != null) {
+            $entityManager->remove($challenge);
+            $entityManager->flush();
+
+            $serializer = new Serializer([new ObjectNormalizer()]);
+            $jsonContent = $serializer->normalize("c bon");
+            return new JsonResponse($jsonContent);
+        }
+        return new JsonResponse("non");
+    }
+    /**
+     * @Route("/uploadCH", name="app_user_editChmobile", methods={"GET", "POST"})
+     */
+    public function editChallengeMobile(Request $request, NormalizerInterface $normalizer, ChallengeRepository $userRepository, EntityManagerInterface $entityManager): Response
+    {
+
+        $poidnv = $request->query->get("poidnv");
+
+        $id = $request->query->get("iduser");
+        $chinit= $entityManager->getRepository(Challenge::class)->findOneBy(['iduser'=>$id]);
+        $chinit->setPoidnv($poidnv);
+
+
+        $entityManager->flush();
+        $jsonContent=$normalizer->normalize($chinit,'json');
+        return new Response("update  Sucessfully".json_encode($jsonContent));
     }
 }
