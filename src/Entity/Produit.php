@@ -75,7 +75,7 @@ class Produit
 
     /**
      * @var string
-     *@Assert\NotNull
+     * @Assert\File(mimeTypes={ "image/jpeg","image/png"})
      * @ORM\Column(name="ImageProduit", type="string", length=255, nullable=false)
      * @Groups("produit")
      */

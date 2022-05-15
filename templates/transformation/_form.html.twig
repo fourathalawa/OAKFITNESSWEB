@@ -22,18 +22,16 @@
     {{ form_errors(form.descreptionimage) }}
     </div>
 
-    <div class="form-group" style="color: black">
-    {{ form_label(form.imageavant,'Image Before ') }}<br />
+    {{ form_label(form.imageavant, 'Image Before ') }}<br />
     {{ form_widget(form.imageavant) }}
-    </div>
+
     <div style="color: red">
-    {{ form_errors(form.imageavant) }}
+        {{ form_errors(form.imageavant) }}
     </div>
 
-    <div class="form-group" style="color: black">
-    {{ form_label(form.imageapres,'Image After  ') }}<br />
+    {{ form_label(form.imageapres, 'Image After ') }}<br />
     {{ form_widget(form.imageapres) }}
-    </div>
+
     <div style="color: red">
         {{ form_errors(form.imageapres) }}
     </div>

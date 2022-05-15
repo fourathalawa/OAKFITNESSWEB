@@ -41,7 +41,7 @@
                 <td><script >
                         document.write(A)
                     </script></td>
-                <td><img class="card-img-top" src="{{ asset('uploads/brochures/'~produit.imageproduit)}}"alt="{{produit.imageproduit}}" width="50" height="60"/></td>
+                <td><img class="card-img-top" src="{{ asset('uploads/images/'~produit.imageproduit)}}"alt="{{produit.imageproduit}}" width="50" height="60"/></td>
                 <td>{{ produit.stockproduit }}</td>
                 <td>
                     <a href="{{ path('app_produit_showb', {'idproduit': produit.idproduit}) }}">show &nbsp;</a>

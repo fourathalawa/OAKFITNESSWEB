@@ -73,27 +73,13 @@ class ProduitController extends AbstractController
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
-        //start move image
-        $file = new File($request->get('imageproduit'));
-        //Move image
-        $filename= $file->getFilename();
-        $file->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename);
-        //end move image
 
-        //end move image
         if ($form->isSubmitted() && $form->isValid()) {
-          $file = $produit->getImageproduit();
-          $fileName = md5(uniqid()).'.'.$file->guessExtension();
-            try {
-                $file->move(
-                    $this->getParameter('brochures_directory'),
-                    $fileName
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
-            }
-            $entityManager = $this->getDoctrine()->getManager();
-            $produit->setImageproduit($fileName);
+            //Move image
+            $filename=$form->get('imageproduit')->getData()->getClientOriginalName();
+            $form->get('imageproduit')->getData()->move($this->getParameter('kernel.project_dir'). '/public/uploads/images',$filename);
+            //end move image
+            $produit->setImageproduit($filename);
             $entityManager->persist($produit);
             $entityManager->flush();
             return $this->redirectToRoute('app_produit_indexback', [], Response::HTTP_SEE_OTHER);
@@ -129,30 +115,20 @@ class ProduitController extends AbstractController
      * @Route("/{idproduit}/edit", name="app_produit_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
-    {
+    {   $oldfile=$produit->getImageproduit();
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
         //start move image
-        $file = new File($request->get('imageproduit'));
-        //Move image
-        $filename="equipe";
-        $file->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename);
-        //end move image
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $produit->getImageproduit();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-            try {
-                $file->move(
-                    $this->getParameter('brochures_directory'),
-                    $fileName
-                );
-            } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
+            $filename = $form->get('imageproduit')->getData()->getClientOriginalName();
+            if($oldfile != $filename) {
+                $form->get('imageproduit')->getData()->move($this->getParameter('kernel.project_dir') . '/public/uploads/images', $filename);
+                $produit->setImageproduit($filename);
             }
+            $entityManager->persist($produit);
             $entityManager = $this->getDoctrine()->getManager();
-            $produit->setImageproduit($fileName);
             $entityManager->flush();
 
 
@@ -265,10 +241,9 @@ class ProduitController extends AbstractController
     public function addp(Request $request, NormalizerInterface $Normalizer){
         $em=$this->getDoctrine()->getManager();
         //start move image
-        $file = new File($request->get('imageproduit'));
-        //Move image
-        $filename= $file->getFilename();
-        $file->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filename);
+        $file = new File($request->query->get('imageproduit'));
+        $filename=$file->getFilename();
+        $file->move($this->getParameter('kernel.project_dir'). '/public/uploads/images',$filename);
         //end move image
         $produit= new Produit();
         $produit->setNomproduit($request->get('nomproduit'));
@@ -293,17 +268,16 @@ class ProduitController extends AbstractController
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
         //start move image
-        $file1 = new File($request->get('imageproduit'));
-        //Move image
-        $filenamea= $file1->getFilename();
-        $file1->move($this->getParameter('kernel.project_dir'). 'public/uploads/images',$filenamea);
+        $file = new File($request->query->get('imageproduit'));
+        $filename=$file->getFilename();
+        $file->move($this->getParameter('kernel.project_dir'). '/public/uploads/images',$filename);
         //end move image
         $produit->setNomproduit($request->get('nomproduit'));
         $produit->setCategproduit($request->get('categproduit'));
         $produit->setDescrproduit($request->get('descrproduit'));
         $produit->setPrixproduit($request->get('prixproduit'));
         $produit->setIsavailable($request->get('isavailable'));
-        $produit->setImageproduit($filenamea);
+        $produit->setImageproduit($filename);
         $produit->setStockproduit($request->get('stockproduit'));
 
         $em->flush();
