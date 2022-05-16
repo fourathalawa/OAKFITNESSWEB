@@ -68,8 +68,10 @@ class TransformationController extends AbstractController
         $transformation = new Transformation();
         $form = $this->createForm(TransformationType::class, $transformation);
         $form->handleRequest($request);
+        $session=$request->getSession();
+        $id=$session->get('iduser',0);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
 
 
             $filename=$form->get('imageavant')->getData()->getClientOriginalName();
@@ -79,6 +81,7 @@ class TransformationController extends AbstractController
             $form->get('imageapres')->getData()->move($this->getParameter('kernel.project_dir').'/public/uploads/images',$filename1);
             $transformation->setImageavant($filename);
             $transformation->setImageapres($filename1);
+            $transformation->setIduser($id);
             $entityManager->persist($transformation);
             $entityManager->flush();
 
