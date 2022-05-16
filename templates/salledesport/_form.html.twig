@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creat challenge</title>
+    <title>Creat Gym</title>
     <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href={{asset('front/css/challenge.css')}}>
     <link rel="stylesheet" href={{asset('front/css/signup.css')}}>
@@ -11,22 +11,19 @@
 <body>
 
 <fieldset>
-    <legend><span class="number"></span>Donnée sur la salle de sport</legend>
-    {{ form_label(form.nomsalle,"Nom salle :") }}
+    <legend><span class="number"></span>Gym data</legend>
+    {{ form_label(form.nomsalle,"Gym name :") }}
     {{ form_widget(form.nomsalle) }}
     {{ form_errors(form.nomsalle) }}
 
-    {{ form_label(form.adresse,"Adresse :") }}
+    {{ form_label(form.adresse,"Adress :") }}
     {{ form_widget(form.adresse) }}
     {{ form_errors(form.adresse) }}
 
-    {{ form_label(form.prixseance,"Prix seance :") }}
+
+    {{ form_label(form.prixseance,"Price per session :") }}
     {{ form_widget(form.prixseance) }}
     {{ form_errors(form.prixseance) }}
-
-    {{ form_label(form.idResponsable,"Id User :") }}
-    {{ form_widget(form.idResponsable) }}
-    {{ form_errors(form.idResponsable) }}
 
 </fieldset>
 <button class="btn">{{ button_label|default('Save') }}</button>

@@ -1,32 +1,29 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-front.html.twig' %}
 
-{% block title %}Salledesport index{% endblock %}
+{% block title %}My GYMS{% endblock %}
 
 {% block body %}
-    <h1>Salledesport index</h1>
+    <h1>My GYMS</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>IdSalle</th>
-                <th>Adresse</th>
-                <th>IdResponsable</th>
-                <th>Nomsalle</th>
-                <th>Prixseance</th>
-                <th>actions</th>
+
+                <th>Address</th>
+                <th>Gym name</th>
+                <th>Price per session</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for salledesport in salledesports %}
             <tr>
-                <td>{{ salledesport.idSalle }}</td>
                 <td>{{ salledesport.adresse }}</td>
-                <td>{{ salledesport.idResponsable }}</td>
                 <td>{{ salledesport.nomsalle }}</td>
                 <td>{{ salledesport.prixseance }}</td>
                 <td>
-                    <a href="{{ path('app_salledesport_show', {'idSalle': salledesport.idSalle}) }}">show</a>
-                    <a href="{{ path('app_salledesport_edit', {'idSalle': salledesport.idSalle}) }}">edit</a>
+                    {{ include('salledesport/_delete_form.html.twig') }}
+                    <a href="{{ path('app_salledesport_edit', {'idSalle': salledesport.idSalle}) }}">Edit</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +34,8 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_salledesport_new') }}">Create new</a>
+    <a href="{{ path('app_salledesport_new') }}">Add new GYM</a>
+    <br>
+    <a href="{{ path('app_user_show') }}">Back</a>
+
 {% endblock %}

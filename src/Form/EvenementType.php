@@ -18,10 +18,11 @@ class EvenementType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var \Doctrine\ORM\EntityManager $entityManager */
+        /** @var EntityManager $entityManager */
 
 
         $entityManager = $options['entity_manager'];
+
         $creators = $entityManager
             ->getRepository(User::class)
             ->getCreators();
@@ -47,12 +48,7 @@ class EvenementType extends AbstractType
                     'online' => 'online'
                 ],
             ])
-            ->add('image', FileType::class, [
-                'data_class' => null,
-                'mapped' => false,
-                'required' => false,
-
-            ])
+            ->add('image', FileType::class, array('data_class' => null ,'required' => false))
         ;
     }
 

@@ -15,7 +15,6 @@ class SalledesportType extends AbstractType
             ->add('nomsalle')
             ->add('adresse')
             ->add('prixseance')
-            ->add('idResponsable')
         ;
     }
 

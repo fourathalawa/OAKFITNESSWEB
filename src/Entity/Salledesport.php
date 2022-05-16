@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Entity;
+use App\Repository\SalledesportRepository;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Salledesport
@@ -23,7 +25,7 @@ class Salledesport
 
     /**
      * @var string|null
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="Adresse", type="string", length=300, nullable=true)
      */
     private $adresse;
@@ -37,14 +39,14 @@ class Salledesport
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="NomSalle", type="string", length=30, nullable=false)
      */
     private $nomsalle;
 
     /**
      * @var float
-     *
+     * @Assert\NotBlank(message="le champs ne doit pas etre vide")
      * @ORM\Column(name="PrixSeance", type="float", precision=10, scale=0, nullable=false)
      */
     private $prixseance;

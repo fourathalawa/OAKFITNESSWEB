@@ -24,12 +24,7 @@ class RepasType extends AbstractType
                     'ACTIVE' => 'ACTIVE'
                 ],
             ])
-            ->add('image', FileType::class, [
-                'data_class' => null,
-                'mapped' => false,
-                'required' => false,
-
-            ])
+            ->add('image', FileType::class, array('data_class' => null ,'required' => false))
         ;
     }
 

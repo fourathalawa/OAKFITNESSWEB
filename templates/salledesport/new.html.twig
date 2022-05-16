@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-front.html.twig' %}
 
-{% block title %}New Salledesport{% endblock %}
+{% block title %}New Gym{% endblock %}
 
 {% block body %}
-    <h1>Create new Salledesport</h1>
+    <h1>Create new Gym</h1>
 
     {{ include('salledesport/_form.html.twig') }}
 
-    <a href="{{ path('app_salledesport_index') }}">back to list</a>
+    <a href="{{ path('app_salledesport_manager') }}">back to list</a>
 {% endblock %}

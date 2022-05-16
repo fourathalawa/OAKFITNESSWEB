@@ -55,18 +55,17 @@ class testController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="newpub", methods={"GET", "POST"})
+     * @Route("/create/{sess}", name="newpub", methods={"GET", "POST"})
      */
-    public function newMobile(Request $request,USerRepository $userRepository, EntityManagerInterface $entityManager, SerializerInterface $serializer)
+    public function newMobile(Request $request,$sess,USerRepository $userRepository, EntityManagerInterface $entityManager, SerializerInterface $serializer)
     {
-        $session = 52;
         $user = $userRepository
-            ->find($session);
+            ->find($sess);
 
         $pub = $request->query->get("publication");
         $publication = new Publication();
         $publication->setPublication($pub);
-        $publication->setIduser($session);
+        $publication->setIduser($sess);
         $time = date('d/m/Y');
         $publication->setDatepublication($time);
         $publication->setUsernamep($user->getNomuser());
@@ -119,18 +118,17 @@ class testController extends AbstractController
         return new Response($json);
     }
     /**
-     * @Route("/createcomm/{idp}", name="app_new_comment", methods={"GET", "POST"})
+     * @Route("/createcomm/{idp}/{sess}", name="app_new_comment", methods={"GET", "POST"})
      */
-    public function newComment(Request $request,$idp,USerRepository $userRepository, EntityManagerInterface $entityManager, SerializerInterface $serializer)
+    public function newComment(Request $request,$sess,$idp,USerRepository $userRepository, EntityManagerInterface $entityManager, SerializerInterface $serializer)
     {
-        $session = 52;
         $user = $userRepository
-            ->find($session);
+            ->find($sess);
 
         $com = $request->query->get("commentaire");
         $comment = new Commentaire();
         $comment->setCommentaire($com);
-        $comment->setIduser($session);
+        $comment->setIduser($sess);
         $time = date('d/m/Y');
         $comment->setDatecommentaire($time);
         $comment->setUsernamep($user->getNomuser());

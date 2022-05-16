@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-front.html.twig' %}
 
 {% block title %}Salledesport{% endblock %}
 
@@ -7,32 +7,25 @@
 
     <table class="table">
         <tbody>
+
             <tr>
-                <th>IdSalle</th>
-                <td>{{ salledesport.idSalle }}</td>
-            </tr>
-            <tr>
-                <th>Adresse</th>
+                <th>Adress</th>
                 <td>{{ salledesport.adresse }}</td>
             </tr>
             <tr>
-                <th>IdResponsable</th>
-                <td>{{ salledesport.idResponsable }}</td>
-            </tr>
-            <tr>
-                <th>Nomsalle</th>
+                <th>Gym name</th>
                 <td>{{ salledesport.nomsalle }}</td>
             </tr>
             <tr>
-                <th>Prixseance</th>
+                <th>Price per session</th>
                 <td>{{ salledesport.prixseance }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_salledesport_index') }}">back to list</a>
+    <a href="{{ path('app_salledesport_manager') }}">Back to list</a>
 
-    <a href="{{ path('app_salledesport_edit', {'idSalle': salledesport.idSalle}) }}">edit</a>
+    <a href="{{ path('app_salledesport_edit', {'idSalle': salledesport.idSalle}) }}">Edit</a>
 
     {{ include('salledesport/_delete_form.html.twig') }}
 {% endblock %}

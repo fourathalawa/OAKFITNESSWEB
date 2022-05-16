@@ -1,15 +1,7 @@
-
 {% extends 'base-front.html.twig' %}
 
 {% block title %}User{% endblock %}
-{% block session %}{% if(user.iduser !=0) %}
-{% elseif(user.iduser==3) %}
-    <li class=""><a href="{{ path('app_user_alladmin') }}">Dashboard</a>
 
-    </li>
-    {% endif %}
-
-{% endblock %}
 {% block body %}
     <link rel="stylesheet" href={{asset('front/css/show.css')}}>
     <div class="page-content page-container" id="page-content">
@@ -20,14 +12,14 @@
                         <div class="row m-l-0 m-r-0">
                             <div class="col-sm-4 bg-c-lite-green user-profile">
                                 <div class="card-block text-center text-white">
-                                    <div class="m-b-25"> <img src="{{asset('uploads/brochures/'~user.imageuser)}}" class="img-radius" alt="User-Profile-Image"> </div>
+                                    <div class="m-b-25"> <img src="{{asset('images/'~user.imageuser)}}" class="img-radius" alt="User-Profile-Image"> </div>
                                     <h6 class="f-w-600">{{ user.nomuser }} {{ user.prenomuser }}</h6>
                                     {% if(user.roleuser == 0) %}
-                                    <p>Member</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                        <p>Member</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                     {% elseif(user.roleuser == 1) %}
-                                    <p>Coach</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                        <p>Coach</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                     {% elseif(user.roleuser == 2) %}
-                                    <p>Manager</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                        <p>Manager</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                     {% endif %}
                                 </div>
                             </div>
@@ -48,28 +40,28 @@
                                             <h6 class="text-muted f-w-400">{{ user.datenaissanceuser ? user.datenaissanceuser|date('Y-m-d') : '' }}</h6>
                                         </div>
                                     </div>
-                                        {% if(user.roleuser == 1) %}
-                                            <br>
+                                    {% if(user.roleuser == 1) %}
+                                        <br>
                                         <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Professional</h6>
-                                            <div class="row">
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Experience</p>
-                                            <h6 class="text-muted f-w-400">{{ user.experienceuser  }}</h6>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Experience</p>
+                                                <h6 class="text-muted f-w-400">{{ user.experienceuser  }}</h6>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Diplome</p>
+                                                <h6 class="text-muted f-w-400">{{ user.diplomeuser }}</h6>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Diplome</p>
-                                            <h6 class="text-muted f-w-400">{{ user.diplomeuser }}</h6>
-                                        </div>
-                                    </div>
                                     {% elseif(user.roleuser == 2) %}
 
 
-                                    <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
-                                    <div class="row">
-                                    <div class="col-sm-6">
-                                        <p class="m-b-10 f-w-600">Tax number</p>
-                                        <h6 class="text-muted f-w-400">{{ user.matriculefiscale }}</h6>
-                                    </div>
+                                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Projects</h6>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <p class="m-b-10 f-w-600">Tax number</p>
+                                                <h6 class="text-muted f-w-400">{{ user.matriculefiscale }}</h6>
+                                            </div>
                                         </div> {% endif %}
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -77,19 +69,23 @@
                                                 <br>
                                                 <p class="m-b-10 f-w-600">Challenge</p>
                                                 <a href="{{ path('app_challenge_userchallenge', {'iduser': 1}) }}">My Challenge </a>
+                                            {% elseif(user.roleuser == 2) %}
+                                                <br>
+                                                <p class="m-b-10 f-w-600">My Gyms</p>
+                                                <a href="{{ path('app_salledesport_manager') }}">My GYMS </a>
                                             {% endif %}
                                         </div>
-                                        </div>
+                                    </div>
 
                                     <br>
-                                        <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-sm-6">
 
-                                        <p class="m-b-10 f-w-600">Edit profile</p>
+                                            <p class="m-b-10 f-w-600">Edit profile</p>
 
-                                        <a href="{{ path('app_user_editadherent', {'iduser': 1}) }}">edit</a>
-                                    </div>
+                                            <a href="{{ path('app_user_editadherent', {'iduser': 1}) }}">edit</a>
                                         </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <p class="m-b-10 f-w-600">Delete profile</p>
@@ -97,6 +93,7 @@
 
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -104,7 +101,7 @@
             </div>
         </div>
     </div>
-    </div>
 
+    <a href="{{ path('login') }}">Log Out</a>
 
 {% endblock %}
